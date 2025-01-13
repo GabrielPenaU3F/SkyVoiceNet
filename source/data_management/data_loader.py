@@ -14,12 +14,12 @@ class DataLoader(metaclass=Singleton):
     def __init__(self, data_dir):
         self.data_dir = data_dir
 
-    def load_data(self, filename='nus_train_raw.h5', force_reload=False):
-        if force_reload or not os.path.exists(os.path.join(self.data_dir, filename)):
+    def load_data(self, filename, load_wavs=False):
+        if load_wavs:
             data = self.load_wavs()
             self.save_hdf5(data, filename)
         else:
-            data = self.load_hdf5('nus_train_raw.h5')
+            data = self.load_hdf5(filename)
         return data
 
     def load_wavs(self):

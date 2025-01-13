@@ -1,7 +1,5 @@
 import librosa
-import numpy as np
 import pandas as pd
-from torchaudio.compliance.kaldi import spectrogram
 
 from source.data_management.data_loader import DataLoader
 from source.singleton import Singleton
@@ -26,7 +24,7 @@ class DataPreprocessor(metaclass=Singleton):
             processed_data = pd.concat([processed_data, spectrogram_row])
 
         if self.config.save:
-            self.save_processed_data(processed_data)
+            self.save_processed_data(processed_data, self.config.filename)
 
         return processed_data
 
@@ -47,8 +45,8 @@ class DataPreprocessor(metaclass=Singleton):
         read = librosa.util.normalize(row['read'])
         return pd.DataFrame([{'sing': sing, 'read': read}])
 
-    def save_processed_data(self, processed_data):
-        DataLoader().save_hdf5(processed_data, filename='nus_train.h5')
+    def save_processed_data(self, processed_data, filename):
+        DataLoader().save_hdf5(processed_data, filename)
 
 
 class PreprocessConfig(metaclass=Singleton):
@@ -59,6 +57,7 @@ class PreprocessConfig(metaclass=Singleton):
         self.hop_length = 256
         self.win_length = 1024
         self.save = False
+        self.filename = 'nus_processed.h5'
 
     def update(self, **kwargs):
         for key, value in kwargs.items():
