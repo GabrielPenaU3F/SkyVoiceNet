@@ -3,29 +3,29 @@ import os
 
 import h5py
 import librosa
-import numpy as np
 import pandas as pd
 
+from source.data_management.data_writer import DataWriter
+from source.data_management.path_repo import PathRepo
 from source.singleton import Singleton
 
 
 class DataLoader(metaclass=Singleton):
 
-    def __init__(self, data_dir):
-        self.data_dir = data_dir
 
     def load_data(self, filename, load_wavs=False):
         if load_wavs:
             data = self.load_wavs()
-            self.save_hdf5(data, filename)
+            DataWriter().save_hdf5_raw(data, filename)
         else:
             data = self.load_hdf5(filename)
         return data
 
     def load_wavs(self):
 
+        wav_dir = PathRepo().get_wavs_path()
         data = []
-        for subdir, dirs, files in os.walk(self.data_dir):
+        for subdir, dirs, files in os.walk(wav_dir):
 
             if 'sing' in dirs and 'read' in dirs:
                 sing_path = os.path.join(subdir, 'sing')
@@ -49,22 +49,11 @@ class DataLoader(metaclass=Singleton):
 
         return pd.DataFrame(data)
 
-    def save_hdf5(self, data, filename, dtype='float32'):
-        with h5py.File(os.path.join(self.data_dir, filename), 'w') as f:
-
-            for index, row in data.iterrows():
-                group_name = str(index)
-                if group_name in f:
-                    del f[group_name]
-                group = f.create_group(group_name)
-                group.create_dataset('sing', data=np.array(row['sing'], dtype=dtype))
-                group.create_dataset('read', data=np.array(row['read'], dtype=dtype))
-
-        print("Data saved to HDF5 format.")
-
     def load_hdf5(self, filename='nus_train_raw.h5'):
+
+        hdf5_dir = PathRepo().get_hdf5_path()
         data = []
-        with h5py.File(os.path.join(self.data_dir, filename), 'r') as f:
+        with h5py.File(os.path.join(hdf5_dir, filename), 'r') as f:
             for index in f:
                 sing_data = f[index]['sing'][:]
                 read_data = f[index]['read'][:]

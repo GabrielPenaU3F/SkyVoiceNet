@@ -4,11 +4,11 @@ from matplotlib import pyplot as plt
 from source.data_management.data_loader import DataLoader
 from source.data_management.data_preprocessor import DataPreprocessor
 
-data_loader = DataLoader('resources/NUS-48E/nus-smc-corpus_48')
+data_loader = DataLoader()
 proc = DataPreprocessor()
 
-#raw_data = data_loader.load_data('nus_data_raw.h5', load_wavs=True)
-#processed_data = proc.preprocess(raw_data, save=True)
+raw_data = data_loader.load_data('nus_data_raw.h5', load_wavs=True)
+processed_data = proc.preprocess(raw_data, save=True)
 
 processed_data = data_loader.load_data('nus_processed.h5')
 
