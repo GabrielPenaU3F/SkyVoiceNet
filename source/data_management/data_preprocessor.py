@@ -14,8 +14,8 @@ class DataPreprocessor(metaclass=Singleton):
     def preprocess(self, data, **kwargs):
         self.config.update(**kwargs)  # Actualizar parámetros con kwargs
         preprocessed_data = pd.DataFrame(columns=['contour', 'speech'])
+        data = data.rename(columns={'sing': 'contour', 'read': 'speech'})
         for _, row in data.iterrows():
-            row_renamed = row.rename(columns=['contour', 'speech'])
             norm_row = self.normalize_values(row)
             silenceless_speech = self.remove_speech_silence(
                 norm_row, self.config.fs, self.config.threshold, self.config.max_allowed_silence_duration)
@@ -30,18 +30,48 @@ class DataPreprocessor(metaclass=Singleton):
 
     def remove_speech_silence(self, row, fs=44100, threshold=40, max_allowed_silence_duration=0.05):
 
-        # Dividir audio en intervalos no silenciosos
-        speech = row['read']
+        sing = row['contour'].values[0]
+        speech = row['speech'].values[0]
+        # Divide audio into non-silent intervals
         non_silent_intervals = librosa.effects.split(speech, top_db=threshold)
+        # By default, this covers 50ms
+        max_silence_samples = int(max_allowed_silence_duration * fs)
+        silent_intervals = self.obtain_silent_intervals(speech, non_silent_intervals)
+        # This filters the array to identify long silences
+        filtered_silent_intervals = [
+            (start, end) for start, end in silent_intervals if (end - start) >= max_silence_samples
+        ]
 
-        # Filtrar intervalos demasiado cortos (silencios menores a min_silence_duration)
-        min_samples = int(max_allowed_silence_duration * fs)
-        filtered_intervals = [i for i in non_silent_intervals if (i[1] - i[0]) >= min_samples]
+        # Finally, we rebuild the audio omitting the long silences
+        filtered_fragments = self.rebuild_audio_without_long_silences(speech, filtered_silent_intervals)
+        clean_speech = np.concatenate(filtered_fragments)
 
-        # Concatenar partes relevantes
-        cleaned_audio = np.concatenate([speech[start:end] for start, end in filtered_intervals])
+        return pd.DataFrame([{'contour': sing, 'speech': clean_speech}])
 
-        return cleaned_audio
+    def rebuild_audio_without_long_silences(self, speech, filtered_silent_intervals):
+        filtered_audio = []
+        prev_end = 0
+        for start, end in filtered_silent_intervals:
+            filtered_audio.append(speech[prev_end:start])
+            prev_end = end
+        if prev_end < len(speech):
+            filtered_audio.append(speech[prev_end:])
+        return filtered_audio
+
+    def obtain_silent_intervals(self, speech, non_silent_intervals):
+        silent_intervals = []
+        start_index = 0
+        for interval in non_silent_intervals:
+            # Add the next silent interval
+            if start_index < interval[0]:
+                silent_intervals.append([start_index, interval[0] - 1])
+
+            start_index = interval[1] + 1
+        # Add the last silent interval, if it exists
+        if start_index < len(speech):
+            silent_intervals.append([start_index, len(speech) - 1])
+
+        return silent_intervals
 
     def obtain_spectrograms(self, row, n_fft, hop_length, win_length):
         sing_spectrogram = librosa.stft(row['sing'].values[0], n_fft=n_fft, hop_length=hop_length, win_length=win_length)
@@ -51,9 +81,9 @@ class DataPreprocessor(metaclass=Singleton):
         return pd.DataFrame([{'sing': sing_db, 'read': read_db}])
 
     def normalize_values(self, row):
-        sing = librosa.util.normalize(row['sing'])
-        read = librosa.util.normalize(row['read'])
-        return pd.DataFrame([{'sing': sing, 'read': read}])
+        sing = librosa.util.normalize(row['contour'])
+        read = librosa.util.normalize(row['speech'])
+        return pd.DataFrame([{'contour': sing, 'speech': read}])
 
 
 class PreprocessConfig(metaclass=Singleton):

@@ -21,7 +21,7 @@ class DataWriter(metaclass=Singleton):
                 group.create_dataset('sing', data=np.array(row['sing'], dtype=dtype))
                 group.create_dataset('read', data=np.array(row['read'], dtype=dtype))
 
-        print("Data saved to HDF5 format.")
+        print('Data saved to HDF5 format')
 
     def save_hdf5_preprocessed(self, data, filename, dtype='float32'):
         pass
