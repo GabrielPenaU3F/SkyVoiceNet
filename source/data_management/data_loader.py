@@ -13,13 +13,28 @@ from source.singleton import Singleton
 class DataLoader(metaclass=Singleton):
 
 
-    def load_data(self, filename, load_wavs=False):
+    def load_raw_data(self, filename, load_wavs=False):
         if load_wavs:
             data = self.load_wavs()
             DataWriter().save_hdf5_raw(data, filename)
         else:
-            data = self.load_hdf5(filename)
+            data = self.load_raw_hdf5(filename)
         return data
+
+    def load_preprocessed_data(self, filename):
+        hdf5_dir = PathRepo().get_hdf5_path()
+        data = []
+        with h5py.File(os.path.join(hdf5_dir, filename), 'r') as f:
+            for index in f:
+                contour = f[index]['contour'][:]
+                melody_spectrogram = f[index]['melody_spectrogram'][:]
+                speech_spectrogram = f[index]['speech_spectrogram'][:]
+                melody_fs = f[index]['melody_fs'][:]
+                speech_fs = f[index]['speech_fs'][:]
+                data.append({'contour': contour, 'melody_spectrogram': melody_spectrogram,
+                             'speech_spectrogram': speech_spectrogram, 'melody_fs': melody_fs, 'speech_fs': speech_fs})
+
+        return pd.DataFrame(data)
 
     def load_wavs(self):
 
@@ -49,7 +64,7 @@ class DataLoader(metaclass=Singleton):
 
         return pd.DataFrame(data)
 
-    def load_hdf5(self, filename='nus_train_raw.h5'):
+    def load_raw_hdf5(self, filename='nus_train_raw.h5'):
 
         hdf5_dir = PathRepo().get_hdf5_path()
         data = []
