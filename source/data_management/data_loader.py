@@ -7,21 +7,20 @@ import pandas as pd
 
 from source.data_management.data_writer import DataWriter
 from source.data_management.path_repo import PathRepo
-from source.singleton import Singleton
 
+class DataLoader:
 
-class DataLoader(metaclass=Singleton):
-
-
-    def load_raw_data(self, filename, load_wavs=False):
+    @staticmethod
+    def load_raw_data(filename, load_wavs=False):
         if load_wavs:
-            data = self.load_wavs()
-            DataWriter().save_hdf5_raw(data, filename)
+            data = DataLoader.load_wavs()
+            DataWriter.save_hdf5_raw(data, filename)
         else:
-            data = self.load_raw_hdf5(filename)
+            data = DataLoader.load_raw_hdf5(filename)
         return data
 
-    def load_preprocessed_data(self, filename):
+    @staticmethod
+    def load_preprocessed_data(filename):
         hdf5_dir = PathRepo().get_hdf5_path()
         data = []
         with h5py.File(os.path.join(hdf5_dir, filename), 'r') as f:
@@ -29,14 +28,15 @@ class DataLoader(metaclass=Singleton):
                 contour = f[index]['contour'][:]
                 melody_spectrogram = f[index]['melody_spectrogram'][:]
                 speech_spectrogram = f[index]['speech_spectrogram'][:]
-                melody_fs = f[index]['melody_fs'][:]
-                speech_fs = f[index]['speech_fs'][:]
+                melody_sr = f[index]['melody_sr'][()]
+                speech_sr = f[index]['speech_sr'][()]
                 data.append({'contour': contour, 'melody_spectrogram': melody_spectrogram,
-                             'speech_spectrogram': speech_spectrogram, 'melody_fs': melody_fs, 'speech_fs': speech_fs})
+                             'speech_spectrogram': speech_spectrogram, 'melody_sr': melody_sr, 'speech_sr': speech_sr})
 
         return pd.DataFrame(data)
 
-    def load_wavs(self):
+    @staticmethod
+    def load_wavs():
 
         wav_dir = PathRepo().get_wavs_path()
         data = []
@@ -64,7 +64,7 @@ class DataLoader(metaclass=Singleton):
 
         return pd.DataFrame(data)
 
-    def load_raw_hdf5(self, filename='nus_train_raw.h5'):
+    def load_raw_hdf5(self, filename='nus_data_raw.h5'):
 
         hdf5_dir = PathRepo().get_hdf5_path()
         data = []

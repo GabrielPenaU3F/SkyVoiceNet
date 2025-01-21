@@ -4,12 +4,12 @@ import h5py
 import numpy as np
 
 from source.data_management.path_repo import PathRepo
-from source.singleton import Singleton
 
 
-class DataWriter(metaclass=Singleton):
+class DataWriter:
 
-    def save_hdf5_raw(self, data, filename, dtype='float32'):
+    @staticmethod
+    def save_hdf5_raw(data, filename, dtype='float32'):
         filepath = os.path.join(PathRepo().get_hdf5_path(), filename)
         with h5py.File(filepath, 'w') as f:
 
@@ -24,7 +24,8 @@ class DataWriter(metaclass=Singleton):
 
         print('Data saved')
 
-    def save_hdf5_preprocessed(self, data, filename, dtype='float32'):
+    @staticmethod
+    def save_hdf5_preprocessed(data, filename, dtype='float32'):
         filepath = os.path.join(PathRepo().get_hdf5_path(), filename)
         with h5py.File(filepath, 'w') as f:
 
@@ -37,7 +38,7 @@ class DataWriter(metaclass=Singleton):
                 group.create_dataset('contour', data=np.array(row['contour'], dtype=dtype))
                 group.create_dataset('melody_spectrogram', data=np.array(row['melody_spectrogram'], dtype=dtype))
                 group.create_dataset('speech_spectrogram', data=np.array(row['speech_spectrogram'], dtype=dtype))
-                group.create_dataset('melody_fs', data=np.array(row['melody_fs'], dtype=dtype))
-                group.create_dataset('speech_fs', data=np.array(row['speech_fs'], dtype=dtype))
+                group.create_dataset('melody_sr', data=np.array(row['melody_sr'], dtype=dtype))
+                group.create_dataset('speech_sr', data=np.array(row['speech_sr'], dtype=dtype))
 
         print('Data saved')

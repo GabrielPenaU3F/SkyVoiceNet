@@ -38,14 +38,14 @@ def play_midi_notes(midi_numbers, duration=0.1, sample_rate=44100):
 
 def draw_spectrograms(spectrogram_1, spectrogram_2):
     plt.subplot(2, 1, 1)
-    librosa.display.specshow(spectrogram_1, sr=44100, hop_length=256, x_axis='time', y_axis='log', cmap='magma')
-    plt.colorbar(format='%+2.0f dB')
+    plt.imshow(spectrogram_1, aspect="auto", origin='lower', cmap='magma')
+    plt.colorbar(format='%+2.0f dB', label="Intensity")
     plt.title("Spectrogram 1")
     plt.xlabel("Time (s)")
     plt.ylabel("Freq")
     plt.subplot(2, 1, 2)
     plt.imshow(spectrogram_2, aspect="auto", origin='lower', cmap='magma')
-    plt.colorbar(label="Intensity")
+    plt.colorbar(format='%+2.0f dB', label="Intensity")
     plt.xlabel("Time (s)")
     plt.ylabel("Freq")
     plt.title("Spectrogram 2")
