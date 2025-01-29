@@ -20,7 +20,7 @@ class DataLoader:
         return data
 
     @staticmethod
-    def load_preprocessed_data(filename):
+    def load_processed_data(filename):
         hdf5_dir = PathRepo().get_hdf5_path()
         data = []
         with h5py.File(os.path.join(hdf5_dir, filename), 'r') as f:

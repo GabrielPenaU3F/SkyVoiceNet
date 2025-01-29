@@ -25,7 +25,7 @@ class DataWriter:
         print('Data saved')
 
     @staticmethod
-    def save_hdf5_preprocessed(data, filename, dtype='float32'):
+    def save_hdf5_processed(data, filename, dtype='float32'):
         filepath = os.path.join(PathRepo().get_hdf5_path(), filename)
         with h5py.File(filepath, 'w') as f:
 

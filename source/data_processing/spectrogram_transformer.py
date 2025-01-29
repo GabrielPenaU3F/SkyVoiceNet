@@ -1,4 +1,5 @@
 import librosa
+import numpy as np
 from scipy.ndimage import zoom
 
 
@@ -10,7 +11,12 @@ class SpectrogramTransformer:
         return spectrogram_db
 
     def stretch_spectrogram(self, spectrogram, target_length):
-        speech_length = spectrogram.shape[1]
         scale_factor = target_length / spectrogram.shape[1]
         stretched_spectrogram = zoom(spectrogram, (1, scale_factor), order=1)
         return stretched_spectrogram
+
+    def zeropad_time(self, spectrogram, target_length):
+        _, t = spectrogram.shape
+        pad_t = target_length - t
+        min_value = np.min(spectrogram)
+        return np.pad(spectrogram, ((0, 0), (0, pad_t)), mode='constant', constant_values=min_value)

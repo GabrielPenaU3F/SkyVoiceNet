@@ -9,7 +9,7 @@ from source.data_processing.silence_remover import SilenceRemover
 from source.data_processing.spectrogram_transformer import SpectrogramTransformer
 
 
-class PreprocessingPipeline:
+class ProcessingPipeline:
 
     def __init__(self):
         self.config = PreprocessConfig() # This one is a singleton
@@ -19,12 +19,22 @@ class PreprocessingPipeline:
         self.spectrogram_transformer = SpectrogramTransformer()
         self.contour_extractor = ContourExtractor()
 
-    def preprocess(self, data, **kwargs):
-        self.config.update(**kwargs)  # Actualize parameters
+    def process(self, data, **kwargs):
+        self.config.update(**kwargs)
+
+        processed_data = self.preprocess(data)
+        processed_data = self.postprocess(processed_data)
+
+        if self.config.save:
+            DataWriter().save_hdf5_processed(processed_data, self.config.filename)
+
+        return processed_data
+
+    def preprocess(self, data):
+
         preprocessed_data = pd.DataFrame(columns=['contour', 'melody_spectrogram', 'speech_spectrogram',
                                                   'speech_fs', 'melody_fs'])
         for index, row in data.iterrows():
-
             print(f'Preprocessing input element Nº {index + 1}')
             melody = row['sing']
             speech = row['read']
@@ -65,7 +75,24 @@ class PreprocessingPipeline:
                 index=[len(preprocessed_data)])
             preprocessed_data = pd.concat([preprocessed_data, preprocessed_row], ignore_index=True)
 
-        if self.config.save:
-            DataWriter().save_hdf5_preprocessed(preprocessed_data, self.config.filename)
-
         return preprocessed_data
+
+    def postprocess(self, data):
+
+        speech_spectrogram = data['speech_spectrogram'].values
+        max_t = max([spectrogram.shape[1] for spectrogram in speech_spectrogram])
+        for index, row in data.iterrows():
+            print(f'Postprocessing input element Nº {index + 1}')
+
+            contour_spectrogram = row['contour']
+            speech_spectrogram = row['speech_spectrogram']
+            melody_spectrogram = row['melody_spectrogram']
+            contour_spectrogram = self.spectrogram_transformer.zeropad_time(contour_spectrogram, max_t)
+            speech_spectrogram = self.spectrogram_transformer.zeropad_time(speech_spectrogram, max_t)
+            melody_spectrogram = self.spectrogram_transformer.zeropad_time(melody_spectrogram, max_t)
+
+            data.at[index, 'contour'] = contour_spectrogram
+            data.at[index, 'speech_spectrogram'] = speech_spectrogram
+            data.at[index, 'melody_spectrogram'] = melody_spectrogram
+
+        return data

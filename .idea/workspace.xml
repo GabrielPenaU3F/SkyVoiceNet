@@ -4,206 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="15936c0f-728c-4ae7-8ae2-14f990ceb9fa" name="Changes" comment="Big refactor to the data IO managers. Preparation to correctly implement the preprocessing, which was entirely wrong">
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/read/01.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/read/01.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/read/09.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/read/09.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/read/13.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/read/13.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/read/18.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/read/18.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/sing/01.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/sing/01.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/sing/09.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/sing/09.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/sing/13.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/sing/13.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/sing/18.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ADIZ/sing/18.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/read/05.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/read/05.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/read/08.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/read/08.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/read/11.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/read/11.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/read/15.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/read/15.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/sing/05.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/sing/05.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/sing/08.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/sing/08.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/sing/11.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/sing/11.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/sing/15.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JLEE/sing/15.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/read/07.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/read/07.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/read/15.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/read/15.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/read/16.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/read/16.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/read/20.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/read/20.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/sing/07.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/sing/07.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/sing/15.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/sing/15.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/sing/16.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/sing/16.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/sing/20.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/JTAN/sing/20.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/read/04.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/read/04.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/read/10.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/read/10.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/read/12.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/read/12.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/read/17.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/read/17.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/sing/04.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/sing/04.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/sing/10.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/sing/10.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/sing/12.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/sing/12.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/sing/17.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/KENN/sing/17.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/read/04.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/read/04.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/read/10.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/read/10.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/read/12.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/read/12.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/read/17.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/read/17.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/sing/04.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/sing/04.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/sing/10.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/sing/10.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/sing/12.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/sing/12.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/sing/17.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MCUR/sing/17.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/read/05.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/read/05.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/read/11.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/read/11.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/read/19.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/read/19.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/read/20.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/read/20.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/sing/05.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/sing/05.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/sing/11.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/sing/11.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/sing/19.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/sing/19.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/sing/20.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPOL/sing/20.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/read/02.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/read/02.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/read/03.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/read/03.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/read/06.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/read/06.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/read/14.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/read/14.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/sing/02.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/sing/02.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/sing/03.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/sing/03.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/sing/06.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/sing/06.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/sing/14.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/MPUR/sing/14.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/read/07.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/read/07.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/read/15.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/read/15.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/read/16.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/read/16.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/read/20.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/read/20.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/sing/07.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/sing/07.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/sing/15.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/sing/15.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/sing/16.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/sing/16.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/sing/20.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/NJAT/sing/20.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/read/05.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/read/05.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/read/08.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/read/08.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/read/11.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/read/11.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/read/15.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/read/15.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/sing/05.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/sing/05.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/sing/08.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/sing/08.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/sing/11.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/sing/11.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/sing/15.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/PMAR/sing/15.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/README.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/read/01.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/read/01.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/read/09.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/read/09.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/read/13.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/read/13.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/read/18.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/read/18.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/sing/01.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/sing/01.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/sing/09.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/sing/09.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/sing/13.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/sing/13.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/sing/18.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/SAMF/sing/18.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/read/05.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/read/05.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/read/11.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/read/11.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/read/19.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/read/19.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/read/20.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/read/20.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/sing/05.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/sing/05.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/sing/11.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/sing/11.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/sing/19.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/sing/19.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/sing/20.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/VKOW/sing/20.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/read/02.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/read/02.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/read/03.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/read/03.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/read/06.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/read/06.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/read/14.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/read/14.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/sing/02.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/sing/02.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/sing/03.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/sing/03.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/sing/06.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/sing/06.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/sing/14.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/ZHIY/sing/14.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/data/nus_data_raw.h5" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.idea/SkyVoiceNet.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.idea/SkyVoiceNet.iml" afterDir="false" />
+    <list default="true" id="15936c0f-728c-4ae7-8ae2-14f990ceb9fa" name="Changes" comment="Big refactor">
+      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/data_dims.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/net_test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/process_raw_data.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/network/convolutional_block.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/network/convolutional_layer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/training_loop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_management/data_preprocessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_management/data_preprocessor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/resources/NUS-48E/nus-smc-corpus_48/README.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_management/data_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_management/data_loader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_management/data_writer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_management/data_writer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_management/path_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_management/path_repo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/preprocessing_pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/processing_pipeline.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/spectrogram_transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/spectrogram_transformer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -231,7 +48,16 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Python.crepe_verif.executor": "Debug",
+    "Python.data_dims.executor": "Run",
+    "Python.data_preprocessor.executor": "Debug",
     "Python.main.executor": "Debug",
+    "Python.melody_contour.executor": "Run",
+    "Python.net_test (1).executor": "Debug",
+    "Python.practica_transformers.executor": "Run",
+    "Python.process_raw_data.executor": "Run",
+    "Python.verify_tensorflow.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
@@ -240,16 +66,65 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Universidad\FIUBA\Redes Neuronales\Trabajo Final\SkyVoiceNet\scripts" />
+      <recent name="D:\Universidad\FIUBA\Redes Neuronales\Trabajo Final\SkyVoiceNet\source\data_processing" />
       <recent name="D:\Universidad\FIUBA\Redes Neuronales\Trabajo Final\SkyVoiceNet" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.data_dims">
+    <configuration name="data_dims" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="SkyVoiceNet" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/data_dims.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="net_test (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="SkyVoiceNet" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/net_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="net_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="SkyVoiceNet" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -263,7 +138,53 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/main.py" />
+      <option name="SCRIPT_NAME" value="D:\Universidad\FIUBA\Redes Neuronales\Trabajo Final\SkyVoiceNet\scripts\net_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="practica_embeddings" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="SkyVoiceNet" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="D:\Universidad\FIUBA\Redes Neuronales\Trabajo Final\SkyVoiceNet\practica_embeddings.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="process_raw_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="SkyVoiceNet" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/process_raw_data.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -274,7 +195,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
+        <item itemvalue="Python.data_dims" />
+        <item itemvalue="Python.process_raw_data" />
+        <item itemvalue="Python.net_test (1)" />
+        <item itemvalue="Python.net_test" />
+        <item itemvalue="Python.practica_embeddings" />
       </list>
     </recent_temporary>
   </component>
@@ -300,7 +225,18 @@
       <workItem from="1736479495085" duration="601000" />
       <workItem from="1736713240464" duration="13072000" />
       <workItem from="1736816244533" duration="2996000" />
-      <workItem from="1736819510730" duration="5362000" />
+      <workItem from="1736819510730" duration="5796000" />
+      <workItem from="1736886677392" duration="14980000" />
+      <workItem from="1736975082720" duration="9750000" />
+      <workItem from="1737068079253" duration="4992000" />
+      <workItem from="1737157170071" duration="7702000" />
+      <workItem from="1737261417702" duration="2127000" />
+      <workItem from="1737409495515" duration="8289000" />
+      <workItem from="1737602226022" duration="2351000" />
+      <workItem from="1737775626783" duration="74000" />
+      <workItem from="1737951282576" duration="4773000" />
+      <workItem from="1738114839242" duration="5650000" />
+      <workItem from="1738130230789" duration="625000" />
     </task>
     <task id="LOCAL-00001" summary="Basic data IO and preprocessing working">
       <option name="closed" value="true" />
@@ -326,7 +262,31 @@
       <option name="project" value="LOCAL" />
       <updated>1736819840551</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fixed a serious bug in the silence removal">
+      <option name="closed" value="true" />
+      <created>1736830657625</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1736830657625</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Implemented complete preprocessing pipeline">
+      <option name="closed" value="true" />
+      <created>1737262920198</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1737262920198</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Big refactor">
+      <option name="closed" value="true" />
+      <created>1737420353082</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1737420353082</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -339,9 +299,38 @@
     <MESSAGE value="Basic data IO and preprocessing working" />
     <MESSAGE value="Fixes and improvements" />
     <MESSAGE value="Big refactor to the data IO managers. Preparation to correctly implement the preprocessing, which was entirely wrong" />
-    <option name="LAST_COMMIT_MESSAGE" value="Big refactor to the data IO managers. Preparation to correctly implement the preprocessing, which was entirely wrong" />
+    <MESSAGE value="Fixed a serious bug in the silence removal" />
+    <MESSAGE value="Implemented complete preprocessing pipeline" />
+    <MESSAGE value="Big refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Big refactor" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/net_test.py</url>
+          <line>31</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/SkyVoiceNet$main.coverage" NAME="main Coverage Results" MODIFIED="1736830445719" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$melody_contour.coverage" NAME="melody_contour Coverage Results" MODIFIED="1736999746249" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$crepe_verif.coverage" NAME="crepe_verif Coverage Results" MODIFIED="1736983700120" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$practica_transformers.coverage" NAME="practica_transformers Coverage Results" MODIFIED="1737604122026" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$net_test__1_.coverage" NAME="net_test (1) Coverage Results" MODIFIED="1738116487058" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$process_raw_data.coverage" NAME="process_raw_data Coverage Results" MODIFIED="1738130247883" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$data_dims.coverage" NAME="data_dims Coverage Results" MODIFIED="1738130617774" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$data_preprocessor.coverage" NAME="data_preprocessor Coverage Results" MODIFIED="1737000902731" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_management" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$verify_tensorflow.coverage" NAME="verify_tensorflow Coverage Results" MODIFIED="1736915231758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$main.coverage" NAME="main Coverage Results" MODIFIED="1737956594097" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet" />
   </component>
 </project>
