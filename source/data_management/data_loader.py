@@ -3,10 +3,14 @@ import os
 
 import h5py
 import librosa
+import numpy as np
 import pandas as pd
+import torch
 
 from source.data_management.data_writer import DataWriter
 from source.data_management.path_repo import PathRepo
+from source.data_management.sky_dataset import SkyVoiceDataset
+
 
 class DataLoader:
 
@@ -20,7 +24,7 @@ class DataLoader:
         return data
 
     @staticmethod
-    def load_processed_data(filename):
+    def load_processed_data(filename, as_tensor_dataset=False):
         hdf5_dir = PathRepo().get_hdf5_path()
         data = []
         with h5py.File(os.path.join(hdf5_dir, filename), 'r') as f:
@@ -33,7 +37,13 @@ class DataLoader:
                 data.append({'contour': contour, 'melody_spectrogram': melody_spectrogram,
                              'speech_spectrogram': speech_spectrogram, 'melody_sr': melody_sr, 'speech_sr': speech_sr})
 
-        return pd.DataFrame(data)
+        data = pd.DataFrame(data)
+        if as_tensor_dataset:
+            dataset = SkyVoiceDataset(data['speech_spectrogram'], data['contour'], data['melody_spectrogram'],
+                                      data['speech_sr'], data['melody_sr'])
+            return dataset
+
+        return data
 
     @staticmethod
     def load_wavs():
