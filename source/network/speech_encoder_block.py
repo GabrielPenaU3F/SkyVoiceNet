@@ -28,10 +28,12 @@ class SpeechEncoderBlock(nn.Module):
         conv_output = self.conv_block(speech_spec)
         transf_input = self.format_transformer_input(conv_output)
 
+        # Dynamically define the projection layer, only once
         if self.conv_output_projection is None:
             self.conv_output_projection = nn.Linear(
                 transf_input.shape[-1], self.config.transf_dim).to(speech_spec.device)
 
+        # Transformer layer
         transformer_input = self.conv_output_projection(transf_input)
         speech_embedding = self.transformer_block(transformer_input)
         return speech_embedding

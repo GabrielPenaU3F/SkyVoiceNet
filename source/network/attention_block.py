@@ -17,12 +17,14 @@ class AttentionBlock(nn.Module):
 
         melody_contour = self.format_attention_input(speech_embedding, melody_contour)
 
+        # Dynamically define the projection and the attention layers, only once
         if self.attention_layer is None or self.contour_projection_layer is None:
             embedding_dim = speech_embedding.shape[-1]
             self.contour_projection_layer = nn.Linear(melody_contour.shape[-1], embedding_dim).to(melody_contour.device)
             self.attention_layer = CrossAttentionLayer(embedding_dim, self.config.cross_attention_num_heads,
                                                        self.config.cross_attention_dropout, device=self.config.device)
 
+        # Project to match dimensions, then apply the attention
         melody_contour = self.contour_projection_layer(melody_contour)
         attention_output = self.attention_layer(speech_embedding, melody_contour)
         return attention_output
