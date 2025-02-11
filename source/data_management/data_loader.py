@@ -3,13 +3,12 @@ import os
 
 import h5py
 import librosa
-import numpy as np
 import pandas as pd
-import torch
+from torch.utils.data import TensorDataset
 
 from source.data_management.data_writer import DataWriter
 from source.data_management.path_repo import PathRepo
-from source.data_management.sky_dataset import SkyVoiceDataset
+from source.utilities import series_to_tensor
 
 
 class DataLoader:
@@ -39,8 +38,10 @@ class DataLoader:
 
         data = pd.DataFrame(data)
         if as_tensor_dataset:
-            dataset = SkyVoiceDataset(data['speech_spectrogram'], data['contour'], data['melody_spectrogram'],
-                                      data['speech_sr'], data['melody_sr'])
+            speech_spec = series_to_tensor(data['speech_spectrogram'])
+            contour_spec = series_to_tensor(data['contour'])
+            target_spec = series_to_tensor(data['melody_spectrogram'])
+            dataset = TensorDataset(speech_spec, contour_spec, target_spec)
             return dataset
 
         return data

@@ -13,6 +13,9 @@ def midi_to_frequency(midi_number):
     """Convert MIDI number to frequency."""
     return 440.0 * (2.0 ** ((midi_number - 69) / 12.0))
 
+def series_to_tensor(series):
+    return torch.tensor(np.stack(series)[:, None, :, :], dtype=torch.float32)
+
 def play_midi_notes(midi_numbers, duration=0.1, sample_rate=44100):
     """
     Play a sequence of MIDI notes.

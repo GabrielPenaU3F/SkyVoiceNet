@@ -1,7 +1,17 @@
+import torch
+
 from source.singleton import Singleton
 
+class Config(metaclass=Singleton):
 
-class PreprocessConfig(metaclass=Singleton):
+    def update(self, **kwargs):
+        for key, value in kwargs.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
+            else:
+                raise ValueError(f'Invalid parameter: {key}')
+
+class PreprocessConfig(Config):
 
     def __init__(self):
         self.original_sr = 44100
@@ -29,7 +39,7 @@ class PreprocessConfig(metaclass=Singleton):
                 raise ValueError(f'Invalid parameter: {key}')
 
 
-class CrepeConfig(metaclass=Singleton):
+class CrepeConfig(Config):
 
     def __init__(self):
         global_config = PreprocessConfig()
@@ -42,3 +52,17 @@ class CrepeConfig(metaclass=Singleton):
 
     def expand(self):
         return self.silence_threshold, self.hop_length, self.fmin, self.fmax, self.batch_size, self.filter_win_frames
+
+
+class NetworkConfig(Config):
+
+    def __init__(self):
+        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.conv_out_channels = 64
+        self.transf_dim = 256
+        self.transf_heads = 4
+        self.transf_hidden = 512
+        self.transf_num_layers = 6
+        self.transf_dropout = 0.1
+        self.cross_attention_num_heads = 8
+        self.cross_attention_dropout = 0.1

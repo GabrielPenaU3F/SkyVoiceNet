@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -13,4 +14,5 @@ class ConvolutionalLayer(nn.Module):
         x = self.conv(x)
         x = self.batch_norm(x)
         x = F.relu(x)
+        torch.cuda.empty_cache()
         return x
