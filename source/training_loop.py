@@ -1,14 +1,17 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-def train_model(model, dataset, batch_size, num_epochs, learning_rate, device='cuda'):
+def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate,
+                lr_patience=5, lr_reduction=0.5, plateau_threshold=1e-2, device='cuda'):
 
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
-    loss_f = nn.MSELoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+    scheduler = ReduceLROnPlateau(optimizer, factor=lr_reduction, patience=lr_patience, threshold=plateau_threshold)
+
     model.to(device)
     training_loss = []
 
@@ -26,17 +29,24 @@ def train_model(model, dataset, batch_size, num_epochs, learning_rate, device='c
 
             optimizer.zero_grad()
 
-            # Paso forward: obtener la predicción de la red
-            predicted_spec = model(speech_spec, contour_spec)  # Aquí pasamos los inputs de forma correcta
+            # Forward pass
+            predicted_spec = model(speech_spec, contour_spec)
 
-            # Calcular pérdida
-            loss = loss_f(predicted_spec, target_spec)
+            # Backprop
+            loss = loss_fn(predicted_spec, target_spec)
             loss.backward()
             optimizer.step()
+            scheduler.step(loss)
 
             epoch_loss += loss.item()
 
+            # For memory usage optimization
+            del loss, predicted_spec, target_spec # Delete tensors
+            torch.cuda.empty_cache() # Clear memory
+            torch.cuda.synchronize()
+
         avg_loss = epoch_loss / len(dataloader)
+        training_loss.append(avg_loss)
         print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {avg_loss:.6f}")
 
     return model, training_loss

@@ -66,3 +66,4 @@ class NetworkConfig(Config):
         self.transf_dropout = 0.1
         self.cross_attention_num_heads = 8
         self.cross_attention_dropout = 0.1
+        self.conv_output_dim = None

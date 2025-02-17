@@ -91,6 +91,9 @@ class ProcessingPipeline:
             speech_spectrogram = self.spectrogram_transformer.zeropad_time(speech_spectrogram, max_t)
             melody_spectrogram = self.spectrogram_transformer.zeropad_time(melody_spectrogram, max_t)
 
+            speech_spectrogram = self.normalizer.spectrogram_min_max_normalize(speech_spectrogram)
+            melody_spectrogram = self.normalizer.spectrogram_min_max_normalize(melody_spectrogram)
+
             data.at[index, 'contour'] = contour_spectrogram
             data.at[index, 'speech_spectrogram'] = speech_spectrogram
             data.at[index, 'melody_spectrogram'] = melody_spectrogram

@@ -8,7 +8,7 @@ from source import utilities
 
 hop_length = 256
 
-melody, fs = torchcrepe.load.audio('resources/NUS-48E/nus-smc-corpus_48/ADIZ/sing/01.wav')
+melody, fs = torchcrepe.load.audio('../resources/NUS-48E/nus-smc-corpus_48/ADIZ/sing/01.wav')
 melody_np = melody.numpy().squeeze()
 melody_trim, melody_idx = librosa.effects.trim(melody_np, top_db=40, hop_length=hop_length)
 melody_tensor = torch.tensor(melody_trim)
