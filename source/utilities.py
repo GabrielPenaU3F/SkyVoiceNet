@@ -54,8 +54,3 @@ def draw_spectrograms(spectrogram_1, spectrogram_2):
     plt.title("Spectrogram 2")
     plt.show()
 
-
-def define_module_dynamically(nn_module, name: str, module_class, *args, **kwargs):
-    if not hasattr(nn_module, name):
-        nn_module.add_module(name, module_class(*args, **kwargs))
-    return getattr(nn_module, name)

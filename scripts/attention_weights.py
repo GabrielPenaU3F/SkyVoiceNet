@@ -10,8 +10,13 @@ from source.network.sky_voice_net import SkyVoiceNet
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = SkyVoiceNet().to(device)
 outputs_path = PathRepo().get_output_path()
-model.load_state_dict(torch.load(os.path.join(outputs_path, "sky_voice_net.pth"), map_location=device), strict=True)
+checkpoint = torch.load(os.path.join(outputs_path, "sky_voice_net.pth"), map_location=device)
+
+for name, module in model.named_modules():
+    print(name)
+
 model.eval()
+
 
 attn_weights = model.attention_block.attention_layer.attn_weights
 attn_weights = attn_weights.detach().cpu().numpy()

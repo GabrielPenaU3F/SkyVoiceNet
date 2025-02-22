@@ -1,13 +1,12 @@
 import torch
-from torch import nn
 
-from source import utilities
 from source.config import NetworkConfig
 from source.network.convolutional_block import ConvolutionalDecoderBlock
+from source.network.dynamic_module import DynamicModule
 from source.network.transformer_block import TransformerBlock
 
 
-class DecoderBlock(nn.Module):
+class DecoderBlock(DynamicModule):
 
     def __init__(self, **kwargs):
         super(DecoderBlock, self).__init__()
@@ -21,16 +20,11 @@ class DecoderBlock(nn.Module):
 
 
     def forward(self, attended_audio):
-        """
-            Advice:
-            There will be some ifs to dynamically define layers,
-            this is because we can't know a-priori the dimensions of certain outputs
-        """
 
         transformer_output = self.transformer_block(attended_audio)
 
         # Dynamically define the projection layer, only once
-        conv_input_projection = utilities.define_module_dynamically(self,"conv_input_projection", torch.nn.Linear,
+        conv_input_projection = self.define_layer_dynamically("conv_input_projection", torch.nn.Linear,
                                                               self.config.transf_dim, self.config.conv_output_dim,
                                                                     device=self.config.device)
 

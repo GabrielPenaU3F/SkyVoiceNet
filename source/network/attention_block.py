@@ -1,12 +1,12 @@
 import torch
 from torch import nn
 
-from source import utilities
 from source.config import NetworkConfig
 from source.network.cross_attention_layer import CrossAttentionLayer
+from source.network.dynamic_module import DynamicModule
 
 
-class AttentionBlock(nn.Module):
+class AttentionBlock(DynamicModule):
 
     def __init__(self, **kwargs):
         super(AttentionBlock, self).__init__()
@@ -19,9 +19,9 @@ class AttentionBlock(nn.Module):
         embedding_dim = speech_embedding.shape[-1]
 
         # Dynamically define the projection and the attention layers, only once
-        contour_projection_layer = utilities.define_module_dynamically(self, "contour_projection_layer", torch.nn.Linear,
+        contour_projection_layer = self.define_layer_dynamically("contour_projection_layer", torch.nn.Linear,
                                                                     melody_contour.shape[-1], embedding_dim, device=self.config.device)
-        cross_attention_layer = utilities.define_module_dynamically(self, "cross_attention_layer", CrossAttentionLayer,
+        cross_attention_layer = self.define_layer_dynamically("cross_attention_layer", CrossAttentionLayer,
                                                                     embedding_dim, self.config.cross_attention_num_heads,
                                                                     self.config.cross_attention_dropout, device=self.config.device)
 

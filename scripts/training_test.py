@@ -19,12 +19,12 @@ net = SkyVoiceNet(conv_out_channels=64)
 
 # Parameters
 batch_size = 4
-num_epochs = 10
+num_epochs = 1
 learning_rate = 2e-3
 device = "cuda" if torch.cuda.is_available() else "cpu"  # Use GPU if available
 loss_fn = torch.nn.MSELoss()
 
-# Entrenar el modelo
+# Train
 trained_model, training_loss = train_model(
     model=net,
     loss_fn=loss_fn,
@@ -35,6 +35,7 @@ trained_model, training_loss = train_model(
     device=device,
 )
 
+print(trained_model.state_dict().keys())
 path_dir = PathRepo().get_output_path()
 output_file = os.path.join(path_dir, 'sky_voice_net.pth')
 torch.save(trained_model.state_dict(), output_file)

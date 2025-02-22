@@ -1,13 +1,12 @@
 import torch
-from torch import nn
 
-from source import utilities
 from source.config import NetworkConfig
 from source.network.convolutional_block import ConvolutionalEncoderBlock
+from source.network.dynamic_module import DynamicModule
 from source.network.transformer_block import TransformerBlock
 
 
-class EncoderBlock(nn.Module):
+class EncoderBlock(DynamicModule):
 
     def __init__(self, **kwargs):
         super(EncoderBlock, self).__init__()
@@ -19,11 +18,6 @@ class EncoderBlock(nn.Module):
             num_layers=self.config.transf_num_layers, dropout=self.config.transf_dropout, device=self.config.device)
 
     def forward(self, speech_spec):
-        """
-            Advice:
-            There will be some ifs to dynamically define layers,
-            this is because we can't know a-priori the dimensions of certain outputs
-        """
 
         # Convolutional leyers and feed-forward to produce a correct transformer input
         conv_output = self.conv_block(speech_spec)
@@ -31,7 +25,7 @@ class EncoderBlock(nn.Module):
         self.config.conv_output_dim = transf_input.shape[-1] # We will need this in the decoder
 
         # Dynamically define the projection layer, only once
-        conv_output_projection = utilities.define_module_dynamically(self,"conv_output_projection", torch.nn.Linear,
+        conv_output_projection = self.define_layer_dynamically("conv_output_projection", torch.nn.Linear,
                                                               transf_input.shape[-1], self.config.transf_dim,
                                                                      device=self.config.device)
 
