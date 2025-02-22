@@ -1,5 +1,7 @@
+import torch
 from torch import nn
 
+from source import utilities
 from source.config import NetworkConfig
 from source.network.cross_attention_layer import CrossAttentionLayer
 
@@ -10,23 +12,22 @@ class AttentionBlock(nn.Module):
         super(AttentionBlock, self).__init__()
         self.config = NetworkConfig() # This one is a singleton
         self.config.update(**kwargs)
-        self.contour_projection_layer = None
-        self.attention_layer = None
 
     def forward(self, speech_embedding, melody_contour):
 
         melody_contour = self.format_attention_input(speech_embedding, melody_contour)
+        embedding_dim = speech_embedding.shape[-1]
 
         # Dynamically define the projection and the attention layers, only once
-        if self.attention_layer is None or self.contour_projection_layer is None:
-            embedding_dim = speech_embedding.shape[-1]
-            self.contour_projection_layer = nn.Linear(melody_contour.shape[-1], embedding_dim).to(melody_contour.device)
-            self.attention_layer = CrossAttentionLayer(embedding_dim, self.config.cross_attention_num_heads,
-                                                       self.config.cross_attention_dropout, device=self.config.device)
+        contour_projection_layer = utilities.define_module_dynamically(self, "contour_projection_layer", torch.nn.Linear,
+                                                                    melody_contour.shape[-1], embedding_dim, device=self.config.device)
+        cross_attention_layer = utilities.define_module_dynamically(self, "cross_attention_layer", CrossAttentionLayer,
+                                                                    embedding_dim, self.config.cross_attention_num_heads,
+                                                                    self.config.cross_attention_dropout, device=self.config.device)
 
         # Project to match dimensions, then apply the attention
-        melody_contour = self.contour_projection_layer(melody_contour)
-        attention_output = self.attention_layer(speech_embedding, melody_contour)
+        melody_contour = contour_projection_layer(melody_contour)
+        attention_output = cross_attention_layer(speech_embedding, melody_contour)
         return attention_output
 
     def format_attention_input(self, speech_embedding, contour_spec):

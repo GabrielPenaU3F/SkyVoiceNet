@@ -1,5 +1,7 @@
+import torch
 from torch import nn
 
+from source import utilities
 from source.config import NetworkConfig
 from source.network.convolutional_block import ConvolutionalDecoderBlock
 from source.network.transformer_block import TransformerBlock
@@ -14,7 +16,6 @@ class DecoderBlock(nn.Module):
         self.transformer_block = TransformerBlock(
             self.config.transf_dim, num_heads=self.config.transf_heads, hidden_dim=self.config.transf_hidden,
             num_layers=self.config.transf_num_layers, dropout=self.config.transf_dropout, device=self.config.device)
-        self.conv_input_projection = None
         self.conv_block = ConvolutionalDecoderBlock(in_channels=self.config.conv_out_channels, out_channels=1)
 
 
@@ -29,12 +30,13 @@ class DecoderBlock(nn.Module):
         transformer_output = self.transformer_block(attended_audio)
 
         # Dynamically define the projection layer, only once
-        if self.conv_input_projection is None:
-            self.conv_input_projection = nn.Linear(
-                self.config.transf_dim, self.config.conv_output_dim).to(transformer_output.device)
+        conv_input_projection = utilities.define_module_dynamically(self,"conv_input_projection", torch.nn.Linear,
+                                                              self.config.transf_dim, self.config.conv_output_dim,
+                                                                    device=self.config.device)
+
 
         # Project and reformat
-        projected_output = self.conv_input_projection(transformer_output)
+        projected_output = conv_input_projection(transformer_output)
         conv_input = self.format_convolutional_input(projected_output)
 
         # Apply the convolutional block to recover a reconstructed spectrogram

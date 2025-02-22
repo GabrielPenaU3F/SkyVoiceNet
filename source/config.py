@@ -31,13 +31,6 @@ class PreprocessConfig(Config):
         self.save = False
         self.filename = 'nus_processed.h5'
 
-    def update(self, **kwargs):
-        for key, value in kwargs.items():
-            if hasattr(self, key):
-                setattr(self, key, value)
-            else:
-                raise ValueError(f'Invalid parameter: {key}')
-
 
 class CrepeConfig(Config):
 
@@ -67,3 +60,15 @@ class NetworkConfig(Config):
         self.cross_attention_num_heads = 8
         self.cross_attention_dropout = 0.1
         self.conv_output_dim = None
+
+
+class AudioPlayerConfig(Config):
+
+    def __init__(self):
+        self.device = 'cuda'
+        self.sr = 22050
+        self.gan_sr = 22050
+        self.n_fft = 1024
+        self.n_mels = 80
+        self.compression_factor = 1
+        self.denoising_strength = 0.005

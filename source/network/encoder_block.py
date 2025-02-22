@@ -1,5 +1,7 @@
+import torch
 from torch import nn
 
+from source import utilities
 from source.config import NetworkConfig
 from source.network.convolutional_block import ConvolutionalEncoderBlock
 from source.network.transformer_block import TransformerBlock
@@ -12,7 +14,6 @@ class EncoderBlock(nn.Module):
         self.config = NetworkConfig() # This one is a singleton
         self.config.update(**kwargs)
         self.conv_block = ConvolutionalEncoderBlock(in_channels=1, out_channels=self.config.conv_out_channels)
-        self.conv_output_projection = None
         self.transformer_block = TransformerBlock(
             self.config.transf_dim, num_heads=self.config.transf_heads, hidden_dim=self.config.transf_hidden,
             num_layers=self.config.transf_num_layers, dropout=self.config.transf_dropout, device=self.config.device)
@@ -30,12 +31,12 @@ class EncoderBlock(nn.Module):
         self.config.conv_output_dim = transf_input.shape[-1] # We will need this in the decoder
 
         # Dynamically define the projection layer, only once
-        if self.conv_output_projection is None:
-            self.conv_output_projection = nn.Linear(
-                transf_input.shape[-1], self.config.transf_dim).to(speech_spec.device)
+        conv_output_projection = utilities.define_module_dynamically(self,"conv_output_projection", torch.nn.Linear,
+                                                              transf_input.shape[-1], self.config.transf_dim,
+                                                                     device=self.config.device)
 
         # Transformer layer
-        transformer_input = self.conv_output_projection(transf_input)
+        transformer_input = conv_output_projection(transf_input)
         speech_embedding = self.transformer_block(transformer_input)
         return speech_embedding
 
