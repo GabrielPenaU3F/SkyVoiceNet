@@ -17,6 +17,6 @@ class SkyVoiceNet(nn.Module):
 
         speech_embedding = self.encoder_block(speech_spec)
         attention_output = self.attention_block(speech_embedding, contour_spec)
-        output_spectrogram = self.decoder_block(attention_output)
+        output_spectrogram = self.decoder_block(attention_output, memory=speech_embedding)
 
         return output_spectrogram

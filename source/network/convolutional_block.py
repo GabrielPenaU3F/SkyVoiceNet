@@ -1,4 +1,5 @@
 import torch.nn as nn
+from torch.nn import init
 
 from source.network.convolutional_layer import ConvolutionalEncoderLayer, ConvolutionalDecoderLayer
 
@@ -10,7 +11,6 @@ class ConvolutionalBlock(nn.Module):
 
     def forward(self, x):
         return self.layers(x)
-
 
 class ConvolutionalEncoderBlock(ConvolutionalBlock):
 

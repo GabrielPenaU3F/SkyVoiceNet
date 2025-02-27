@@ -39,37 +39,49 @@ class ProcessingPipeline:
             melody = row['sing']
             speech = row['read']
 
+            # Resample
             resampled_melody = self.resampler.resample(melody, self.config.resample_sr)
             resampled_speech = self.resampler.resample(speech, self.config.resample_sr)
 
-            norm_melody = self.normalizer.normalize(resampled_melody)
-            norm_speech = self.normalizer.normalize(resampled_speech)
+            # Normalize
+            if self.config.normalize:
+                resampled_melody = self.normalizer.normalize(resampled_melody)
+                resampled_speech = self.normalizer.normalize(resampled_speech)
 
-            silenceless_speech = self.silence_remover.remove_silence(norm_speech, self.config.resample_sr,
+            # Remove silences and trails
+            silenceless_speech = self.silence_remover.remove_silence(resampled_speech, self.config.resample_sr,
                                                                      self.config.silence_threshold,
                                                                      self.config.max_allowed_silence_duration)
-            melody_no_trail = self.silence_remover.remove_trailing_silences(norm_melody,
+            melody_no_trail = self.silence_remover.remove_trailing_silences(resampled_melody,
                                                                             self.config.silence_threshold,
                                                                             self.config.hop_length)
 
+            # Resample randomly
             randomly_resampled_speech, speech_sr = self.resampler.resample_randomly(silenceless_speech,
                                                                                     self.config.min_resample_factor,
                                                                                     self.config.max_resample_factor)
 
+            # Obtain spectrograms
             speech_spectrogram = self.spectrogram_transformer.obtain_log_spectrogram(
                 randomly_resampled_speech, self.config.n_fft, self.config.hop_length, self.config.win_length)
             melody_spectrogram = self.spectrogram_transformer.obtain_log_spectrogram(
                 melody_no_trail, self.config.n_fft, self.config.hop_length, self.config.win_length)
 
-            melody_contour = self.contour_extractor.extract_contour(norm_melody, self.config.resample_sr, CrepeConfig())
+            melody_contour = self.contour_extractor.extract_contour(resampled_melody, self.config.resample_sr, CrepeConfig())
 
-            stretched_spectrogram = self.spectrogram_transformer.stretch_spectrogram(
+            # Time stretch
+            speech_spectrogram = self.spectrogram_transformer.stretch_spectrogram(
                 speech_spectrogram, melody_contour.shape[1])
+
+            # Normalize
+            if self.config.normalize:
+                speech_spectrogram = self.normalizer.spectrogram_min_max_normalize(speech_spectrogram)
+                melody_spectrogram = self.normalizer.spectrogram_min_max_normalize(melody_spectrogram)
 
             preprocessed_row = pd.DataFrame(
                 {'contour': [melody_contour],
                  'melody_spectrogram': [melody_spectrogram],
-                 'speech_spectrogram': [stretched_spectrogram],
+                 'speech_spectrogram': [speech_spectrogram],
                  'melody_sr': [self.config.resample_sr],
                  'speech_sr': [speech_sr]},
                 index=[len(preprocessed_data)])
@@ -90,9 +102,6 @@ class ProcessingPipeline:
             contour_spectrogram = self.spectrogram_transformer.zeropad_time(contour_spectrogram, max_t)
             speech_spectrogram = self.spectrogram_transformer.zeropad_time(speech_spectrogram, max_t)
             melody_spectrogram = self.spectrogram_transformer.zeropad_time(melody_spectrogram, max_t)
-
-            speech_spectrogram = self.normalizer.spectrogram_min_max_normalize(speech_spectrogram)
-            melody_spectrogram = self.normalizer.spectrogram_min_max_normalize(melody_spectrogram)
 
             data.at[index, 'contour'] = contour_spectrogram
             data.at[index, 'speech_spectrogram'] = speech_spectrogram

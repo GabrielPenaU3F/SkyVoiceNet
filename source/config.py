@@ -30,6 +30,7 @@ class PreprocessConfig(Config):
         self.max_resample_factor = 1.1
         self.save = False
         self.filename = 'nus_processed.h5'
+        self.normalize = True
 
 
 class CrepeConfig(Config):
@@ -55,9 +56,9 @@ class NetworkConfig(Config):
         self.transf_dim = 256
         self.transf_heads = 4
         self.transf_hidden = 512
-        self.transf_num_layers = 6
+        self.transf_num_layers = 2
         self.transf_dropout = 0.1
-        self.cross_attention_num_heads = 8
+        self.cross_attention_num_heads = 4
         self.cross_attention_dropout = 0.1
         self.conv_output_dim = None
 

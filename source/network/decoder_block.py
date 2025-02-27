@@ -1,9 +1,10 @@
 import torch
+from torch import nn
 
 from source.config import NetworkConfig
 from source.network.convolutional_block import ConvolutionalDecoderBlock
 from source.network.dynamic_module import DynamicModule
-from source.network.transformer_block import TransformerBlock
+from source.network.transformer_decoder_block import TransformerDecoderBlock
 
 
 class DecoderBlock(DynamicModule):
@@ -12,25 +13,31 @@ class DecoderBlock(DynamicModule):
         super(DecoderBlock, self).__init__()
         self.config = NetworkConfig() # This one is a singleton
         self.config.update(**kwargs)
-        self.transformer_block = TransformerBlock(
+        self.fc = None
+        self.transformer_decoder_block = TransformerDecoderBlock(
             self.config.transf_dim, num_heads=self.config.transf_heads, hidden_dim=self.config.transf_hidden,
             num_layers=self.config.transf_num_layers, dropout=self.config.transf_dropout, device=self.config.device)
         self.conv_block = ConvolutionalDecoderBlock(in_channels=self.config.conv_out_channels, out_channels=1)
 
 
 
-    def forward(self, attended_audio):
+    def forward(self, attended_audio, memory):
 
-        transformer_output = self.transformer_block(attended_audio)
+        transformer_output = self.transformer_decoder_block(attended_audio, memory=memory)
 
         # Dynamically define the projection layer, only once
         conv_input_projection = self.define_layer_dynamically("conv_input_projection", torch.nn.Linear,
                                                               self.config.transf_dim, self.config.conv_output_dim,
                                                                     device=self.config.device)
+        self.fc = nn.Sequential(
+            conv_input_projection,
+            nn.LayerNorm(self.config.conv_output_dim, device=self.config.device),
+            nn.ReLU()
+        )
 
 
         # Project and reformat
-        projected_output = conv_input_projection(transformer_output)
+        projected_output = self.fc(transformer_output)
         conv_input = self.format_convolutional_input(projected_output)
 
         # Apply the convolutional block to recover a reconstructed spectrogram

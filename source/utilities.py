@@ -39,18 +39,30 @@ def play_midi_notes(midi_numbers, duration=0.1, sample_rate=44100):
     sd.play(audio, samplerate=sample_rate)
     sd.wait()
 
-def draw_spectrograms(spectrogram_1, spectrogram_2):
-    plt.subplot(2, 1, 1)
-    plt.imshow(spectrogram_1, aspect="auto", origin='lower', cmap='magma')
-    plt.colorbar(format='%+2.0f dB', label="Intensity")
-    plt.title("Spectrogram 1")
-    plt.xlabel("Time (s)")
-    plt.ylabel("Freq")
-    plt.subplot(2, 1, 2)
-    plt.imshow(spectrogram_2, aspect="auto", origin='lower', cmap='magma')
-    plt.colorbar(format='%+2.0f dB', label="Intensity")
-    plt.xlabel("Time (s)")
-    plt.ylabel("Freq")
-    plt.title("Spectrogram 2")
+def draw_spectrograms(spectrogram_1, spectrogram_2, title_1='', title_2=''):
+    fig, ax = plt.subplots(2, 1, figsize=(8, 5))
+    im_1 = ax[0].imshow(spectrogram_1, aspect="auto", origin='lower', cmap='magma')
+    ax[0].set_title(title_1)
+    ax[0].set_xlabel("Time (s)")
+    ax[0].set_ylabel("Freq")
+    fig.colorbar(im_1, format='%+2.0f ', label="Intensity")
+
+    im_2 = ax[1].imshow(spectrogram_2, aspect="auto", origin='lower', cmap='magma')
+    ax[1].set_xlabel("Time (s)")
+    ax[1].set_ylabel("Freq")
+    ax[1].set_title(title_2)
+    fig.colorbar(im_2, label="Intensity")
+
+    fig.tight_layout()
     plt.show()
 
+def draw_single_spectrogram(spectrogram, title=''):
+    fig, ax = plt.subplots(figsize=(8, 5))
+    im = ax.imshow(spectrogram, aspect="auto", origin='lower', cmap='magma')
+    ax.set_title(title)
+    ax.set_xlabel("Time (s)")
+    ax.set_ylabel("Freq")
+    fig.colorbar(im, label="Intensity")
+
+    fig.tight_layout()
+    plt.show()

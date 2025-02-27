@@ -5,16 +5,15 @@ import torch
 from source.audio_reconstruction.audio_player import AudioPlayer
 from source.data_management.data_loader import DataLoader
 from source.data_management.path_repo import PathRepo
-from source.network.sky_voice_net import SkyVoiceNet
 from source.utilities import draw_spectrograms
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 dataset = DataLoader.load_processed_data('nus_processed.h5', as_tensor_dataset=False)
-model = SkyVoiceNet().to(device)
 
 # Load pretrained model
 outputs_path = PathRepo().get_output_path()
-model.load_state_dict(torch.load(os.path.join(outputs_path, "sky_voice_net.pth"), map_location=device), strict=False)
+path = os.path.join(outputs_path, "sky_voice_net.pt")
+model = torch.load(path)
 model.eval()
 
 # Load test data
@@ -36,5 +35,5 @@ predicted_spectrogram = predicted_spectrogram.cpu().numpy()
 draw_spectrograms(melody_spectrogram, predicted_spectrogram)
 
 # Reconstruct
-# player = AudioPlayer()
-# player.play_audio_from_spectrogram(predicted_spectrogram, sr=sr, compression_factor=2, denoising_strength=0.05)
+player = AudioPlayer()
+player.play_audio_from_spectrogram(predicted_spectrogram, sr=sr, compression_factor=2, denoising_strength=0.05)

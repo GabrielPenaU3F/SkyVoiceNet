@@ -1,15 +1,17 @@
+import numpy as np
 import torch
 import torch.optim as optim
-from torch.optim.lr_scheduler import ReduceLROnPlateau
+from matplotlib import pyplot as plt
+from torch.optim.lr_scheduler import ReduceLROnPlateau, ExponentialLR
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate,
-                lr_patience=5, lr_reduction=0.5, plateau_threshold=1e-2, device='cuda'):
+def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, gamma=0.9, device='cuda'):
 
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-    scheduler = ReduceLROnPlateau(optimizer, factor=lr_reduction, patience=lr_patience, threshold=plateau_threshold)
+    scheduler = ExponentialLR(optimizer, gamma=gamma)
+    # scheduler = ReduceLROnPlateau(optimizer, factor=lr_reduction, patience=lr_patience, threshold=plateau_threshold)
 
     model.to(device)
     training_loss = []
@@ -34,8 +36,24 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate,
             # Backprop
             loss = loss_fn(predicted_spec, target_spec)
             loss.backward()
+
+            # # Visualize gradients
+            # gradients = []
+            #
+            # for param in model.parameters():
+            #     if param.grad is not None:
+            #         gradients.append(param.grad.view(-1).cpu().detach().numpy())
+            #
+            # plt.hist(np.concatenate(gradients), bins=100)
+            # plt.yscale("log")
+            # plt.xlabel("Gradiente")
+            # plt.ylabel("Frecuencia")
+            # plt.title("Distribución de Gradientes")
+            # plt.show()
+
             optimizer.step()
-            scheduler.step(loss)
+            scheduler.step()
+            # scheduler.step(loss)
 
             epoch_loss += loss.item()
 
