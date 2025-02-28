@@ -51,6 +51,11 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
             # plt.title("Distribución de Gradientes")
             # plt.show()
 
+            for name, param in model.named_parameters():
+                if param.grad is not None:
+                    print(f"{name} gradient norm: {param.grad.norm().item()}")
+
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)  # Prevents exploding gradients
             optimizer.step()
             scheduler.step()
             # scheduler.step(loss)

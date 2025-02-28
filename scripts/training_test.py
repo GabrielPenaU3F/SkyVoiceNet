@@ -8,7 +8,6 @@ from torch.utils.data import TensorDataset
 
 from source.data_management.data_loader import DataLoader
 from source.data_management.path_repo import PathRepo
-from source.data_processing.normalizer import Normalizer
 
 from source.network.sky_voice_net import SkyVoiceNet
 from source.training_loop import train_model
@@ -27,9 +26,9 @@ net = SkyVoiceNet(conv_out_channels=64)
 #         module.register_forward_hook(activation_hook)
 
 # Parameters
-batch_size = 4
-num_epochs = 4
-learning_rate = 2e-2
+batch_size = 5
+num_epochs = 10
+learning_rate = 1e-2
 device = "cuda" if torch.cuda.is_available() else "cpu"  # Use GPU if available
 loss_fn = torch.nn.MSELoss()
 

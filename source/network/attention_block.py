@@ -3,38 +3,31 @@ from torch import nn
 
 from source.config import NetworkConfig
 from source.network.cross_attention_layer import CrossAttentionLayer
-from source.network.dynamic_module import DynamicModule
 
 
-class AttentionBlock(DynamicModule):
+class AttentionBlock(nn.Module):
 
     def __init__(self, **kwargs):
         super(AttentionBlock, self).__init__()
         self.config = NetworkConfig() # This one is a singleton
         self.config.update(**kwargs)
-        self.fc = None
+        self.fc = nn.Sequential(
+            nn.LazyLinear(self.config.transf_embedding_dim),
+            nn.LayerNorm(self.config.transf_embedding_dim),
+            nn.LeakyReLU()
+        )
+        self.cross_attention = CrossAttentionLayer(self.config.transf_embedding_dim, self.config.cross_attention_num_heads,
+                                                   dropout=self.config.cross_attention_dropout, device=self.config.device)
 
     def forward(self, speech_embedding, melody_contour):
 
+        # Format contour
         melody_contour = self.format_attention_input(speech_embedding, melody_contour)
-        embedding_dim = speech_embedding.shape[-1]
-
-        # Dynamically define the projection and the attention layers, only once
-        contour_projection_layer = self.define_layer_dynamically("contour_projection_layer", torch.nn.Linear,
-                                                                    melody_contour.shape[-1], embedding_dim, device=self.config.device)
-        self.fc = nn.Sequential(
-            contour_projection_layer,
-            nn.LayerNorm(embedding_dim, device=self.config.device),
-            nn.ReLU()
-        )
-
-        cross_attention_layer = self.define_layer_dynamically("cross_attention_layer", CrossAttentionLayer,
-                                                                    embedding_dim, self.config.cross_attention_num_heads,
-                                                                    self.config.cross_attention_dropout, device=self.config.device)
 
         # Project to match dimensions, then apply the attention
         melody_contour = self.fc(melody_contour)
-        attention_output = cross_attention_layer(speech_embedding, melody_contour)
+        attention_output = self.cross_attention(speech_embedding, melody_contour)
+        print("Attention Output:", torch.mean(attention_output), torch.std(attention_output))
         return attention_output
 
     def format_attention_input(self, speech_embedding, contour_spec):

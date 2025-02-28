@@ -3,11 +3,10 @@ from torch import nn
 
 from source.config import NetworkConfig
 from source.network.convolutional_block import ConvolutionalDecoderBlock
-from source.network.dynamic_module import DynamicModule
 from source.network.transformer_decoder_block import TransformerDecoderBlock
 
 
-class DecoderBlock(DynamicModule):
+class DecoderBlock(nn.Module):
 
     def __init__(self, **kwargs):
         super(DecoderBlock, self).__init__()
@@ -15,26 +14,24 @@ class DecoderBlock(DynamicModule):
         self.config.update(**kwargs)
         self.fc = None
         self.transformer_decoder_block = TransformerDecoderBlock(
-            self.config.transf_dim, num_heads=self.config.transf_heads, hidden_dim=self.config.transf_hidden,
+            self.config.transf_embedding_dim, num_heads=self.config.transf_heads, hidden_dim=self.config.transf_hidden,
             num_layers=self.config.transf_num_layers, dropout=self.config.transf_dropout, device=self.config.device)
         self.conv_block = ConvolutionalDecoderBlock(in_channels=self.config.conv_out_channels, out_channels=1)
 
 
-
     def forward(self, attended_audio, memory):
 
+        # Transformer
         transformer_output = self.transformer_decoder_block(attended_audio, memory=memory)
+        print("Transformer Decoder Output:", torch.mean(transformer_output), torch.std(transformer_output))
 
-        # Dynamically define the projection layer, only once
-        conv_input_projection = self.define_layer_dynamically("conv_input_projection", torch.nn.Linear,
-                                                              self.config.transf_dim, self.config.conv_output_dim,
-                                                                    device=self.config.device)
-        self.fc = nn.Sequential(
-            conv_input_projection,
-            nn.LayerNorm(self.config.conv_output_dim, device=self.config.device),
-            nn.ReLU()
-        )
-
+        # Define projection layer
+        if self.fc is None:
+            self.fc = nn.Sequential(
+                nn.Linear(self.config.transf_embedding_dim, self.config.conv_output_dim),
+                nn.LayerNorm(self.config.conv_output_dim),
+                nn.LeakyReLU()
+            ).to(self.config.device)
 
         # Project and reformat
         projected_output = self.fc(transformer_output)
@@ -42,6 +39,8 @@ class DecoderBlock(DynamicModule):
 
         # Apply the convolutional block to recover a reconstructed spectrogram
         output_spectrogram = self.conv_block(conv_input)
+
+        print("Final Spectrogram Output:", torch.mean(output_spectrogram), torch.std(output_spectrogram))
 
         return output_spectrogram
 

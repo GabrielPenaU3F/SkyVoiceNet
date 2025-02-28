@@ -13,7 +13,7 @@ class ConvolutionalLayer(nn.Module):
     def forward(self, x):
         x = self.conv(x)
         x = self.norm(x)
-        x = F.relu(x)
+        x = F.leaky_relu(x, negative_slope=0.2)
         return x
 
     def init_weights(self, m):
@@ -30,7 +30,7 @@ class ConvolutionalEncoderLayer(ConvolutionalLayer):
 
     def __init__(self, in_channels, out_channels, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)):
         super().__init__(out_channels)
-        self.conv = nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding)
+        self.conv = nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding, bias=False)
         self.apply(self.init_weights)
 
 
@@ -39,5 +39,5 @@ class ConvolutionalDecoderLayer(ConvolutionalLayer):
     def __init__(self, in_channels, out_channels, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1),
                  output_padding=(0, 0)):
         super().__init__(out_channels)
-        self.conv = nn.ConvTranspose2d(in_channels, out_channels, kernel_size, stride, padding, output_padding)
+        self.conv = nn.ConvTranspose2d(in_channels, out_channels, kernel_size, stride, padding, output_padding, bias=False)
         self.apply(self.init_weights)

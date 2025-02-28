@@ -15,10 +15,17 @@ class TransformerDecoderBlock(nn.Module):
             nhead=num_heads,
             dim_feedforward=hidden_dim,
             dropout=dropout,
+            activation='gelu',
+            norm_first=True,
             batch_first=True
         )
         self.transformer_decoder = nn.TransformerDecoder(decoder_layer, num_layers=num_layers)
+        self.initialize_transformer()
 
+    def initialize_transformer(self):
+        for p in self.transformer_decoder.parameters():
+            if p.dim() > 1:
+                nn.init.xavier_normal_(p)
 
     def forward(self, x, memory, mask=None):
         x = self.positional_encoding(x)
