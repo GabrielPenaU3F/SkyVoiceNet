@@ -1,8 +1,11 @@
+import math
+
 import torch
 from torch import nn
 
 from source.config import NetworkConfig
 from source.network.cross_attention_layer import CrossAttentionLayer
+from source.network.positional_encoding import PositionalEncoding
 
 
 class AttentionBlock(nn.Module):
@@ -16,18 +19,23 @@ class AttentionBlock(nn.Module):
             nn.LayerNorm(self.config.transf_embedding_dim),
             nn.LeakyReLU()
         )
+        self.positional_encoding = PositionalEncoding(d_model=self.config.transf_embedding_dim, max_len=5000)
         self.cross_attention = CrossAttentionLayer(self.config.transf_embedding_dim, self.config.cross_attention_num_heads,
-                                                   dropout=self.config.cross_attention_dropout, device=self.config.device)
+                                                   dropout=self.config.cross_attention_dropout)
 
     def forward(self, speech_embedding, melody_contour):
 
-        # Format contour
+        # Format contour and project
         melody_contour = self.format_attention_input(speech_embedding, melody_contour)
-
-        # Project to match dimensions, then apply the attention
         melody_contour = self.fc(melody_contour)
+
+        # Positional encode
+        speech_embedding = self.positional_encoding(speech_embedding)
+        melody_contour = self.positional_encoding(melody_contour)
+
+        # Attend
         attention_output = self.cross_attention(speech_embedding, melody_contour)
-        print("Attention Output:", torch.mean(attention_output), torch.std(attention_output))
+
         return attention_output
 
     def format_attention_input(self, speech_embedding, contour_spec):

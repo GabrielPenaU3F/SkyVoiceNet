@@ -5,9 +5,9 @@ from source.network.positional_encoding import PositionalEncoding
 
 class TransformerEncoderBlock(nn.Module):
 
-    def __init__(self, input_dim, num_heads, hidden_dim, num_layers, dropout, device):
+    def __init__(self, input_dim, num_heads, hidden_dim, num_layers, dropout):
         super(TransformerEncoderBlock, self).__init__()
-        self.positional_encoding = PositionalEncoding(input_dim, dropout, device=device)
+        self.positional_encoding = PositionalEncoding(input_dim, max_len=5000, dropout=dropout)
 
         encoder_layer = nn.TransformerEncoderLayer(
             d_model=input_dim,

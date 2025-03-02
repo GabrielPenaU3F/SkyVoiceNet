@@ -15,8 +15,13 @@ class SpectrogramTransformer:
         stretched_spectrogram = zoom(spectrogram, (1, scale_factor), order=1)
         return stretched_spectrogram
 
-    def zeropad_time(self, spectrogram, target_length):
+    def zeropad_time(self, spectrogram, target_length, padding='zero'):
         _, t = spectrogram.shape
         pad_t = target_length - t
-        min_value = np.min(spectrogram)
-        return np.pad(spectrogram, ((0, 0), (0, pad_t)), mode='constant', constant_values=min_value)
+        if padding == 'min':
+            min_value = np.min(spectrogram)
+            padding = min_value
+        elif padding == 'zero':
+            padding = 0
+        spectrogram = np.pad(spectrogram, ((0, 0), (0, pad_t)), mode='constant', constant_values=padding)
+        return spectrogram

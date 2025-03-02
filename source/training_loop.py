@@ -72,3 +72,4 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
         print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {avg_loss:.6f}")
 
     return model, training_loss
+

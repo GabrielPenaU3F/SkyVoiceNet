@@ -3,8 +3,6 @@ import os
 import numpy as np
 import torch
 from matplotlib import pyplot as plt
-from torch import nn
-from torch.utils.data import TensorDataset
 
 from source.data_management.data_loader import DataLoader
 from source.data_management.path_repo import PathRepo
@@ -13,22 +11,14 @@ from source.network.sky_voice_net import SkyVoiceNet
 from source.training_loop import train_model
 
 
-dataset = DataLoader.load_processed_data('nus_processed.h5', as_tensor_dataset=True)
+dataset = DataLoader.load_processed_data('nus_processed_zeroed.h5', as_tensor_dataset=True)
 
 net = SkyVoiceNet(conv_out_channels=64)
 
-# def activation_hook(module, input, output):
-#     print(f"{module.__class__.__name__}: mean={output.mean().item()}, std={output.std().item()}, min={output.min().item()}, max={output.max().item()}")
-#
-# for name, module in net.named_modules():
-#     if isinstance(module, (nn.Conv2d, nn.Linear, nn.TransformerEncoder, nn.TransformerDecoder, nn.BatchNorm2d,
-#                            nn.LayerNorm, nn.ConvTranspose2d)):
-#         module.register_forward_hook(activation_hook)
-
 # Parameters
 batch_size = 5
-num_epochs = 10
-learning_rate = 1e-2
+num_epochs = 5
+learning_rate = 1e-4
 device = "cuda" if torch.cuda.is_available() else "cpu"  # Use GPU if available
 loss_fn = torch.nn.MSELoss()
 

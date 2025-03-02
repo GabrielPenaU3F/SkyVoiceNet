@@ -99,9 +99,9 @@ class ProcessingPipeline:
             contour_spectrogram = row['contour']
             speech_spectrogram = row['speech_spectrogram']
             melody_spectrogram = row['melody_spectrogram']
-            contour_spectrogram = self.spectrogram_transformer.zeropad_time(contour_spectrogram, max_t)
-            speech_spectrogram = self.spectrogram_transformer.zeropad_time(speech_spectrogram, max_t)
-            melody_spectrogram = self.spectrogram_transformer.zeropad_time(melody_spectrogram, max_t)
+            contour_spectrogram = self.spectrogram_transformer.zeropad_time(contour_spectrogram, max_t, padding=self.config.padding)
+            speech_spectrogram = self.spectrogram_transformer.zeropad_time(speech_spectrogram, max_t, padding=self.config.padding)
+            melody_spectrogram = self.spectrogram_transformer.zeropad_time(melody_spectrogram, max_t, padding=self.config.padding)
 
             data.at[index, 'contour'] = contour_spectrogram
             data.at[index, 'speech_spectrogram'] = speech_spectrogram

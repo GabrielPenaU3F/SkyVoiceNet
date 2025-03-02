@@ -5,10 +5,10 @@ from source.network.positional_encoding import PositionalEncoding
 
 class TransformerDecoderBlock(nn.Module):
 
-    def __init__(self, input_dim, num_heads, hidden_dim, num_layers, dropout, device):
+    def __init__(self, input_dim, num_heads, hidden_dim, num_layers, dropout):
         super(TransformerDecoderBlock, self).__init__()
 
-        self.positional_encoding = PositionalEncoding(input_dim, dropout, device=device)
+        self.positional_encoding = PositionalEncoding(input_dim, max_len=5000, dropout=dropout)
 
         decoder_layer = nn.TransformerDecoderLayer(
             d_model=input_dim,

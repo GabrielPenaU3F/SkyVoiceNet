@@ -1,15 +1,18 @@
 import torch
 from torch import nn
 
+from source.config import PositionalEncodingConfig
+
 
 class PositionalEncoding(nn.Module):
 
-    def __init__(self, d_model, dropout=0.1, max_len=5000, device='cuda'):
+    def __init__(self, d_model, max_len, dropout=0.1):
         super(PositionalEncoding, self).__init__()
+        self.config = PositionalEncodingConfig()
         self.dropout = nn.Dropout(p=dropout)
 
         # Positional encoding formulae
-        pe = torch.zeros(max_len, d_model).to(device)
+        pe = torch.zeros(max_len, d_model).to(self.config.device)
         position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
         div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-torch.log(torch.tensor(10000.0)) / d_model))
         pe[:, 0::2] = torch.sin(position * div_term)

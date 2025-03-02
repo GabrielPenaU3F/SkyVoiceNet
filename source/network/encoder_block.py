@@ -20,21 +20,20 @@ class EncoderBlock(nn.Module):
         )
         self.transformer_encoder_block = TransformerEncoderBlock(
             self.config.transf_embedding_dim, num_heads=self.config.transf_heads, hidden_dim=self.config.transf_hidden,
-            num_layers=self.config.transf_num_layers, dropout=self.config.transf_dropout, device=self.config.device)
+            num_layers=self.config.transf_num_layers, dropout=self.config.transf_dropout)
 
     def forward(self, speech_spec):
 
         # Convolutional leyers and feed-forward to produce a correct transformer input
         conv_output = self.conv_block(speech_spec)
-        transf_input = self.format_transformer_input(conv_output)
-        self.config.conv_output_dim = transf_input.shape[-1] # Save this for later use in the decoder
-        print("Convolutional encoder output:", torch.mean(conv_output), torch.std(conv_output))
+        transformer_input = self.format_transformer_input(conv_output)
+        self.config.conv_output_dim = transformer_input.shape[-1] # Save this for later use in the decoder
 
         # Transformer layer
-        transformer_input = self.fc(transf_input)
-        speech_embedding = self.transformer_encoder_block(transformer_input)
-        print("Speech Embedding (Transformer Encoder Output):", torch.mean(speech_embedding),
-              torch.std(speech_embedding))
+        transformer_input = self.fc(transformer_input)
+        # speech_embedding = self.transformer_encoder_block(transformer_input)
+        speech_embedding = transformer_input
+
         return speech_embedding
 
     def format_transformer_input(self, conv_output):

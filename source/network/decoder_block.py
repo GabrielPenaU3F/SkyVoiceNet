@@ -15,15 +15,15 @@ class DecoderBlock(nn.Module):
         self.fc = None
         self.transformer_decoder_block = TransformerDecoderBlock(
             self.config.transf_embedding_dim, num_heads=self.config.transf_heads, hidden_dim=self.config.transf_hidden,
-            num_layers=self.config.transf_num_layers, dropout=self.config.transf_dropout, device=self.config.device)
+            num_layers=self.config.transf_num_layers, dropout=self.config.transf_dropout)
         self.conv_block = ConvolutionalDecoderBlock(in_channels=self.config.conv_out_channels, out_channels=1)
 
 
     def forward(self, attended_audio, memory):
 
         # Transformer
-        transformer_output = self.transformer_decoder_block(attended_audio, memory=memory)
-        print("Transformer Decoder Output:", torch.mean(transformer_output), torch.std(transformer_output))
+        # transformer_output = self.transformer_decoder_block(attended_audio, memory=memory)
+        transformer_output = attended_audio
 
         # Define projection layer
         if self.fc is None:
@@ -39,8 +39,6 @@ class DecoderBlock(nn.Module):
 
         # Apply the convolutional block to recover a reconstructed spectrogram
         output_spectrogram = self.conv_block(conv_input)
-
-        print("Final Spectrogram Output:", torch.mean(output_spectrogram), torch.std(output_spectrogram))
 
         return output_spectrogram
 

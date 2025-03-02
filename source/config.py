@@ -31,6 +31,8 @@ class PreprocessConfig(Config):
         self.save = False
         self.filename = 'nus_processed.h5'
         self.normalize = True
+        self.padding = 'zero'
+
 
 
 class CrepeConfig(Config):
@@ -61,6 +63,12 @@ class NetworkConfig(Config):
         self.cross_attention_num_heads = 4
         self.cross_attention_dropout = 0.1
         self.conv_output_dim = None
+
+
+class PositionalEncodingConfig(Config):
+
+    def __init__(self):
+        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 
 class AudioPlayerConfig(Config):
