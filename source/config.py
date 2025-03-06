@@ -34,7 +34,6 @@ class PreprocessConfig(Config):
         self.padding = 'zero'
 
 
-
 class CrepeConfig(Config):
 
     def __init__(self):
@@ -63,6 +62,7 @@ class NetworkConfig(Config):
         self.cross_attention_num_heads = 4
         self.cross_attention_dropout = 0.1
         self.conv_output_dim = None
+        self.spectrogram_dimensions = None
 
 
 class PositionalEncodingConfig(Config):

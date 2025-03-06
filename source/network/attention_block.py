@@ -2,6 +2,7 @@ import math
 
 import torch
 from torch import nn
+from torch.nn import LayerNorm
 
 from source.config import NetworkConfig
 from source.network.cross_attention_layer import CrossAttentionLayer
@@ -16,8 +17,8 @@ class AttentionBlock(nn.Module):
         self.config.update(**kwargs)
         self.fc = nn.Sequential(
             nn.LazyLinear(self.config.transf_embedding_dim),
-            nn.LayerNorm(self.config.transf_embedding_dim),
-            nn.LeakyReLU()
+            nn.GELU(),
+            nn.LayerNorm(self.config.transf_embedding_dim)
         )
         self.positional_encoding = PositionalEncoding(d_model=self.config.transf_embedding_dim, max_len=5000)
         self.cross_attention = CrossAttentionLayer(self.config.transf_embedding_dim, self.config.cross_attention_num_heads,
@@ -30,7 +31,7 @@ class AttentionBlock(nn.Module):
         melody_contour = self.fc(melody_contour)
 
         # Positional encode
-        speech_embedding = self.positional_encoding(speech_embedding)
+        # speech_embedding = self.positional_encoding(speech_embedding)
         melody_contour = self.positional_encoding(melody_contour)
 
         # Attend

@@ -23,5 +23,7 @@ class SpectrogramTransformer:
             padding = min_value
         elif padding == 'zero':
             padding = 0
+        else:
+            return spectrogram
         spectrogram = np.pad(spectrogram, ((0, 0), (0, pad_t)), mode='constant', constant_values=padding)
         return spectrogram

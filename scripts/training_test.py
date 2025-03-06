@@ -11,14 +11,14 @@ from source.network.sky_voice_net import SkyVoiceNet
 from source.training_loop import train_model
 
 
-dataset = DataLoader.load_processed_data('nus_processed_zeroed.h5', as_tensor_dataset=True)
+dataset = DataLoader.load_processed_data('nus_processed_nopad.h5', dataset='variable')
 
 net = SkyVoiceNet(conv_out_channels=64)
 
 # Parameters
-batch_size = 5
-num_epochs = 5
-learning_rate = 1e-4
+batch_size = 1
+num_epochs = 4
+learning_rate = 2e-2
 device = "cuda" if torch.cuda.is_available() else "cpu"  # Use GPU if available
 loss_fn = torch.nn.MSELoss()
 

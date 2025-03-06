@@ -8,6 +8,7 @@ from torch.utils.data import TensorDataset
 
 from source.data_management.data_writer import DataWriter
 from source.data_management.path_repo import PathRepo
+from source.data_management.variable_dim_dataset import VariableLengthDataset
 from source.utilities import series_to_tensor
 
 
@@ -23,7 +24,7 @@ class DataLoader:
         return data
 
     @staticmethod
-    def load_processed_data(filename, as_tensor_dataset=False):
+    def load_processed_data(filename, dataset=None):
         hdf5_dir = PathRepo().get_hdf5_path()
         data = []
         with h5py.File(os.path.join(hdf5_dir, filename), 'r') as f:
@@ -37,13 +38,18 @@ class DataLoader:
                              'speech_spectrogram': speech_spectrogram, 'melody_sr': melody_sr, 'speech_sr': speech_sr})
 
         data = pd.DataFrame(data)
-        if as_tensor_dataset:
+        if dataset == 'tensor':
             speech_spec = series_to_tensor(data['speech_spectrogram'])
             contour_spec = series_to_tensor(data['contour'])
             target_spec = series_to_tensor(data['melody_spectrogram'])
-            dataset = TensorDataset(speech_spec, contour_spec, target_spec)
-            return dataset
-
+            data = TensorDataset(speech_spec, contour_spec, target_spec)
+        elif dataset == 'variable':
+            data_list = data.apply(lambda row: {
+                'speech_spectrogram': row['speech_spectrogram'],
+                'contour': row['contour'],
+                'melody_spectrogram': row['melody_spectrogram']
+            }, axis=1).tolist()
+            data = VariableLengthDataset(data_list)
         return data
 
     @staticmethod

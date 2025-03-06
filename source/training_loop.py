@@ -1,14 +1,17 @@
 import numpy as np
+import torch.nn.functional as F
+
 import torch
 import torch.optim as optim
 from matplotlib import pyplot as plt
+from torch.nn.utils.rnn import pad_sequence
 from torch.optim.lr_scheduler import ReduceLROnPlateau, ExponentialLR
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, gamma=0.9, device='cuda'):
 
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
     scheduler = ExponentialLR(optimizer, gamma=gamma)
     # scheduler = ReduceLROnPlateau(optimizer, factor=lr_reduction, patience=lr_patience, threshold=plateau_threshold)
@@ -73,3 +76,19 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
 
     return model, training_loss
 
+
+def collate_fn(batch):
+    spectrograms, contours, targets = zip(*batch)  # Desempacamos batch
+
+    if len(spectrograms) > 1:
+        # Convertimos listas a tensores y los rellenamos dinámicamente
+        max_length = max(tensor.size(2) for tensor in spectrograms)
+        spectrograms = [pad_tensor(tensor, max_length) for tensor in spectrograms]
+        contours = [pad_tensor(tensor, max_length) for tensor in contours]
+        targets = [pad_tensor(tensor, max_length) for tensor in targets]
+
+    return torch.stack(spectrograms), torch.stack(contours), torch.stack(targets)
+
+def pad_tensor(tensor, length):
+    # padding in the last dimension, i.e., dimension 2
+    return F.pad(tensor, (0, length - tensor.size(2)), "constant", 0)

@@ -13,16 +13,16 @@ class EncoderBlock(nn.Module):
         self.config = NetworkConfig() # This one is a singleton
         self.config.update(**kwargs)
         self.conv_block = ConvolutionalEncoderBlock(in_channels=1, out_channels=self.config.conv_out_channels)
-        self.fc = nn.Sequential(
-            nn.LazyLinear(out_features=self.config.transf_embedding_dim, device=self.config.device),
-            nn.LayerNorm(self.config.transf_embedding_dim, device=self.config.device),
-            nn.LeakyReLU()
-        )
-        self.transformer_encoder_block = TransformerEncoderBlock(
-            self.config.transf_embedding_dim, num_heads=self.config.transf_heads, hidden_dim=self.config.transf_hidden,
-            num_layers=self.config.transf_num_layers, dropout=self.config.transf_dropout)
+        self.global_avg_pool = nn.AdaptiveAvgPool2d((4096, 256))
+        self.blstm = nn.LSTM(input_size=256, hidden_size=128, num_layers=2, dropout=0.1, batch_first=True, bidirectional=True)
+        # self.transformer_encoder_block = TransformerEncoderBlock(
+        #     self.config.transf_embedding_dim, num_heads=self.config.transf_heads, hidden_dim=self.config.transf_hidden,
+        #     num_layers=self.config.transf_num_layers, dropout=self.config.transf_dropout)
 
     def forward(self, speech_spec):
+
+        # Save this for later use in the decoder
+        self.config.spectrogram_dimensions = speech_spec.shape[-2:]  # Guardar (H, W) originales
 
         # Convolutional leyers and feed-forward to produce a correct transformer input
         conv_output = self.conv_block(speech_spec)
@@ -30,9 +30,13 @@ class EncoderBlock(nn.Module):
         self.config.conv_output_dim = transformer_input.shape[-1] # Save this for later use in the decoder
 
         # Transformer layer
-        transformer_input = self.fc(transformer_input)
+        transformer_input = self.global_avg_pool(transformer_input)
+        # Option 1: Transformer
         # speech_embedding = self.transformer_encoder_block(transformer_input)
-        speech_embedding = transformer_input
+        # Option 2: BLSTM
+        speech_embedding, _ = self.blstm(transformer_input)
+        # Option 3: Bypass
+        # speech_embedding = transformer_input
 
         return speech_embedding
 

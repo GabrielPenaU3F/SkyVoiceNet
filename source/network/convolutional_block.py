@@ -42,7 +42,7 @@ class ConvolutionalDecoderBlock(ConvolutionalBlock):
         layer_1 = ConvolutionalDecoderLayer(in_channels, out_channels=32, kernel_size=(3, 3), stride=(1, 1),
                                             padding=(1, 1))
         layer_2 = ConvolutionalDecoderLayer(in_channels=32, out_channels=out_channels, kernel_size=(3, 3),
-                                            stride=(3, 3), padding=(1, 1), output_padding=(2, 0))
+                                            stride=(3, 3), padding=(1, 1), output_padding=(0, 0))
         layers = [layer_1, layer_2]
         '''
         For a 4-layer architecture

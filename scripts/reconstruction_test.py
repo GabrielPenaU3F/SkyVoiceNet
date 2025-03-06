@@ -10,7 +10,7 @@ from source.network.sky_voice_net import SkyVoiceNet
 from source.training_loop import train_model
 from source.utilities import draw_spectrograms, draw_single_spectrogram
 
-dataset = DataLoader.load_processed_data('nus_processed.h5', as_tensor_dataset=True)
+# dataset = DataLoader.load_processed_data('nus_processed.h5', dataset='tensor')
 device = "cuda" if torch.cuda.is_available() else "cpu"  # Use GPU if available
 
 net = SkyVoiceNet(conv_out_channels=64)
@@ -39,7 +39,7 @@ output_file = os.path.join(path_dir, 'sky_voice_net.pt')
 trained_model = torch.load(output_file)
 
 # Load test data
-dataset = DataLoader.load_processed_data('nus_processed.h5', as_tensor_dataset=False)
+dataset = DataLoader.load_processed_data('nus_processed_nopad.h5', dataset=None)
 speech_spectrogram = dataset.iloc[0]['speech_spectrogram']
 melody_spectrogram = dataset.iloc[0]['melody_spectrogram']
 melody_contour = dataset.iloc[0]['contour']
