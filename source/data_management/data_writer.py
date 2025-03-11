@@ -21,6 +21,8 @@ class DataWriter:
                 group = f.create_group(group_name)
                 group.create_dataset('sing', data=np.array(row['sing'], dtype=dtype))
                 group.create_dataset('read', data=np.array(row['read'], dtype=dtype))
+                group.create_dataset('marks_sing', data=row['marks_sing'].to_json())
+                group.create_dataset('marks_read', data=row['marks_read'].to_json())
 
         print('Data saved')
 
@@ -36,9 +38,7 @@ class DataWriter:
                     del f[group_name]
                 group = f.create_group(group_name)
                 group.create_dataset('contour', data=np.array(row['contour'], dtype=dtype))
-                group.create_dataset('melody_spectrogram', data=np.array(row['melody_spectrogram'], dtype=dtype))
-                group.create_dataset('speech_spectrogram', data=np.array(row['speech_spectrogram'], dtype=dtype))
-                group.create_dataset('melody_sr', data=np.array(row['melody_sr'], dtype=dtype))
-                group.create_dataset('speech_sr', data=np.array(row['speech_sr'], dtype=dtype))
+                group.create_dataset('song', data=np.array(row['song'], dtype=dtype))
+                group.create_dataset('speech', data=np.array(row['speech'], dtype=dtype))
 
         print('Data saved')

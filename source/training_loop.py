@@ -3,18 +3,13 @@ import torch.nn.functional as F
 
 import torch
 import torch.optim as optim
-from matplotlib import pyplot as plt
-from torch.nn.utils.rnn import pad_sequence
-from torch.optim.lr_scheduler import ReduceLROnPlateau, ExponentialLR
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, gamma=0.9, device='cuda'):
+def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, device='cuda'):
 
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
-    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-    scheduler = ExponentialLR(optimizer, gamma=gamma)
-    # scheduler = ReduceLROnPlateau(optimizer, factor=lr_reduction, patience=lr_patience, threshold=plateau_threshold)
+    optimizer = optim.RAdam(model.parameters(), lr=learning_rate, eps=1e-9)
 
     model.to(device)
     training_loss = []
@@ -24,35 +19,20 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
         torch.autograd.set_detect_anomaly(True)
         model.train()
 
-        for batch_idx, (speech_spec, contour_spec, target_spec) in enumerate(
+        for batch_idx, (speech_spec, contour_spec, melody_spec) in enumerate(
                 tqdm(dataloader, desc=f"Epoch {epoch + 1}/{num_epochs}")):
 
             speech_spec = speech_spec.to(device)
-            contour_spec = contour_spec.to(device)
-            target_spec = target_spec.to(device)
+            target = speech_spec.to(device) # Full autoencoder mode - target is the speech spectrogram
 
             optimizer.zero_grad()
 
             # Forward pass
-            predicted_spec = model(speech_spec, contour_spec)
+            predicted_spec = model(speech_spec)
 
             # Backprop
-            loss = loss_fn(predicted_spec, target_spec)
+            loss = loss_fn(predicted_spec, target)
             loss.backward()
-
-            # # Visualize gradients
-            # gradients = []
-            #
-            # for param in model.parameters():
-            #     if param.grad is not None:
-            #         gradients.append(param.grad.view(-1).cpu().detach().numpy())
-            #
-            # plt.hist(np.concatenate(gradients), bins=100)
-            # plt.yscale("log")
-            # plt.xlabel("Gradiente")
-            # plt.ylabel("Frecuencia")
-            # plt.title("Distribución de Gradientes")
-            # plt.show()
 
             for name, param in model.named_parameters():
                 if param.grad is not None:
@@ -60,13 +40,11 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
 
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)  # Prevents exploding gradients
             optimizer.step()
-            scheduler.step()
-            # scheduler.step(loss)
 
             epoch_loss += loss.item()
 
             # For memory usage optimization
-            del loss, predicted_spec, target_spec # Delete tensors
+            del loss, predicted_spec, target # Delete tensors
             torch.cuda.empty_cache() # Clear memory
             torch.cuda.synchronize()
 
@@ -80,9 +58,19 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
 def collate_fn(batch):
     spectrograms, contours, targets = zip(*batch)  # Desempacamos batch
 
+    # if len(spectrograms) > 1:
+    #     # Convertimos listas a tensores y los rellenamos dinámicamente
+    #     max_length = max(tensor.size(2) for tensor in spectrograms)
+    #     spectrograms = [pad_tensor(tensor, max_length) for tensor in spectrograms]
+    #     contours = [pad_tensor(tensor, max_length) for tensor in contours]
+    #     targets = [pad_tensor(tensor, max_length) for tensor in targets]
+
     if len(spectrograms) > 1:
-        # Convertimos listas a tensores y los rellenamos dinámicamente
+        # Encontramos la longitud máxima y la ajustamos al múltiplo de 8 más cercano
         max_length = max(tensor.size(2) for tensor in spectrograms)
+        max_length = (max_length + 7) // 8 * 8  # Redondeamos hacia arriba al múltiplo de 8 más cercano
+
+        # Aplicamos padding a todos los tensores
         spectrograms = [pad_tensor(tensor, max_length) for tensor in spectrograms]
         contours = [pad_tensor(tensor, max_length) for tensor in contours]
         targets = [pad_tensor(tensor, max_length) for tensor in targets]

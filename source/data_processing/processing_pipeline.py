@@ -1,12 +1,15 @@
 import pandas as pd
+import sounddevice as sd
 
 from source.config import PreprocessConfig, CrepeConfig
+from source.data_management.data_loader import DataLoader
 from source.data_management.data_writer import DataWriter
 from source.data_processing.contour_extractor import ContourExtractor
 from source.data_processing.normalizer import Normalizer
 from source.data_processing.resampler import Resampler
 from source.data_processing.silence_remover import SilenceRemover
 from source.data_processing.spectrogram_transformer import SpectrogramTransformer
+from source.data_processing.word_processor import WordProcessor
 
 
 class ProcessingPipeline:
@@ -21,9 +24,15 @@ class ProcessingPipeline:
 
     def process(self, data, **kwargs):
         self.config.update(**kwargs)
+        processed_data = None
 
-        processed_data = self.preprocess(data)
-        processed_data = self.postprocess(processed_data)
+        if self.config.mode == 'pre':
+            processed_data = self.preprocess(data)
+        elif self.config.mode == 'post':
+            processed_data = self.postprocess(data)
+        elif self.config.mode == 'full':
+            processed_data = self.preprocess(data)
+            processed_data = self.postprocess(processed_data)
 
         if self.config.save:
             DataWriter().save_hdf5_processed(processed_data, self.config.filename)
@@ -32,79 +41,94 @@ class ProcessingPipeline:
 
     def preprocess(self, data):
 
-        preprocessed_data = pd.DataFrame(columns=['contour', 'melody_spectrogram', 'speech_spectrogram',
-                                                  'speech_fs', 'melody_fs'])
+        preprocessed_data = pd.DataFrame(columns=['contour', 'song', 'speech'])
         for index, row in data.iterrows():
-            print(f'Preprocessing input element Nº {index + 1}')
+            print(f'Preprocessing audio element Nº {index + 1}')
             melody = row['sing']
             speech = row['read']
+            melody_marks = row['marks_sing']
+            speech_marks = row['marks_read']
 
-            # Resample
-            resampled_melody = self.resampler.resample(melody, self.config.resample_sr)
-            resampled_speech = self.resampler.resample(speech, self.config.resample_sr)
+            # Segment
+            sing_phrases = WordProcessor.segment_phrases(melody_marks) # Divide sing into phrases
+            sing_words_per_phrase = WordProcessor.segment_words(sing_phrases) # Divide each frase into words
+            read_words_per_phrase = WordProcessor.match_read_segments(sing_words_per_phrase, speech_marks) # Divide read into words
 
-            # Normalize
-            if self.config.normalize:
-                resampled_melody = self.normalizer.normalize(resampled_melody)
-                resampled_speech = self.normalizer.normalize(resampled_speech)
+            # Generate combinations
+            sing_segments = WordProcessor.generate_combinations(sing_words_per_phrase)
+            speech_segments = WordProcessor.generate_combinations(read_words_per_phrase)
+
+            # Extract segments from audios
+            sing_audio_segments = WordProcessor.extract_audio_segments(melody, sing_segments)
+            read_audio_segments = WordProcessor.extract_audio_segments(speech, speech_segments)
+
+            # for idx, audio_segment in enumerate(read_audio_segments):
+            #     print(speech_segments[idx])
+            #     sd.play(audio_segment, 44100)
+            #     sd.wait()
+
+
+
+            # Resample, extract contour and add
+            for idx, (sing_audio, read_audio) in enumerate(zip(sing_audio_segments, read_audio_segments)):
+                resampled_song = self.resampler.resample(sing_audio, self.config.resample_sr)
+                resampled_speech = self.resampler.resample(read_audio, self.config.resample_sr)
+                melody_contour = self.contour_extractor.extract_contour(resampled_song, self.config.resample_sr, CrepeConfig())
+
+                preprocessed_row = pd.DataFrame(
+                    {'contour': [melody_contour],
+                     'song': [resampled_song],
+                     'speech': [resampled_speech]
+                     }
+                )
+                preprocessed_data = pd.concat([preprocessed_data, preprocessed_row], ignore_index=True)
 
             # Remove silences and trails
-            silenceless_speech = self.silence_remover.remove_silence(resampled_speech, self.config.resample_sr,
-                                                                     self.config.silence_threshold,
-                                                                     self.config.max_allowed_silence_duration)
-            melody_no_trail = self.silence_remover.remove_trailing_silences(resampled_melody,
-                                                                            self.config.silence_threshold,
-                                                                            self.config.hop_length)
+            # silenceless_speech = self.silence_remover.remove_silence(resampled_speech, self.config.resample_sr,
+            #                                                          self.config.silence_threshold,
+            #                                                          self.config.max_allowed_silence_duration)
+            # melody_no_trail = self.silence_remover.remove_trailing_silences(resampled_melody,
+            #                                                                 self.config.silence_threshold,
+            #                                                                 self.config.hop_length)
 
             # Resample randomly
-            randomly_resampled_speech, speech_sr = self.resampler.resample_randomly(silenceless_speech,
-                                                                                    self.config.min_resample_factor,
-                                                                                    self.config.max_resample_factor)
+            # randomly_resampled_speech, speech_sr = self.resampler.resample_randomly(silenceless_speech,
+            #                                                                         self.config.min_resample_factor,
+            #                                                                         self.config.max_resample_factor)
+
+        return preprocessed_data
+
+    def postprocess(self, data):
+
+        postprocessed_data = pd.DataFrame(columns=['contour', 'song', 'speech'])
+        for index, row in data.iterrows():
+            print(f'Postprocessing input element Nº {index + 1}')
+            speech = row['speech']
+            song = row['song']
+            contour = row['contour']
 
             # Obtain spectrograms
             speech_spectrogram = self.spectrogram_transformer.obtain_log_spectrogram(
-                randomly_resampled_speech, self.config.n_fft, self.config.hop_length, self.config.win_length)
+                speech, self.config.n_fft, self.config.hop_length, self.config.win_length)
             melody_spectrogram = self.spectrogram_transformer.obtain_log_spectrogram(
-                melody_no_trail, self.config.n_fft, self.config.hop_length, self.config.win_length)
+                song, self.config.n_fft, self.config.hop_length, self.config.win_length)
 
-            melody_contour = self.contour_extractor.extract_contour(resampled_melody, self.config.resample_sr, CrepeConfig())
-
-            # Time stretch
+            # Time stretch speech
             speech_spectrogram = self.spectrogram_transformer.stretch_spectrogram(
-                speech_spectrogram, melody_contour.shape[1])
+                speech_spectrogram, contour.shape[1])
 
             # Normalize
             if self.config.normalize:
                 speech_spectrogram = self.normalizer.spectrogram_min_max_normalize(speech_spectrogram)
                 melody_spectrogram = self.normalizer.spectrogram_min_max_normalize(melody_spectrogram)
 
-            preprocessed_row = pd.DataFrame(
-                {'contour': [melody_contour],
-                 'melody_spectrogram': [melody_spectrogram],
-                 'speech_spectrogram': [speech_spectrogram],
-                 'melody_sr': [self.config.resample_sr],
-                 'speech_sr': [speech_sr]},
-                index=[len(preprocessed_data)])
-            preprocessed_data = pd.concat([preprocessed_data, preprocessed_row], ignore_index=True)
+            # Add
+            postprocessed_row = pd.DataFrame(
+                {'contour': [contour],
+                 'song': [melody_spectrogram],
+                 'speech': [speech_spectrogram]
+                 }
+            )
+            postprocessed_data = pd.concat([postprocessed_data, postprocessed_row], ignore_index=True)
 
-        return preprocessed_data
-
-    def postprocess(self, data):
-
-        speech_spectrogram = data['speech_spectrogram'].values
-        max_t = max([spectrogram.shape[1] for spectrogram in speech_spectrogram])
-        for index, row in data.iterrows():
-            print(f'Postprocessing input element Nº {index + 1}')
-
-            contour_spectrogram = row['contour']
-            speech_spectrogram = row['speech_spectrogram']
-            melody_spectrogram = row['melody_spectrogram']
-            contour_spectrogram = self.spectrogram_transformer.zeropad_time(contour_spectrogram, max_t, padding=self.config.padding)
-            speech_spectrogram = self.spectrogram_transformer.zeropad_time(speech_spectrogram, max_t, padding=self.config.padding)
-            melody_spectrogram = self.spectrogram_transformer.zeropad_time(melody_spectrogram, max_t, padding=self.config.padding)
-
-            data.at[index, 'contour'] = contour_spectrogram
-            data.at[index, 'speech_spectrogram'] = speech_spectrogram
-            data.at[index, 'melody_spectrogram'] = melody_spectrogram
-
-        return data
+        return postprocessed_data

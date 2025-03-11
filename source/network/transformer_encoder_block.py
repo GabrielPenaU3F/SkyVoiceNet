@@ -1,13 +1,15 @@
 import torch.nn as nn
 
 from source.network.positional_encoding import PositionalEncoding
+from source.network.residual_buffer import ResidualBuffer
 
 
 class TransformerEncoderBlock(nn.Module):
 
     def __init__(self, input_dim, num_heads, hidden_dim, num_layers, dropout):
         super(TransformerEncoderBlock, self).__init__()
-        self.positional_encoding = PositionalEncoding(input_dim, max_len=5000, dropout=dropout)
+        self.buffer = ResidualBuffer()
+        self.positional_encoding = PositionalEncoding(input_dim, max_len=600, dropout=dropout)
 
         encoder_layer = nn.TransformerEncoderLayer(
             d_model=input_dim,
@@ -27,10 +29,9 @@ class TransformerEncoderBlock(nn.Module):
                 nn.init.xavier_normal_(p)
 
     def forward(self, x):
+        # x_residual = x
         x = self.positional_encoding(x)
-        # for layer in self.transformer_encoder.layers:
-        #     print(f"Antes de LayerNorm: mean={x.mean()}, std={x.std()}") # 🔍 Check values
-        #     x = layer(x)
-        #     print(f"Después de LayerNorm: mean={x.mean()}, std={x.std()}")  # 🔍 Check if it shrinks too much
         x = self.transformer_encoder(x)
+        # x = x + x_residual
+        self.buffer.buffer_transformer_output(x)
         return x

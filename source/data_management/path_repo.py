@@ -10,6 +10,7 @@ class PathRepo(metaclass=Singleton):
         self.wavs_path = os.path.join(base_path, 'resources', 'NUS-48E', 'nus-smc-corpus_48')
         self.hdf5_path = os.path.join(base_path, 'resources', 'data')
         self.output_path = os.path.join(base_path, 'outputs')
+        self.contour_path = os.path.join(base_path, 'resources', 'data', 'melody_contour')
 
     def get_wavs_path(self):
         return self.wavs_path
@@ -25,3 +26,5 @@ class PathRepo(metaclass=Singleton):
     def get_output_path(self):
         return self.output_path
 
+    def get_contour_path(self):
+        pass

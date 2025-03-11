@@ -14,6 +14,7 @@ class Config(metaclass=Singleton):
 class PreprocessConfig(Config):
 
     def __init__(self):
+        self.mode = 'full'
         self.original_sr = 44100
         self.resample_sr = 16000
         self.silence_threshold = 40
@@ -61,7 +62,7 @@ class NetworkConfig(Config):
         self.transf_dropout = 0.1
         self.cross_attention_num_heads = 4
         self.cross_attention_dropout = 0.1
-        self.conv_output_dim = None
+        self.conv_features_dim = None
         self.spectrogram_dimensions = None
 
 

@@ -1,6 +1,9 @@
+import math
+
 import torch.nn as nn
+import torch.nn.functional as F
 from matplotlib import pyplot as plt
-import seaborn as sns
+
 
 
 class CrossAttentionLayer(nn.Module):
@@ -33,29 +36,22 @@ import torch
 import torch.nn as nn
 
 
-class ScaledDotProductAttention(nn.Module):
+class CrossAttention(nn.Module):
 
-    def __init__(self, embed_dim):
-        super(ScaledDotProductAttention, self).__init__()
-        self.scale = torch.sqrt(torch.tensor(embed_dim, dtype=torch.float32))
-        self.dropout = nn.Dropout(p=0.1)
+    def __init__(self, features, query_dim, embed_dim):
+        super().__init__()
+        self.embed_dim = embed_dim
+        self.query_proj = nn.Linear(query_dim, embed_dim)
+        self.key_proj = nn.Linear(features, embed_dim)
+        self.value_proj = nn.Linear(features, embed_dim)
 
-    def forward(self, query, key, value, mask=None):
-        d_k = query.size(-1)
-        scores = torch.matmul(query, key.transpose(-2, -1)) / (d_k ** 0.5)
+    def forward(self, speech, melody):
+        Q = self.query_proj(melody)  # [batch, time, embed_dim]
+        K = self.key_proj(speech)    # [batch, time_r, embed_dim]
+        V = self.value_proj(speech)  # [batch, time_r, embed_dim]
 
-        if mask is not None:
-            scores = scores.masked_fill(mask == 0, float('-inf'))  # Optional masking
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(self.embed_dim)
+        attn_weights = F.softmax(scores, dim=-1)  # Se encarga del mismatch de dimensiones
 
-        attn_weights = torch.nn.functional.softmax(scores, dim=-1)  # Softmax
-        attn_weights = self.dropout(attn_weights)
-
-        attn_weights_img = attn_weights.detach().cpu().numpy()  # [batch, time, time]
-        plt.imshow(attn_weights_img[0], cmap="viridis", aspect="auto")
-        plt.colorbar()
-        plt.title("Attention Weights")
-        plt.show()
-
-        output = torch.matmul(attn_weights, value)
-
+        output = torch.matmul(attn_weights, V)
         return output, attn_weights

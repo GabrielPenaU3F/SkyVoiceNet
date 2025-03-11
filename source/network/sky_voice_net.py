@@ -15,11 +15,11 @@ class SkyVoiceNet(nn.Module):
         self.decoder_block = DecoderBlock(**kwargs)
         self.apply(self.init_weights)
 
-    def forward(self, speech_spec, contour_spec):
+    def forward(self, speech_spec, melody_contour):
 
         speech_embedding = self.encoder_block(speech_spec)
-        attention_output = self.attention_block(speech_embedding, contour_spec)
-        output_spectrogram = self.decoder_block(attention_output, memory=speech_embedding)
+        # aligned_embedding = self.attention_block(speech_embedding, melody_contour)
+        output_spectrogram = self.decoder_block(speech_embedding)
 
         return output_spectrogram
 

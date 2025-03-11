@@ -33,17 +33,16 @@ net = SkyVoiceNet(conv_out_channels=64)
 # )
 
 path_dir = PathRepo().get_output_path()
-output_file = os.path.join(path_dir, 'sky_voice_net.pt')
+output_file = os.path.join(path_dir, 'sky_voice_net_autoencoder.pt')
 # torch.save(trained_model, output_file)
 
 trained_model = torch.load(output_file)
 
 # Load test data
-dataset = DataLoader.load_processed_data('nus_processed_nopad.h5', dataset=None)
-speech_spectrogram = dataset.iloc[0]['speech_spectrogram']
-melody_spectrogram = dataset.iloc[0]['melody_spectrogram']
+dataset = DataLoader.load_processed_data('reduced_dataset.h5', dataset=None)
+speech_spectrogram = dataset.iloc[0]['speech']
+melody_spectrogram = dataset.iloc[0]['song']
 melody_contour = dataset.iloc[0]['contour']
-sr = dataset.iloc[0]['speech_sr']
 
 # Shape [batch, channel, freq, time]
 speech_spectrogram_tensor = torch.tensor(speech_spectrogram).unsqueeze(0).unsqueeze(0).to(device).float()
@@ -51,13 +50,12 @@ melody_contour_tensor = torch.tensor(melody_contour).unsqueeze(0).unsqueeze(0).t
 
 # Predict
 with torch.no_grad():
-    predicted_spectrogram = trained_model(speech_spectrogram_tensor, melody_contour_tensor).squeeze()
+    predicted_spectrogram = trained_model(speech_spectrogram_tensor).squeeze()
 
 # Draw
 predicted_spectrogram = predicted_spectrogram.cpu().numpy()
-draw_spectrograms(melody_spectrogram, melody_contour, 'Melody spectrogram', 'Melody F0')
-draw_single_spectrogram(predicted_spectrogram, 'Predicted spectrogram')
+draw_spectrograms(speech_spectrogram, predicted_spectrogram, 'Speech spectrogram', 'Predicted')
 
 # Reconstruct
 player = AudioPlayer()
-player.play_audio_from_spectrogram(predicted_spectrogram, sr=sr, compression_factor=2, denoising_strength=0.05)
+player.play_audio_from_spectrogram(predicted_spectrogram, sr=16000, compression_factor=2, denoising_strength=0.05)

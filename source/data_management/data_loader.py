@@ -1,5 +1,6 @@
 
 import os
+from io import StringIO
 
 import h5py
 import librosa
@@ -30,24 +31,21 @@ class DataLoader:
         with h5py.File(os.path.join(hdf5_dir, filename), 'r') as f:
             for index in f:
                 contour = f[index]['contour'][:]
-                melody_spectrogram = f[index]['melody_spectrogram'][:]
-                speech_spectrogram = f[index]['speech_spectrogram'][:]
-                melody_sr = f[index]['melody_sr'][()]
-                speech_sr = f[index]['speech_sr'][()]
-                data.append({'contour': contour, 'melody_spectrogram': melody_spectrogram,
-                             'speech_spectrogram': speech_spectrogram, 'melody_sr': melody_sr, 'speech_sr': speech_sr})
+                song = f[index]['song'][:]
+                speech = f[index]['speech'][:]
+                data.append({'contour': contour, 'song': song, 'speech': speech})
 
         data = pd.DataFrame(data)
         if dataset == 'tensor':
-            speech_spec = series_to_tensor(data['speech_spectrogram'])
+            speech_spec = series_to_tensor(data['speech'])
             contour_spec = series_to_tensor(data['contour'])
-            target_spec = series_to_tensor(data['melody_spectrogram'])
+            target_spec = series_to_tensor(data['song'])
             data = TensorDataset(speech_spec, contour_spec, target_spec)
         elif dataset == 'variable':
             data_list = data.apply(lambda row: {
-                'speech_spectrogram': row['speech_spectrogram'],
+                'speech': row['speech'],
                 'contour': row['contour'],
-                'melody_spectrogram': row['melody_spectrogram']
+                'song': row['song']
             }, axis=1).tolist()
             data = VariableLengthDataset(data_list)
         return data
@@ -67,28 +65,64 @@ class DataLoader:
                     Los archivos están nombrados con un número único, así que se listan por orden
                     y nos aseguramos de matchear los paired leidos y cantados
                 '''
-                for filename in sorted(os.listdir(sing_path)):
-                    if filename.endswith('.wav'):
-                        sing_file = os.path.join(sing_path, filename)
-                        read_file = os.path.join(read_path, filename)
+                filenames = sorted(f for f in os.listdir(sing_path) if f.endswith('.wav'))
+                for filename in filenames:
 
-                        try:
-                            sing_audio, _ = librosa.load(sing_file, sr=44100)
-                            read_audio, _ = librosa.load(read_file, sr=44100)
-                            data.append({'sing': sing_audio, 'read': read_audio})
-                        except Exception as e:
-                            print(f'Error loading {filename}: {e}')
+                    sing_file = os.path.join(sing_path, filename)
+                    read_file = os.path.join(read_path, filename)
+                    sing_marks_file = os.path.join(sing_path, filename.replace('.wav', '.txt'))
+                    read_marks_file = os.path.join(read_path, filename.replace('.wav', '.txt'))
+
+                    sing_audio, read_audio = None, None
+                    sing_marks, read_marks = None, None
+
+                    try:
+                        sing_audio, _ = librosa.load(sing_file, sr=44100)
+                        read_audio, _ = librosa.load(read_file, sr=44100)
+                        sing_marks = DataLoader.load_marks(filename=sing_marks_file)
+                        read_marks = DataLoader.load_marks(filename=read_marks_file)
+
+                    except Exception as e:
+                        print(f'Error loading {filename}: {e}')
+
+
+                    data.append({'sing': sing_audio, 'read': read_audio,
+                                 'marks_sing': sing_marks, 'marks_read': read_marks})
 
         return pd.DataFrame(data)
 
-    def load_raw_hdf5(self, filename='nus_data_raw.h5'):
+    @staticmethod
+    def load_raw_hdf5(filename='nus_data_raw.h5'):
 
         hdf5_dir = PathRepo().get_hdf5_path()
         data = []
         with h5py.File(os.path.join(hdf5_dir, filename), 'r') as f:
-            for index in f:
-                sing_data = f[index]['sing'][:]
-                read_data = f[index]['read'][:]
-                data.append({'sing': sing_data, 'read': read_data})
+            for index, row in f.items():
+                sing_data = row['sing'][:]
+                read_data = row['read'][:]
+                marks_sing = pd.read_json(StringIO(row['marks_sing'][()].decode('utf-8')))
+                marks_read = pd.read_json(StringIO(row['marks_read'][()].decode('utf-8')))
+                data.append({'sing': sing_data, 'read': read_data, 'marks_sing': marks_sing, 'marks_read': marks_read})
+
+        return pd.DataFrame(data)
+
+    @staticmethod
+    def load_marks(filename):
+        # Load textfiles into a dataframe
+        df = pd.read_csv(filename, sep=r'\s+', names=['start', 'end', 'mark'],
+                         dtype={'start': float, 'end': float, 'mark': str})
+        return df
+
+    @staticmethod
+    def load_preprocessed_data(filename):
+        hdf5_dir = PathRepo().get_hdf5_path()
+        data = []
+        with h5py.File(os.path.join(hdf5_dir, filename), 'r') as f:
+            for index, row in f.items():
+                speech = row['speech'][:]
+                contour = row['contour'][:]
+                song = row['song'][:]
+
+                data.append({'song': song, 'speech': speech, 'contour': contour})
 
         return pd.DataFrame(data)

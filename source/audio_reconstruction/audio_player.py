@@ -47,6 +47,7 @@ class AudioPlayer:
     def convert_to_mel(self, y, sr, n_fft, n_mels):
         magnitude_spectrogram = np.exp(y) - 1
         mel_basis = librosa.filters.mel(sr=sr, n_fft=n_fft, fmin=0, fmax=8000, n_mels=n_mels)
+        mel_basis = np.delete(mel_basis, -1, 1) # Delete highest frequency
         return np.dot(mel_basis, magnitude_spectrogram)
 
 
