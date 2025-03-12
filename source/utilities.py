@@ -3,6 +3,7 @@ import numpy as np
 import torch
 import sounddevice as sd
 from matplotlib import pyplot as plt
+from torch import nn
 
 
 def convert_to_midi_note(freq_tensor):
@@ -66,3 +67,9 @@ def draw_single_spectrogram(spectrogram, title=''):
 
     fig.tight_layout()
     plt.show()
+
+def count_parameters(net):
+
+    # Print Model Summary
+    total_params = sum(p.numel() for p in net.parameters() if p.requires_grad)
+    print("Total Trainable Parameters:", total_params)

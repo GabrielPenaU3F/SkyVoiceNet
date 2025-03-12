@@ -19,16 +19,16 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
         torch.autograd.set_detect_anomaly(True)
         model.train()
 
-        for batch_idx, (speech_spec, contour_spec, melody_spec) in enumerate(
+        for batch_idx, (speech_spec, melody_contour, melody_spec) in enumerate(
                 tqdm(dataloader, desc=f"Epoch {epoch + 1}/{num_epochs}")):
 
             speech_spec = speech_spec.to(device)
-            target = speech_spec.to(device) # Full autoencoder mode - target is the speech spectrogram
-
+            target = melody_spec.to(device)
+            # target = speech_spec.to(device) # Full autoencoder mode
             optimizer.zero_grad()
 
             # Forward pass
-            predicted_spec = model(speech_spec)
+            predicted_spec = model(speech_spec, melody_contour)
 
             # Backprop
             loss = loss_fn(predicted_spec, target)

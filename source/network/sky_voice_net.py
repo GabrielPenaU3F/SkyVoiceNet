@@ -18,16 +18,16 @@ class SkyVoiceNet(nn.Module):
     def forward(self, speech_spec, melody_contour):
 
         speech_embedding = self.encoder_block(speech_spec)
-        # aligned_embedding = self.attention_block(speech_embedding, melody_contour)
-        output_spectrogram = self.decoder_block(speech_embedding)
+        aligned_embedding = self.attention_block(speech_embedding, melody_contour)
+        output_spectrogram = self.decoder_block(aligned_embedding)
 
         return output_spectrogram
 
     def init_weights(self, m):
-        if isinstance(m, nn.Conv2d) or isinstance(m, nn.ConvTranspose2d):
+        if isinstance(m, nn.Conv2d) or isinstance(m, nn.ConvTranspose2d) or isinstance(m, nn.Linear):
             init.xavier_uniform_(m.weight)
             if m.bias is not None:
                 init.zeros_(m.bias)
-        elif isinstance(m, nn.BatchNorm2d) or isinstance(m, nn.LayerNorm):
+        elif isinstance(m, nn.BatchNorm2d) or isinstance(m, nn.GroupNorm):
             init.ones_(m.weight)
             init.zeros_(m.bias)

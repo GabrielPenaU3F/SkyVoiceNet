@@ -9,7 +9,7 @@ from source.data_management.path_repo import PathRepo
 
 from source.network.sky_voice_net import SkyVoiceNet
 from source.training_loop import train_model
-
+from source.utilities import count_parameters
 
 # dataset = DataLoader.load_processed_data('nus_processed.h5', dataset='variable')
 dataset = DataLoader.load_processed_data('reduced_dataset.h5', dataset='variable')
@@ -22,7 +22,7 @@ np.random.seed(42)
 
 # Parameters
 batch_size = 16
-num_epochs = 10
+num_epochs = 15
 learning_rate = 1e-4
 device = "cuda" if torch.cuda.is_available() else "cpu"  # Use GPU if available
 loss_fn = torch.nn.MSELoss()
@@ -37,6 +37,8 @@ trained_model, training_loss = train_model(
     learning_rate=learning_rate,
     device=device,
 )
+
+count_parameters(trained_model)
 
 path_dir = PathRepo().get_output_path()
 output_file = os.path.join(path_dir, 'sky_voice_net.pt')

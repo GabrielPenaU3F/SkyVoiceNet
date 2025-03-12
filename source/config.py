@@ -60,7 +60,7 @@ class NetworkConfig(Config):
         self.transf_hidden = 512
         self.transf_num_layers = 2
         self.transf_dropout = 0.1
-        self.cross_attention_num_heads = 4
+        self.cross_attention_num_heads = 16
         self.cross_attention_dropout = 0.1
         self.conv_features_dim = None
         self.spectrogram_dimensions = None
