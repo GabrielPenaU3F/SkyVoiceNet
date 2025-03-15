@@ -14,7 +14,7 @@ class DecoderBlock(nn.Module):
         self.config = NetworkConfig() # This one is a singleton
         self.buffer = ResidualBuffer()
         self.config.update(**kwargs)
-        self.blstm = nn.LSTM(input_size=self.config.transf_embedding_dim, hidden_size=128,
+        self.blstm = nn.LSTM(input_size=self.config.embed_dim, hidden_size=128,
                              num_layers=2, dropout=0.1, batch_first=True, bidirectional=True)
         # self.transformer_decoder_block = TransformerDecoderBlock(
         #     self.config.transf_embedding_dim, num_heads=self.config.transf_heads, hidden_dim=self.config.transf_hidden,

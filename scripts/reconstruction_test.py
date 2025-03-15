@@ -55,7 +55,8 @@ with torch.no_grad():
 
 # Draw
 predicted_spectrogram = predicted_spectrogram.cpu().numpy()
-draw_spectrograms(melody_spectrogram, predicted_spectrogram, 'Melody spectrogram', 'Predicted')
+draw_spectrograms(speech_spectrogram, melody_spectrogram, 'Speech spectrogram', 'Melody spectrogram')
+draw_single_spectrogram(predicted_spectrogram, 'Predicted')
 
 # Reconstruct
 player = AudioPlayer()

@@ -17,8 +17,8 @@ class EncoderBlock(nn.Module):
         self.config.update(**kwargs)
         self.conv_block = ConvolutionalEncoderBlock(in_channels=1, out_channels=self.config.conv_out_channels)
         self.norm = InstanceNorm2d(self.config.conv_out_channels)
-        self.global_avg_pool = nn.AdaptiveAvgPool2d((None, self.config.transf_embedding_dim))
-        self.blstm = nn.LSTM(input_size=self.config.transf_embedding_dim, hidden_size=128,
+        self.global_avg_pool = nn.AdaptiveAvgPool2d((None, self.config.embed_dim))
+        self.blstm = nn.LSTM(input_size=self.config.embed_dim, hidden_size=128,
                              num_layers=2, dropout=0.1, batch_first=True, bidirectional=True)
         # self.transformer_encoder_block = TransformerEncoderBlock(
         #     self.config.transf_embedding_dim, num_heads=self.config.transf_heads, hidden_dim=self.config.transf_hidden,
