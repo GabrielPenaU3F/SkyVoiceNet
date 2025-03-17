@@ -40,6 +40,7 @@ class CrepeConfig(Config):
     def __init__(self):
         global_config = PreprocessConfig()
         self.silence_threshold = global_config.silence_threshold
+        self.n_fft = global_config.n_fft
         self.hop_length = global_config.hop_length
         self.fmin = global_config.crepe_fmin
         self.fmax = global_config.crepe_fmax
@@ -54,15 +55,8 @@ class NetworkConfig(Config):
 
     def __init__(self):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        self.conv_out_channels = 64
-        self.embed_dim = 256
-        self.transf_heads = 4
-        self.transf_hidden = 512
-        self.transf_num_layers = 2
-        self.transf_dropout = 0.1
-        self.cross_attention_num_heads = 16
-        self.cross_attention_dropout = 0.1
-        self.conv_features_dim = None
+        self.embed_dim = 128
+        self.attn_heads = 4
         self.spectrogram_dimensions = None
 
 

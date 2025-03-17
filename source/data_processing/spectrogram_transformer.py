@@ -6,7 +6,7 @@ from scipy.ndimage import zoom
 class SpectrogramTransformer:
 
     def obtain_log_spectrogram(self, audio, n_fft, hop_length, win_length):
-        spectrogram = librosa.stft(audio, n_fft=n_fft, hop_length = hop_length, win_length=win_length)
+        spectrogram = librosa.stft(audio, n_fft=n_fft, hop_length=hop_length, win_length=win_length)
         spectrogram = np.delete(spectrogram, -1, axis=0) # Delete highest frequency so we have just 512
         spectrogram_db = librosa.amplitude_to_db(abs(spectrogram))
         return spectrogram_db
@@ -28,3 +28,4 @@ class SpectrogramTransformer:
             return spectrogram
         spectrogram = np.pad(spectrogram, ((0, 0), (0, pad_t)), mode='constant', constant_values=padding)
         return spectrogram
+

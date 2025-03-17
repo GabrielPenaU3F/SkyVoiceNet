@@ -1,8 +1,6 @@
 import pandas as pd
-import sounddevice as sd
 
-from source.config import PreprocessConfig, CrepeConfig
-from source.data_management.data_loader import DataLoader
+from source.config import PreprocessConfig
 from source.data_management.data_writer import DataWriter
 from source.data_processing.contour_extractor import ContourExtractor
 from source.data_processing.normalizer import Normalizer
@@ -68,12 +66,11 @@ class ProcessingPipeline:
             #     sd.wait()
 
 
-
             # Resample, extract contour and add
             for idx, (sing_audio, read_audio) in enumerate(zip(sing_audio_segments, read_audio_segments)):
                 resampled_song = self.resampler.resample(sing_audio, self.config.resample_sr)
                 resampled_speech = self.resampler.resample(read_audio, self.config.resample_sr)
-                melody_contour = self.contour_extractor.extract_contour(resampled_song, self.config.resample_sr, CrepeConfig())
+                melody_contour = self.contour_extractor.extract_contour(resampled_song, sr=self.config.resample_sr)
 
                 preprocessed_row = pd.DataFrame(
                     {'contour': [melody_contour],

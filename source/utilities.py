@@ -1,10 +1,7 @@
-import librosa
 import numpy as np
 import torch
 import sounddevice as sd
 from matplotlib import pyplot as plt
-from torch import nn
-
 
 def convert_to_midi_note(freq_tensor):
     midi_number = 69 + 12 * torch.log2(freq_tensor / 440)
@@ -40,15 +37,20 @@ def play_midi_notes(midi_numbers, duration=0.1, sample_rate=44100):
     sd.play(audio, samplerate=sample_rate)
     sd.wait()
 
-def draw_spectrograms(spectrogram_1, spectrogram_2, title_1='', title_2=''):
+def draw_spectrograms(spectrogram_1, spectrogram_2, title_1='', title_2='', sr=16000):
+
+    num_bins, num_frames = spectrogram_1.shape  # Extraemos dimensiones
+    freqs = np.linspace(0, sr/2, num_bins)  # Frecuencias en Hz
     fig, ax = plt.subplots(2, 1, figsize=(8, 5))
-    im_1 = ax[0].imshow(spectrogram_1, aspect="auto", origin='lower', cmap='magma')
+    im_1 = ax[0].imshow(spectrogram_1, aspect="auto", origin='lower', cmap='magma', extent=[0, num_frames, freqs[0], freqs[-1]])
     ax[0].set_title(title_1)
     ax[0].set_xlabel("Time")
     ax[0].set_ylabel("Freq")
     fig.colorbar(im_1, format='%+2.0f ', label="Intensity")
 
-    im_2 = ax[1].imshow(spectrogram_2, aspect="auto", origin='lower', cmap='magma')
+    num_bins, num_frames = spectrogram_2.shape  # Extraemos dimensiones
+    freqs = np.linspace(0, sr/2, num_bins)  # Frecuencias en Hz
+    im_2 = ax[1].imshow(spectrogram_2, aspect="auto", origin='lower', cmap='magma', extent=[0, num_frames, freqs[0], freqs[-1]])
     ax[1].set_xlabel("Time")
     ax[1].set_ylabel("Freq")
     ax[1].set_title(title_2)
@@ -57,9 +59,12 @@ def draw_spectrograms(spectrogram_1, spectrogram_2, title_1='', title_2=''):
     fig.tight_layout()
     plt.show()
 
-def draw_single_spectrogram(spectrogram, title=''):
+def draw_single_spectrogram(spectrogram, title='', sr=16000):
+    num_bins, num_frames = spectrogram.shape  # Extraemos dimensiones
+    freqs = np.linspace(0, sr/2, num_bins)  # Frecuencias en Hz
+
     fig, ax = plt.subplots(figsize=(8, 5))
-    im = ax.imshow(spectrogram, aspect="auto", origin='lower', cmap='magma')
+    im = ax.imshow(spectrogram, aspect="auto", origin='lower', cmap='magma', extent=[0, num_frames, freqs[0], freqs[-1]])
     ax.set_title(title)
     ax.set_xlabel("Time (s)")
     ax.set_ylabel("Freq")

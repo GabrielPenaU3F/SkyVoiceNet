@@ -8,22 +8,23 @@ from source.data_management.data_loader import DataLoader
 from source.data_management.path_repo import PathRepo
 
 from source.network.sky_voice_net import SkyVoiceNet
+from source.network.sky_voice_net import SkyVoiceNet
 from source.training_loop import train_model
 from source.utilities import count_parameters
 
-dataset = DataLoader.load_processed_data('nus_processed.h5', dataset='variable')
-# dataset = DataLoader.load_processed_data('reduced_dataset.h5', dataset='variable')
+# dataset = DataLoader.load_processed_data('nus_processed_2.h5', dataset='variable')
+dataset = DataLoader.load_processed_data('reduced_dataset_2.h5', dataset='variable')
 
 
-net = SkyVoiceNet(conv_out_channels=64)
+net = SkyVoiceNet()
 
 torch.manual_seed(42)
 np.random.seed(42)
 
 # Parameters
-batch_size = 16
+batch_size = 4
 num_epochs = 20
-learning_rate = 1e-3
+learning_rate = 2e-4
 device = "cuda" if torch.cuda.is_available() else "cpu"  # Use GPU if available
 loss_fn = torch.nn.MSELoss()
 

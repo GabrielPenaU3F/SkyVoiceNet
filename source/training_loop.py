@@ -5,10 +5,11 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
+
 def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, device='cuda'):
 
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
-    optimizer = optim.RAdam(model.parameters(), lr=learning_rate, eps=1e-9)
+    optimizer = optim.RAdam(model.parameters(), lr=learning_rate, betas=(0.9, 0.9), eps=1e-9)
 
     model.to(device)
     training_loss = []
@@ -22,7 +23,8 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
                 tqdm(dataloader, desc=f"Epoch {epoch + 1}/{num_epochs}")):
 
             speech_spec = speech_spec.to(device)
-            target = melody_spec.to(device)
+            melody_contour = melody_contour.to(device)
+            target = melody_spec.to(device) # Complete mode
             # target = speech_spec.to(device) # Full autoencoder mode
             optimizer.zero_grad()
 
