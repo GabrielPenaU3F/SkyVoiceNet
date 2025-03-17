@@ -55,7 +55,7 @@ class NetworkConfig(Config):
 
     def __init__(self):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        self.embed_dim = 128
+        self.embed_dim = 64
         self.attn_heads = 4
         self.spectrogram_dimensions = None
 

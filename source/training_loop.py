@@ -24,8 +24,7 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
 
             speech_spec = speech_spec.to(device)
             melody_contour = melody_contour.to(device)
-            target = melody_spec.to(device) # Complete mode
-            # target = speech_spec.to(device) # Full autoencoder mode
+            target = melody_spec.to(device)
             optimizer.zero_grad()
 
             # Forward pass
@@ -39,7 +38,6 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
                 if param.grad is not None:
                     print(f"{name} gradient norm: {param.grad.norm().item()}")
 
-            # torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)  # Prevents exploding gradients
             optimizer.step()
 
             epoch_loss += loss.item()
@@ -57,21 +55,14 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
 
 
 def collate_fn(batch):
-    spectrograms, contours, targets = zip(*batch)  # Desempacamos batch
-
-    # if len(spectrograms) > 1:
-    #     # Convertimos listas a tensores y los rellenamos dinámicamente
-    #     max_length = max(tensor.size(2) for tensor in spectrograms)
-    #     spectrograms = [pad_tensor(tensor, max_length) for tensor in spectrograms]
-    #     contours = [pad_tensor(tensor, max_length) for tensor in contours]
-    #     targets = [pad_tensor(tensor, max_length) for tensor in targets]
+    spectrograms, contours, targets = zip(*batch)
 
     if len(spectrograms) > 1:
-        # Encontramos la longitud máxima y la ajustamos al múltiplo de 8 más cercano
+        # Maximum length is rounded up to the closest multiple of 8
         max_length = max(tensor.size(2) for tensor in spectrograms)
-        max_length = (max_length + 7) // 8 * 8  # Redondeamos hacia arriba al múltiplo de 8 más cercano
+        max_length = (max_length + 7) // 8 * 8
 
-        # Aplicamos padding a todos los tensores
+        # Zero-pad all tensors
         spectrograms = [pad_tensor(tensor, max_length) for tensor in spectrograms]
         contours = [pad_tensor(tensor, max_length) for tensor in contours]
         targets = [pad_tensor(tensor, max_length) for tensor in targets]
@@ -79,5 +70,4 @@ def collate_fn(batch):
     return torch.stack(spectrograms), torch.stack(contours), torch.stack(targets)
 
 def pad_tensor(tensor, length):
-    # padding in the last dimension, i.e., dimension 2
     return F.pad(tensor, (0, length - tensor.size(2)), "constant", 0)
