@@ -17,6 +17,10 @@ class AttentionBlock(nn.Module):
 
 class SelfAttentionBlock(AttentionBlock):
 
+    def __init__(self):
+        super().__init__()
+        self.attention = nn.MultiheadAttention(embed_dim=2*self.config.embed_dim, num_heads=self.config.attn_heads, batch_first=True)
+
     def forward(self, embedding):
         attended_embedding, _ = self.attention(query=embedding,
                                                key=embedding,
@@ -24,7 +28,7 @@ class SelfAttentionBlock(AttentionBlock):
         return attended_embedding
 
 
-class FullAttentionBlock(AttentionBlock):
+class DoubleAttentionBlock(AttentionBlock):
 
     def __init__(self):
         super().__init__()

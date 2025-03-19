@@ -31,7 +31,7 @@ class Encoder(nn.Module):
         # LSTM or other recurrent layers
         self.norm = nn.InstanceNorm1d(hidden_2)
         self.lstm = nn.LSTM(hidden_2, hidden_2, num_layers=2, batch_first=True, dropout=0.1, bidirectional=True)
-        self.lstm_proj = nn.Linear(hidden_2 * 2, hidden_2)
+        self.lstm_proj = nn.Conv1d(hidden_2 * 2, hidden_2, kernel_size=5, stride=1, padding=2)
 
 
     def forward(self, x):
@@ -53,8 +53,8 @@ class Encoder(nn.Module):
         # Apply LSTM when the embedding dimension is 128
         x_down4 = self.norm(x_down4)
         x_down4, _ = self.lstm(x_down4.permute(0, 2, 1))
-        x_down4 = self.lstm_proj(x_down4)
         x_down4 = x_down4.permute(0, 2, 1)
+        x_down4 = self.lstm_proj(x_down4)
 
         # Downsampling 3
         x_down8_t = self.t_downsample_conv_3(x_down4)

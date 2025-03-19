@@ -3,7 +3,7 @@ from torch import nn
 from torch.nn import functional as F
 
 from source.config import NetworkConfig
-from source.network.attention_blocks import SelfAttentionBlock
+from source.network.attention_blocks import SelfAttentionBlock, CrossAttentionBlock, DoubleAttentionBlock
 from source.network.convolutional_blocks import ConvTranspose1DBlock
 from source.network.residual_buffer import ResidualBuffer
 
@@ -13,6 +13,7 @@ class Decoder(nn.Module):
         super(Decoder, self).__init__()
         self.config = NetworkConfig()
         self.residual_buffer = ResidualBuffer()
+        self.attention = None # Defined by subclasses
 
         # Dimensional reconstruction
         hidden_1 = int(freqs / 2)
@@ -28,9 +29,8 @@ class Decoder(nn.Module):
 
         # LSTM
         self.norm = nn.InstanceNorm1d(freqs)
-        self.lstm = nn.LSTM(freqs, freqs, num_layers=1, batch_first=True, dropout=0.3, bidirectional=True)
-        self.lstm_proj = nn.Linear(freqs * 2, freqs)
-
+        self.lstm = nn.LSTM(freqs, freqs, num_layers=2, batch_first=True, dropout=0.1, bidirectional=True)
+        self.lstm_proj = nn.Conv1d(freqs * 2, freqs, kernel_size=5, stride=1, padding=2)
 
     def forward(self, x):
 
@@ -51,26 +51,11 @@ class Decoder(nn.Module):
         x_up1 = self.t_upsample_conv_1(x_up1_f)
 
         # Apply LSTM
-        y, _ = self.lstm(x_up1.permute(0, 2, 1))
-        y = self.lstm_proj(y)
+        y = self.norm(x_up1)
+        y, _ = self.lstm(y.permute(0, 2, 1))
         y = y.permute(0, 2, 1)
+        y = self.lstm_proj(y)
 
-        return y
-
-
-class ShortDecoder(nn.Module):
-
-    # This decoder is meant to be used with an embedding dim of 64, ideally after a cross attention layer
-    def __init__(self, freqs=512):
-        super(ShortDecoder, self).__init__()
-
-        hidden_2 = int(freqs / 4)
-        self.f_upsample_conv_3 = ConvTranspose1DBlock(self.config.embed_dim, hidden_2, kernel_size=5, stride=1, padding=2)
-
-
-    def forward(self, x):
-        x = self.apply_skip_connection(x, self.residual_buffer.retrieve_buffer_conv_3_output())
-        y = super().forward(x)
         return y
 
     def apply_skip_connection(self, x, x_res):
@@ -80,6 +65,37 @@ class ShortDecoder(nn.Module):
         return x + x_res
 
 
+class ShortDecoder(Decoder):
+
+    # This decoder is meant to be used with an embedding dim of 64, ideally after a cross attention layer
+    def __init__(self, freqs=512):
+        super(ShortDecoder, self).__init__()
+
+        hidden_2 = int(freqs / 4)
+        self.f_upsample_conv_3 = ConvTranspose1DBlock(self.config.embed_dim, hidden_2, kernel_size=5, stride=1, padding=2)
+
+        # Available modes: 'cross_attn' or 'double_attn'
+        if self.config.mode == 'cross_attn':
+            self.attention = CrossAttentionBlock()
+
+        elif self.config.mode == 'double_attn':
+            self.mode = 'double_attn'
+            self.attention = DoubleAttentionBlock()
+
+
+    def forward(self, speech_embedding, contour_embedding):
+
+        # Apply attention
+        speech_embedding = speech_embedding.permute(0, 2, 1)
+        contour_embedding = contour_embedding.permute(0, 2, 1)
+        embedding = self.attention(speech_embedding, contour_embedding)
+        x = embedding.permute(0, 2, 1)
+
+        x = self.apply_skip_connection(x, self.residual_buffer.retrieve_buffer_conv_3_output())
+        y = super().forward(x)
+        return y
+
+
 class LargeDecoder(Decoder):
 
     # This decoder is meant to be used with an embedding dimension of 128, after a concatenation
@@ -87,18 +103,22 @@ class LargeDecoder(Decoder):
         super().__init__(freqs)
         hidden_2 = int(freqs / 4)
         self.f_upsample_conv_3 = ConvTranspose1DBlock(hidden_2, hidden_2, kernel_size=5, stride=1, padding=2)
-        self.attention = SelfAttentionBlock()
+
+        # Available modes: None or 'self_attn'
+        if self.config.mode == 'self_attn':
+            self.attention = SelfAttentionBlock()
 
     def forward(self, speech_embedding, melody_embedding):
 
+        # Concatenation
         speech_embedding = self.apply_skip_connection(speech_embedding, self.residual_buffer.retrieve_buffer_conv_3_output())
         x = torch.cat((speech_embedding, melody_embedding), dim=1)
 
-        # Optional self-attention
-        x = self.attention(query=x,
-                           key=x,
-                           value=x)
+        # Apply attention (optional)
+        if self.config.mode == 'attn':
+            x = x.permute(0, 2, 1)
+            x = self.attention(x)
+            x = x.permute(0, 2, 1)
 
         y = super().forward(x)
-
         return y

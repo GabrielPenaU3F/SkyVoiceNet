@@ -1,3 +1,4 @@
+import librosa
 import numpy as np
 import torch
 import sounddevice as sd
@@ -74,7 +75,13 @@ def draw_single_spectrogram(spectrogram, title='', sr=16000):
     plt.show()
 
 def count_parameters(net):
-
-    # Print Model Summary
     total_params = sum(p.numel() for p in net.parameters() if p.requires_grad)
     print("Total Trainable Parameters:", total_params)
+
+
+def compute_spectrogram_energy(log_spectrogram):
+    spectrogram = librosa.db_to_amplitude(log_spectrogram)
+    total_energy = np.sum(spectrogram**2)
+    energy_per_frame = np.sum(spectrogram**2, axis=0)
+
+    return total_energy, energy_per_frame

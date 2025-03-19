@@ -38,6 +38,7 @@ class AudioPlayer:
             audio = self.denoiser(audio.squeeze(1), self.config.denoising_strength)
             audio = audio.squeeze().cpu().numpy()
 
+        audio = librosa.util.normalize(audio)
         sd.play(audio, self.config.gan_sr)
         sd.wait()
 
