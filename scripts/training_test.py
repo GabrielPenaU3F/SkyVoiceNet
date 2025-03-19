@@ -14,7 +14,7 @@ from source.utilities import count_parameters
 # dataset = DataLoader.load_processed_data('nus_processed_2.h5', dataset='variable')
 dataset = DataLoader.load_processed_data('reduced_dataset_2.h5', dataset='variable')
 
-net = SkyVoiceNet(mode='double_attn')
+net = SkyVoiceNet(mode='cat_pre_post_attn')
 
 torch.manual_seed(42)
 
@@ -54,7 +54,7 @@ ax.plot(t, training_loss)
 ax.set_xlabel("Epoch")
 ax.set_ylabel("Training Loss")
 ax.set_title("Loss evolution over time")
-output_png = os.path.join(path_dir, 'loss_double_attn.png')
+output_png = os.path.join(path_dir, 'loss_cat_pre_post_attn.png')
 
 fig.savefig(output_png, dpi=300)
 plt.show()
