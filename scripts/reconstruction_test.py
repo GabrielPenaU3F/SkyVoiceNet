@@ -56,7 +56,7 @@ plt.xlabel("Frame")
 plt.ylabel("Energy")
 plt.show()
 
-plt.savefig('energy_double_attn.png')
+plt.savefig('energy.png')
 
 # Reconstruct
 player = AudioPlayer()

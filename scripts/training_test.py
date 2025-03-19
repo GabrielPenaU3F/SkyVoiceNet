@@ -11,22 +11,22 @@ from source.network.sky_voice_net import SkyVoiceNet
 from source.training_loop import train_model
 from source.utilities import count_parameters
 
-# dataset = DataLoader.load_processed_data('nus_processed_2.h5', dataset='variable')
-dataset = DataLoader.load_processed_data('reduced_dataset_2.h5', dataset='variable')
+dataset = DataLoader.load_processed_data('nus_processed_2.h5', dataset='variable')
+# dataset = DataLoader.load_processed_data('reduced_dataset_2.h5', dataset='variable')
 
-net = SkyVoiceNet(mode='cat_pre_post_attn')
+net = SkyVoiceNet(mode=None)
 
 torch.manual_seed(42)
 
 # Train-test split
-# training_set, test_set = dataset.train_test_split(578, seed=42)
+training_set, test_set = dataset.train_test_split(578, seed=42)
 
 # Full dataset in training
-training_set = dataset
+# training_set = dataset
 
 # Parameters
-batch_size = 4
-num_epochs = 60
+batch_size = 16
+num_epochs = 90
 learning_rate = 1e-3
 device = "cuda" if torch.cuda.is_available() else "cpu"  # Use GPU if available
 loss_fn = torch.nn.MSELoss()
@@ -54,7 +54,7 @@ ax.plot(t, training_loss)
 ax.set_xlabel("Epoch")
 ax.set_ylabel("Training Loss")
 ax.set_title("Loss evolution over time")
-output_png = os.path.join(path_dir, 'loss_cat_pre_post_attn.png')
+output_png = os.path.join(path_dir, 'loss.png')
 
 fig.savefig(output_png, dpi=300)
 plt.show()
