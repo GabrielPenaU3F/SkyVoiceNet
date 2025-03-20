@@ -5,7 +5,6 @@ from source.data_management.data_writer import DataWriter
 from source.data_processing.contour_extractor import ContourExtractor
 from source.data_processing.normalizer import Normalizer
 from source.data_processing.resampler import Resampler
-from source.data_processing.silence_remover import SilenceRemover
 from source.data_processing.spectrogram_transformer import SpectrogramTransformer
 from source.data_processing.word_processor import WordProcessor
 
@@ -16,7 +15,6 @@ class ProcessingPipeline:
         self.config = PreprocessConfig() # This one is a singleton
         self.resampler = Resampler(self.config.original_sr)
         self.normalizer = Normalizer()
-        self.silence_remover = SilenceRemover()
         self.spectrogram_transformer = SpectrogramTransformer()
         self.contour_extractor = ContourExtractor()
 
@@ -79,14 +77,6 @@ class ProcessingPipeline:
                      }
                 )
                 preprocessed_data = pd.concat([preprocessed_data, preprocessed_row], ignore_index=True)
-
-            # Remove silences and trails
-            # silenceless_speech = self.silence_remover.remove_silence(resampled_speech, self.config.resample_sr,
-            #                                                          self.config.silence_threshold,
-            #                                                          self.config.max_allowed_silence_duration)
-            # melody_no_trail = self.silence_remover.remove_trailing_silences(resampled_melody,
-            #                                                                 self.config.silence_threshold,
-            #                                                                 self.config.hop_length)
 
             # Resample randomly
             # randomly_resampled_speech, speech_sr = self.resampler.resample_randomly(silenceless_speech,

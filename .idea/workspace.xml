@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="15936c0f-728c-4ae7-8ae2-14f990ceb9fa" name="Changes" comment="Added new mode with pre and post concatenation self attention">
       <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/reconstruction_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/reconstruction_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/training_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/training_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/processing_pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/processing_pipeline.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/silence_remover.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +24,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;GabrielPenaU3F&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/GabrielPenaU3F/SkyVoiceNet.git&quot;,
+    &quot;accountId&quot;: &quot;98b9ffff-1b5e-4a87-abaa-a0ff1c40b63d&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -72,8 +84,8 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;ToolWindow.Plots.ShowToolbar&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;skyvoicenet2&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Universidad/FIUBA/Redes Neuronales/Trabajo Final/SkyVoiceNet/outputs/full&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Universidad/FIUBA/Redes Neuronales/Diagramas/PlotNeuralNet&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -296,7 +308,8 @@
       <workItem from="1742240284283" duration="5763000" />
       <workItem from="1742253019552" duration="13518000" />
       <workItem from="1742324807247" duration="22528000" />
-      <workItem from="1742423544971" duration="8000" />
+      <workItem from="1742423544971" duration="1545000" />
+      <workItem from="1742427370299" duration="7996000" />
     </task>
     <task id="LOCAL-00001" summary="Basic data IO and preprocessing working">
       <option name="closed" value="true" />
