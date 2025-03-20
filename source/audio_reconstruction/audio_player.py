@@ -51,7 +51,6 @@ class AudioPlayer:
         mel_basis = np.delete(mel_basis, -1, 1) # Delete highest frequency
         return np.dot(mel_basis, magnitude_spectrogram)
 
-
     def upsample_spectrogram(self, spectrogram, orig_sr=16000, target_sr=22050):
         factor = target_sr / orig_sr
         time_steps = np.linspace(0, spectrogram.shape[1] - 1, num=int(spectrogram.shape[1] * factor))

@@ -31,7 +31,7 @@ class SkyVoiceNet(nn.Module):
     def select_decoder(self, freqs):
 
         # Decoder with 128-embeddings
-        if self.config.mode in {None, 'self_attn', 'cat_pre_post_attn'}:
+        if self.config.mode in {'cat', 'cat_attn', 'cat_pre_post_attn'}:
             return LargeDecoder(freqs)
 
         # Decoder with 64-embeddings

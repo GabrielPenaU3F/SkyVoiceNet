@@ -104,27 +104,28 @@ class LargeDecoder(Decoder):
         hidden_2 = int(freqs / 4)
         self.f_upsample_conv_3 = ConvTranspose1DBlock(hidden_2, hidden_2, kernel_size=5, stride=1, padding=2)
 
-        # Available modes: None, 'self_attn' or 'cat_pre_post_attn'
-        if self.config.mode == 'self_attn':
+        # Available modes: 'no_attn, 'self_attn' or 'cat_pre_post_attn'
+        if self.config.mode == 'cat_attn':
             self.attention = SelfAttentionBlock(embed_dim=2*self.config.embed_dim)
 
         elif self.config.mode == 'cat_pre_post_attn':
-            self.pre_attention = SelfAttentionBlock(embed_dim=self.config.embed_dim)
+            self.speech_pre_attention = SelfAttentionBlock(embed_dim=self.config.embed_dim)
+            self.melody_pre_attention = SelfAttentionBlock(embed_dim=self.config.embed_dim)
             self.post_attention = SelfAttentionBlock(embed_dim=2*self.config.embed_dim)
 
     def forward(self, speech_embedding, melody_embedding):
 
         # Optional pre-attention
         if self.config.mode == 'cat_pre_post_attn':
-            speech_embedding = self.pre_attention(speech_embedding)
-            melody_embedding = self.pre_attention(melody_embedding)
+            speech_embedding = self.speech_pre_attention(speech_embedding)
+            melody_embedding = self.melody_pre_attention(melody_embedding)
 
         # Concatenation
         speech_embedding = self.apply_skip_connection(speech_embedding, self.residual_buffer.retrieve_buffer_conv_3_output())
         x = torch.cat((speech_embedding, melody_embedding), dim=1)
 
         # Optional single self-attention
-        if self.config.mode == 'attn':
+        if self.config.mode == 'cat_attn':
             x = self.attention(x)
 
         # Optional post-attention

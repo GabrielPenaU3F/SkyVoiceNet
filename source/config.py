@@ -53,12 +53,24 @@ class CrepeConfig(Config):
 
 class NetworkConfig(Config):
 
+    modes = {'cat', 'cat_attn', 'cross_attn', 'double_attn', 'cat_pre_post_attn'}
+
     def __init__(self):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.mode = 'cat'
         self.embed_dim = 64
         self.attn_heads = 4
-        self.mode = None
-        self.spectrogram_dimensions = None
+
+    def validate_mode(self, mode):
+        if mode not in self.modes:
+            raise ValueError(f'Invalid mode: {mode}')
+
+        return True
+
+    def update(self, **kwargs):
+        if 'mode' in kwargs.keys():
+            self.validate_mode(kwargs['mode'])
+        super().update(**kwargs)
 
 
 class PositionalEncodingConfig(Config):
