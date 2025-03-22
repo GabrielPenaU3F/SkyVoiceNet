@@ -16,7 +16,7 @@ from source.utilities import draw_spectrograms, draw_single_spectrogram, compute
 net = SkyVoiceNet()
 
 path_dir = PathRepo().get_output_path()
-output_file = os.path.join(path_dir, 'sky_voice_net.pt')
+output_file = os.path.join(path_dir, 'sky_voice_net_full_cat.pt')
 
 trained_model = torch.load(output_file)
 
@@ -46,7 +46,7 @@ print("Range (predicted):", np.min(predicted_spectrogram), np.max(predicted_spec
 real_total_energy, real_energy_per_frame = compute_spectrogram_energy(melody_spectrogram)
 pred_total_energy, pred_energy_per_frame = compute_spectrogram_energy(predicted_spectrogram)
 
-print(f"Energía total (real): {real_total_energy}, Energía total (predicho): {pred_total_energy}")
+print(f"Total energy (real): {real_total_energy}, Total energy (predicted): {pred_total_energy}")
 
 plt.plot(real_energy_per_frame, label="Real", alpha=0.7)
 plt.plot(pred_energy_per_frame, label="Predicted", alpha=0.7)
@@ -55,8 +55,6 @@ plt.title("Framewise spectrogram energy")
 plt.xlabel("Frame")
 plt.ylabel("Energy")
 plt.show()
-
-plt.savefig('energy.png')
 
 # Reconstruct
 player = AudioPlayer()

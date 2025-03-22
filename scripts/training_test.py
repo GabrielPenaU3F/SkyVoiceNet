@@ -14,7 +14,7 @@ from source.utilities import count_parameters
 dataset = DataLoader.load_processed_data('nus_processed_2.h5', dataset='variable')
 # dataset = DataLoader.load_processed_data('reduced_dataset_2.h5', dataset='variable')
 
-net = SkyVoiceNet(mode='cat_pre_post_attn')
+net = SkyVoiceNet(mode='cat_attn')
 
 torch.manual_seed(42)
 
@@ -25,7 +25,7 @@ training_set, test_set = dataset.train_test_split(578, seed=42)
 # training_set = dataset
 
 # Parameters
-batch_size = 16
+batch_size = 32
 num_epochs = 90
 learning_rate = 1e-3
 device = "cuda" if torch.cuda.is_available() else "cpu"  # Use GPU if available
@@ -45,7 +45,7 @@ trained_model, training_loss = train_model(
 count_parameters(trained_model)
 
 path_dir = PathRepo().get_output_path()
-output_file = os.path.join(path_dir, 'sky_voice_net_full_pre_post_attn.pt')
+output_file = os.path.join(path_dir, 'sky_voice_net_full_cat_attn.pt')
 torch.save(trained_model, output_file)
 
 fig, ax = plt.subplots()
@@ -54,7 +54,7 @@ ax.plot(t, training_loss)
 ax.set_xlabel("Epoch")
 ax.set_ylabel("Training Loss")
 ax.set_title("Loss evolution over time")
-output_png = os.path.join(path_dir, 'loss_full_cat_pre_post_attn.png')
+output_png = os.path.join(path_dir, 'loss_full_cat_attn.png')
 
 fig.savefig(output_png, dpi=300)
 plt.show()

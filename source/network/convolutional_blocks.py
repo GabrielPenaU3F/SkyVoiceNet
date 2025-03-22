@@ -6,7 +6,7 @@ class Conv1DBlock(nn.Module):
         super(Conv1DBlock, self).__init__()
 
         conv = nn.Conv1d(in_channels, out_channels, kernel_size, stride, padding, bias=False)
-        norm = nn.BatchNorm1d(out_channels)
+        norm = nn.BatchNorm1d(out_channels, eps=1e-6)
         activation = nn.LeakyReLU()
 
         self.block = nn.Sequential(conv, norm, activation)
@@ -21,7 +21,7 @@ class ConvTranspose1DBlock(nn.Module):
 
         conv = nn.ConvTranspose1d(in_channels, out_channels, kernel_size,
                                   stride=stride, padding=padding, output_padding=output_padding, bias=False)
-        norm = nn.BatchNorm1d(out_channels)
+        norm = nn.BatchNorm1d(out_channels, eps=1e-6)
         activation = nn.LeakyReLU()
 
         self.block = nn.Sequential(conv, norm, activation)

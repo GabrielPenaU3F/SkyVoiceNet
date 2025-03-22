@@ -39,8 +39,12 @@ class AudioPlayer:
             audio = audio.squeeze().cpu().numpy()
 
         audio = librosa.util.normalize(audio)
-        sd.play(audio, self.config.gan_sr)
-        sd.wait()
+
+        if self.config.mode == 'play':
+            sd.play(audio, self.config.gan_sr)
+            sd.wait()
+        elif self.config.mode == 'return':
+            return audio, self.config.gan_sr
 
     def apply_log_compression(self, mel_spectrogram, C):
         return np.log(np.clip(mel_spectrogram, a_min=1e-5, a_max=None) * C)

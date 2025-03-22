@@ -38,6 +38,7 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
                 if param.grad is not None:
                     print(f"{name} gradient norm: {param.grad.norm().item()}")
 
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)  # Gradient Clipping
             optimizer.step()
 
             epoch_loss += loss.item()
