@@ -29,7 +29,7 @@ class Decoder(nn.Module):
 
         # LSTM
         self.norm = nn.InstanceNorm1d(freqs)
-        self.lstm = nn.LSTM(freqs, freqs, num_layers=2, batch_first=True, dropout=0.1, bidirectional=True)
+        self.lstm = nn.LSTM(freqs, freqs, num_layers=2, batch_first=True, dropout=self.config.dropout, bidirectional=True)
         self.lstm_proj = nn.Conv1d(freqs * 2, freqs, kernel_size=5, stride=1, padding=2)
 
     def forward(self, x):

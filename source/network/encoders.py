@@ -30,7 +30,7 @@ class Encoder(nn.Module):
 
         # LSTM or other recurrent layers
         self.norm = nn.InstanceNorm1d(hidden_2)
-        self.lstm = nn.LSTM(hidden_2, hidden_2, num_layers=2, batch_first=True, dropout=0.1, bidirectional=True)
+        self.lstm = nn.LSTM(hidden_2, hidden_2, num_layers=2, batch_first=True, dropout=self.config.dropout, bidirectional=True)
         self.lstm_proj = nn.Conv1d(hidden_2 * 2, hidden_2, kernel_size=5, stride=1, padding=2)
 
 

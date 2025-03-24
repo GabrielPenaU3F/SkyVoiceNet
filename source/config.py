@@ -60,6 +60,7 @@ class NetworkConfig(Config):
         self.mode = 'cat'
         self.embed_dim = 64
         self.attn_heads = 4
+        self.dropout = 0
 
     def validate_mode(self, mode):
         if mode not in self.modes:
