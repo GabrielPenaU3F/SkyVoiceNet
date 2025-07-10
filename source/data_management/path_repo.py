@@ -11,6 +11,7 @@ class PathRepo(metaclass=Singleton):
         self.hdf5_path = os.path.join(base_path, 'resources', 'data')
         self.output_path = os.path.join(base_path, 'outputs')
         self.contour_path = os.path.join(base_path, 'resources', 'data', 'melody_contour')
+        self.test_wavs_path = os.path.join(base_path, 'outputs', 'test_wavs')
 
     def get_wavs_path(self):
         return self.wavs_path
@@ -28,3 +29,6 @@ class PathRepo(metaclass=Singleton):
 
     def get_contour_path(self):
         pass
+
+    def get_test_wads_path(self):
+        return self.test_wavs_path

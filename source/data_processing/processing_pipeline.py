@@ -1,4 +1,5 @@
 import pandas as pd
+import sounddevice as sd
 
 from source.config import PreprocessConfig
 from source.data_management.data_writer import DataWriter
@@ -58,10 +59,9 @@ class ProcessingPipeline:
             sing_audio_segments = WordProcessor.extract_audio_segments(melody, sing_segments)
             read_audio_segments = WordProcessor.extract_audio_segments(speech, speech_segments)
 
-            # for idx, audio_segment in enumerate(read_audio_segments):
-            #     print(speech_segments[idx])
-            #     sd.play(audio_segment, 44100)
-            #     sd.wait()
+            for idx, audio_segment in enumerate(read_audio_segments):
+                sd.play(audio_segment, 44100)
+                sd.wait()
 
 
             # Resample, extract contour and add

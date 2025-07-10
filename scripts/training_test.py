@@ -22,9 +22,6 @@ torch.manual_seed(42)
 # Train-test split
 training_set, test_set = dataset.train_test_split(578, seed=42)
 
-# Full dataset in training
-# training_set = dataset
-
 # Parameters
 batch_size = 16
 num_epochs = 30

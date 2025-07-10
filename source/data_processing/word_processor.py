@@ -10,12 +10,16 @@ class WordProcessor:
         current_phrase = []
 
         for _, row in marks.iterrows():
+
+            mark = row["mark"]
+            if not current_phrase and mark == "sil":
+                continue  # ignore first 'sil'
+
+            current_phrase.append(row.to_dict())
             if row["mark"] == "sil":
                 if current_phrase:
                     phrases.append(current_phrase)
                     current_phrase = []
-            else:
-                current_phrase.append(row.to_dict())
 
         if current_phrase:
             phrases.append(current_phrase)
@@ -34,7 +38,8 @@ class WordProcessor:
             current_word = []
 
             for entry in phrase:
-                if entry["mark"] == "sp":
+                if entry["mark"] == "sp" or entry['mark'] == 'sil':
+                    current_word.append(entry) # Include the "sp" and "sil" phonemes
                     if current_word:
                         words.append(current_word)
                         current_word = []
@@ -48,33 +53,67 @@ class WordProcessor:
 
         return words_per_phrase
 
+    # @staticmethod
+    # def match_read_segments(sing_words_per_phrase, read_marks):
+    #
+    #     # Eliminar fonemas 'sil' de read_marks antes de empezar la iteración
+    #     read_marks = read_marks[read_marks["mark"] != "sil"].reset_index(drop=True)
+    #
+    #     read_segments = []
+    #     read_index = 0
+    #
+    #     for phrase in sing_words_per_phrase:
+    #         read_phrase = []
+    #         read_word = []
+    #         for word in phrase:
+    #             for phoneme in word:
+    #                 if read_index < len(read_marks):
+    #
+    #                     if phoneme["mark"] == "sp":
+    #                         if read_word:
+    #                             read_phrase.append(read_word)
+    #                         read_word = []
+    #                     else:
+    #                         read_word.append(read_marks.iloc[read_index].to_dict())
+    #                     read_index += 1
+    #
+    #             if read_word:
+    #                 read_phrase.append(read_word)
+    #                 read_word = []
+    #
+    #         read_segments.append(read_phrase)
+    #
+    #     return read_segments
+
     @staticmethod
     def match_read_segments(sing_words_per_phrase, read_marks):
-
-        # Eliminar fonemas 'sil' de read_marks antes de empezar la iteración
-        read_marks = read_marks[read_marks["mark"] != "sil"].reset_index(drop=True)
-
+        """
+        Alinea las palabras del canto con el habla, por conteo de fonemas.
+        Ignora un 'sil' inicial y asigna los 'sil' entre palabras como cierre de la palabra anterior.
+        """
         read_segments = []
+        read_marks_list = list(read_marks.to_dict(orient="records"))
         read_index = 0
 
-        for phrase in sing_words_per_phrase:
+        for phrase_idx, phrase in enumerate(sing_words_per_phrase):
             read_phrase = []
-            read_word = []
-            for word in phrase:
-                for phoneme in word:
-                    if read_index < len(read_marks):
 
-                        if phoneme["mark"] == "sp":
-                            if read_word:
-                                read_phrase.append(read_word)
-                            read_word = []
-                        else:
-                            read_word.append(read_marks.iloc[read_index].to_dict())
+            for word_idx, word in enumerate(phrase):
+                num_phonemes = len(word)
+                word_segment = []
+
+                while len(word_segment) < num_phonemes and read_index < len(read_marks_list):
+                    word_segment.append(read_marks_list[read_index])
+                    read_index += 1
+
+                # Incluir un 'sil' siguiente si existe
+                if read_index < len(read_marks_list):
+                    next_entry = read_marks_list[read_index]
+                    if next_entry["mark"] == "sil":
+                        word_segment.append(next_entry)
                         read_index += 1
 
-                if read_word:
-                    read_phrase.append(read_word)
-                    read_word = []
+                read_phrase.append(word_segment)
 
             read_segments.append(read_phrase)
 
