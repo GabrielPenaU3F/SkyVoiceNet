@@ -4,15 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="15936c0f-728c-4ae7-8ae2-14f990ceb9fa" name="Changes" comment="Added dropouts and etc">
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/draw_two_batches.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/preprocessing_validation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/save_audios.py" afterDir="false" />
+    <list default="true" id="15936c0f-728c-4ae7-8ae2-14f990ceb9fa" name="Changes" comment="Safety commit... trying to improve">
+      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/edelweiss_phrase_fft.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/preprocessing_validation.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/preprocessing_validation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/process_raw_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/process_raw_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/reconstruction_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/reconstruction_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/reduce_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/reduce_dataset.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/training_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/training_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_management/path_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_management/path_repo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/audio_reconstruction/audio_player.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/audio_reconstruction/audio_player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/processing_pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/processing_pipeline.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/spectrogram_transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/spectrogram_transformer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/word_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/word_processor.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,6 +70,7 @@
     "Python.decoder_block.executor": "Debug",
     "Python.draw_three_batches.executor": "Run",
     "Python.draw_two_batches (1).executor": "Run",
+    "Python.edelweiss_phrase_fft.executor": "Run",
     "Python.encoder_block.executor": "Debug",
     "Python.keys.executor": "Run",
     "Python.main.executor": "Debug",
@@ -74,11 +78,11 @@
     "Python.net_reconstruction_test.executor": "Debug",
     "Python.net_test (1).executor": "Run",
     "Python.practica_transformers.executor": "Run",
-    "Python.preprocessing_validation.executor": "Debug",
+    "Python.preprocessing_validation.executor": "Run",
     "Python.process_raw_data.executor": "Debug",
     "Python.read_dataset.executor": "Run",
     "Python.reconstruction_test (1).executor": "Debug",
-    "Python.reconstruction_test.executor": "Run",
+    "Python.reconstruction_test.executor": "Debug",
     "Python.reduce_dataset.executor": "Run",
     "Python.save_audios.executor": "Debug",
     "Python.summary_test.executor": "Run",
@@ -92,11 +96,12 @@
     "Python.utilities.executor": "Debug",
     "Python.verify_min_max.executor": "Run",
     "Python.verify_tensorflow.executor": "Run",
+    "Python.word_processor.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "ToolWindow.Plots.ShowToolbar": "false",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/Universidad/FIUBA/Redes Neuronales/Trabajo Final/SkyVoiceNet/outputs/full",
+    "last_opened_file_path": "D:/Universidad/FIUBA/Redes Neuronales/Trabajo Final/SkyVoiceNet/outputs",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -120,8 +125,8 @@
       <recent name="D:\Universidad\FIUBA\Redes Neuronales\Trabajo Final\SkyVoiceNet\outputs\pre_post_attention" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.process_raw_data">
-    <configuration name="draw_two_batches (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.reconstruction_test">
+    <configuration name="edelweiss_phrase_fft" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="SkyVoiceNet" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -135,53 +140,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/draw_two_batches.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="draw_two_batches" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="SkyVoiceNet" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="D:\Universidad\FIUBA\Redes Neuronales\Trabajo Final\SkyVoiceNet\scripts\draw_two_batches.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="preprocessing_validation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="SkyVoiceNet" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/preprocessing_validation.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/edelweiss_phrase_fft.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -213,7 +172,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="save_audios" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="reconstruction_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="SkyVoiceNet" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -227,7 +186,53 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/save_audios.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/reconstruction_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="reduce_dataset" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="SkyVoiceNet" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/reduce_dataset.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="training_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="SkyVoiceNet" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/training_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -238,11 +243,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.reconstruction_test" />
+        <item itemvalue="Python.training_test" />
+        <item itemvalue="Python.reduce_dataset" />
         <item itemvalue="Python.process_raw_data" />
-        <item itemvalue="Python.preprocessing_validation" />
-        <item itemvalue="Python.save_audios" />
-        <item itemvalue="Python.draw_two_batches (1)" />
-        <item itemvalue="Python.draw_two_batches" />
+        <item itemvalue="Python.edelweiss_phrase_fft" />
       </list>
     </recent_temporary>
   </component>
@@ -329,7 +334,15 @@
       <workItem from="1743303294788" duration="284000" />
       <workItem from="1751565728672" duration="2881000" />
       <workItem from="1751659479522" duration="48000" />
-      <workItem from="1752089580878" duration="15837000" />
+      <workItem from="1752089580878" duration="17190000" />
+      <workItem from="1752174129904" duration="8419000" />
+      <workItem from="1752196211580" duration="18000" />
+      <workItem from="1752601410545" duration="6230000" />
+      <workItem from="1752692992077" duration="4890000" />
+      <workItem from="1752817534413" duration="612000" />
+      <workItem from="1752885734863" duration="4841000" />
+      <workItem from="1753239276748" duration="3848000" />
+      <workItem from="1753407479152" duration="10600000" />
     </task>
     <task id="LOCAL-00001" summary="Basic data IO and preprocessing working">
       <option name="closed" value="true" />
@@ -539,17 +552,35 @@
       <option name="project" value="LOCAL" />
       <updated>1742787366137</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Safety commit... trying to improve">
+      <option name="closed" value="true" />
+      <created>1752122448731</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1752122448731</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixes and improvements" />
     <MESSAGE value="Big refactor to the data IO managers. Preparation to correctly implement the preprocessing, which was entirely wrong" />
     <MESSAGE value="Fixed a serious bug in the silence removal" />
     <MESSAGE value="Implemented complete preprocessing pipeline" />
@@ -574,27 +605,11 @@
     <MESSAGE value="Some refactors to the operation modes. Added validation." />
     <MESSAGE value="Add evaluation script and removed unused imports and stuff" />
     <MESSAGE value="Added dropouts and etc" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added dropouts and etc" />
+    <MESSAGE value="Safety commit... trying to improve" />
+    <option name="LAST_COMMIT_MESSAGE" value="Safety commit... trying to improve" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/utilities.py</url>
-          <line>64</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/processing_pipeline.py</url>
-          <line>62</line>
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/word_processor.py</url>
-          <line>97</line>
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -622,11 +637,13 @@
     <SUITE FILE_PATH="coverage/SkyVoiceNet$melody_contour.coverage" NAME="melody_contour Coverage Results" MODIFIED="1742072708009" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$test_reconstruction_2.coverage" NAME="test_reconstruction_2 Coverage Results" MODIFIED="1739926081877" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$verify_min_max.coverage" NAME="verify_min_max Coverage Results" MODIFIED="1739743217554" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
-    <SUITE FILE_PATH="coverage/SkyVoiceNet$reconstruction_test.coverage" NAME="reconstruction_test Coverage Results" MODIFIED="1742666338949" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$reconstruction_test.coverage" NAME="reconstruction_test Coverage Results" MODIFIED="1753471329518" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$draw_three_batches.coverage" NAME="draw_three_batches Coverage Results" MODIFIED="1752091432148" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$word_processor.coverage" NAME="word_processor Coverage Results" MODIFIED="1752886595739" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$main.coverage" NAME="main Coverage Results" MODIFIED="1737956594097" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$decoder_block.coverage" NAME="decoder_block Coverage Results" MODIFIED="1741495077420" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/network" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$net_reconstruction_test.coverage" NAME="net_reconstruction_test Coverage Results" MODIFIED="1740345154087" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$edelweiss_phrase_fft.coverage" NAME="edelweiss_phrase_fft Coverage Results" MODIFIED="1753240372765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$training_loop.coverage" NAME="training_loop Coverage Results" MODIFIED="1742172916034" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$count_parameters.coverage" NAME="count_parameters Coverage Results" MODIFIED="1742480684932" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$checks.coverage" NAME="checks Coverage Results" MODIFIED="1740621785731" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
@@ -636,17 +653,17 @@
     <SUITE FILE_PATH="coverage/SkyVoiceNet$data_preprocessor.coverage" NAME="data_preprocessor Coverage Results" MODIFIED="1737000902731" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_management" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$transformer_encoder_block.coverage" NAME="transformer_encoder_block Coverage Results" MODIFIED="1740712591056" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/network" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$contour.coverage" NAME="contour Coverage Results" MODIFIED="1742163953164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
-    <SUITE FILE_PATH="coverage/SkyVoiceNet$reduce_dataset.coverage" NAME="reduce_dataset Coverage Results" MODIFIED="1742077650115" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$reduce_dataset.coverage" NAME="reduce_dataset Coverage Results" MODIFIED="1753408379784" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$test_set_eval.coverage" NAME="test_set_eval Coverage Results" MODIFIED="1752090970340" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$utilities.coverage" NAME="utilities Coverage Results" MODIFIED="1740363337812" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$training_and_reco_test.coverage" NAME="training_and_reco_test Coverage Results" MODIFIED="1740623169750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$check_min_max.coverage" NAME="check_min_max Coverage Results" MODIFIED="1739500884223" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$read_dataset.coverage" NAME="read_dataset Coverage Results" MODIFIED="1741308490687" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$attention_weights.coverage" NAME="attention_weights Coverage Results" MODIFIED="1740343335467" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
-    <SUITE FILE_PATH="coverage/SkyVoiceNet$training_test.coverage" NAME="training_test Coverage Results" MODIFIED="1742774478959" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$training_test.coverage" NAME="training_test Coverage Results" MODIFIED="1753416583005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$practica_transformers.coverage" NAME="practica_transformers Coverage Results" MODIFIED="1737604122026" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet" />
-    <SUITE FILE_PATH="coverage/SkyVoiceNet$process_raw_data.coverage" NAME="process_raw_data Coverage Results" MODIFIED="1752121041247" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
-    <SUITE FILE_PATH="coverage/SkyVoiceNet$preprocessing_validation.coverage" NAME="preprocessing_validation Coverage Results" MODIFIED="1752120552477" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$process_raw_data.coverage" NAME="process_raw_data Coverage Results" MODIFIED="1753407600333" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
+    <SUITE FILE_PATH="coverage/SkyVoiceNet$preprocessing_validation.coverage" NAME="preprocessing_validation Coverage Results" MODIFIED="1752889977631" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$summary_test.coverage" NAME="summary_test Coverage Results" MODIFIED="1741758113192" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$keys.coverage" NAME="keys Coverage Results" MODIFIED="1740254344539" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />
     <SUITE FILE_PATH="coverage/SkyVoiceNet$test_reconstruction.coverage" NAME="test_reconstruction Coverage Results" MODIFIED="1740617711033" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts" />

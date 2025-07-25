@@ -1,5 +1,8 @@
+import librosa
+import numpy as np
 import pandas as pd
 import sounddevice as sd
+from matplotlib import pyplot as plt
 
 from source.config import PreprocessConfig
 from source.data_management.data_writer import DataWriter
@@ -47,25 +50,40 @@ class ProcessingPipeline:
             speech_marks = row['marks_read']
 
             # Segment
-            sing_phrases = WordProcessor.segment_phrases(melody_marks) # Divide sing into phrases
-            sing_words_per_phrase = WordProcessor.segment_words(sing_phrases) # Divide each frase into words
-            read_words_per_phrase = WordProcessor.match_read_segments(sing_words_per_phrase, speech_marks) # Divide read into words
-
-            # Generate combinations
-            sing_segments = WordProcessor.generate_combinations(sing_words_per_phrase)
-            speech_segments = WordProcessor.generate_combinations(read_words_per_phrase)
+            sing_phrases = WordProcessor.segment_phrases(melody_marks)  # Divide sing into phrases
+            sing_words_per_phrase = WordProcessor.segment_words(sing_phrases)  # Divide each frase into words
+            read_words_per_phrase = WordProcessor.match_read_segments(sing_words_per_phrase,
+                                                                      speech_marks)  # Divide read into words
 
             # Extract segments from audios
-            sing_audio_segments = WordProcessor.extract_audio_segments(melody, sing_segments)
-            read_audio_segments = WordProcessor.extract_audio_segments(speech, speech_segments)
+            sing_audio_words_per_phrase = WordProcessor.extract_audio_segments(melody, sing_words_per_phrase)
+            speech_audio_words_per_phrase = WordProcessor.extract_and_stretch_speech_segments(
+                speech_audio=speech,
+                speech_segments=read_words_per_phrase,
+                sing_segments=sing_words_per_phrase,
+                sr=44100
+            )
 
-            for idx, audio_segment in enumerate(read_audio_segments):
-                sd.play(audio_segment, 44100)
-                sd.wait()
+            # Generate combinations
+            sing_audio_segments = WordProcessor.generate_combinations(sing_audio_words_per_phrase)
+            read_audio_segments = WordProcessor.generate_combinations(speech_audio_words_per_phrase)
 
+            # for idx, audio_segment in enumerate(read_audio_segments):
+            #
+            #     if(len(audio_segment) == 5):
+            #         audio = np.concatenate(audio_segment)
+            #         fft = np.abs(np.fft.fft(audio))[:int(len(audio) / 2)]
+            #         f_axis = np.linspace(0, 22050, len(fft), endpoint=False)
+            #
+            #         plt.plot(f_axis, fft)
+            #         plt.show()
+            #         sd.play(audio, 44100)
+            #         sd.wait()
 
             # Resample, extract contour and add
             for idx, (sing_audio, read_audio) in enumerate(zip(sing_audio_segments, read_audio_segments)):
+                sing_audio = np.concatenate(sing_audio)
+                read_audio = np.concatenate(read_audio)
                 resampled_song = self.resampler.resample(sing_audio, self.config.resample_sr)
                 resampled_speech = self.resampler.resample(read_audio, self.config.resample_sr)
                 melody_contour = self.contour_extractor.extract_contour(resampled_song, sr=self.config.resample_sr)
@@ -101,8 +119,8 @@ class ProcessingPipeline:
                 song, self.config.n_fft, self.config.hop_length, self.config.win_length)
 
             # Time stretch speech
-            speech_spectrogram = self.spectrogram_transformer.stretch_spectrogram(
-                speech_spectrogram, contour.shape[1])
+            # speech_spectrogram = self.spectrogram_transformer.stretch_spectrogram(
+            #     speech_spectrogram, contour.shape[1])
 
             # Normalize
             if self.config.normalize:

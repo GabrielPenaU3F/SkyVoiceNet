@@ -1,5 +1,6 @@
 import librosa
 import numpy as np
+from scipy.interpolate import CubicSpline
 from scipy.ndimage import zoom
 
 
@@ -29,3 +30,22 @@ class SpectrogramTransformer:
         spectrogram = np.pad(spectrogram, ((0, 0), (0, pad_t)), mode='constant', constant_values=padding)
         return spectrogram
 
+    def obtain_magnitude_spectrogram(self, log_spectrogram):
+        return librosa.db_to_amplitude(log_spectrogram)
+
+    def convert_to_mel(self, y, sr, n_fft, n_mels):
+        magnitude_spectrogram = np.exp(y) - 1
+        mel_basis = librosa.filters.mel(sr=sr, n_fft=n_fft, fmin=0, fmax=8000, n_mels=n_mels)
+        mel_basis = np.delete(mel_basis, -1, 1) # Delete highest frequency
+        return np.dot(mel_basis, magnitude_spectrogram)
+
+    def upsample_spectrogram(self, spectrogram, orig_sr=16000, target_sr=22050):
+        factor = target_sr / orig_sr
+        time_steps = np.linspace(0, spectrogram.shape[1] - 1, num=int(spectrogram.shape[1] * factor))
+
+        upsampled = np.zeros((spectrogram.shape[0], len(time_steps)))
+        for i in range(spectrogram.shape[0]):
+            spline = CubicSpline(np.arange(spectrogram.shape[1]), spectrogram[i])
+            upsampled[i] = spline(time_steps)
+
+        return upsampled.astype(np.float32)

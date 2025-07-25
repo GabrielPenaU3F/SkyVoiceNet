@@ -5,6 +5,7 @@ import sounddevice as sd
 import librosa
 import torch
 from matplotlib import pyplot as plt
+from scipy.io import wavfile
 
 from source.audio_reconstruction.audio_player import AudioPlayer
 from source.data_management.data_loader import DataLoader
@@ -16,12 +17,12 @@ from source.utilities import draw_spectrograms, draw_single_spectrogram, compute
 net = SkyVoiceNet()
 
 path_dir = PathRepo().get_output_path()
-output_file = os.path.join(path_dir, 'sky_voice_net_full_cat.pt')
+output_file = os.path.join(path_dir, 'sky_voice_net_3_full_cat_30_batch4.pt')
 
 trained_model = torch.load(output_file)
 
 # Load test data
-dataset = DataLoader.load_processed_data('reduced_dataset_2.h5', dataset=None)
+dataset = DataLoader.load_processed_data('reduced_dataset_3.h5', dataset=None)
 sample = dataset.sample(n=1)
 speech_spectrogram = sample.iloc[0]['speech']
 melody_spectrogram = sample.iloc[0]['song']
@@ -58,4 +59,15 @@ plt.show()
 
 # Reconstruct
 player = AudioPlayer()
-player.play_audio_from_spectrogram(predicted_spectrogram, sr=16000, compression_factor=3, denoising_strength=0.2)
+# player.play_audio_from_spectrogram(predicted_spectrogram, sr=16000, compression_factor=3, denoising_strength=0.2)
+
+# Save
+original_audio, new_sr = player.play_audio_from_spectrogram(melody_spectrogram, sr=16000, method='griffin-lim',
+                                                     compression_factor=3, denoising_strength=0.2, mode='return')
+predicted_audio, _ = player.play_audio_from_spectrogram(predicted_spectrogram, sr=16000, method='griffin-lim',
+                                                     compression_factor=3, denoising_strength=0.2, mode='return')
+path = PathRepo().get_test_wads_path()
+original_audio = (original_audio * 32767).astype(np.int16)
+predicted_audio = (predicted_audio * 32767).astype(np.int16)
+wavfile.write(os.path.join(path, 'ex4_original_full_30_batch4.wav'), new_sr, original_audio)
+wavfile.write(os.path.join(path, 'ex4_predicted_full_30_batch4.wav'), new_sr, predicted_audio)
