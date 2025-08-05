@@ -27,10 +27,11 @@ class Decoder(nn.Module):
         self.t_upsample_conv_2 = ConvTranspose1DBlock(hidden_1, hidden_1, kernel_size=3, stride=2, padding=1, output_padding=1)
         self.t_upsample_conv_1 = ConvTranspose1DBlock(freqs, freqs, kernel_size=3, stride=2, padding=1, output_padding=1)
 
-        # LSTM
+        # Recurrent layer
         self.norm = nn.InstanceNorm1d(freqs)
-        self.lstm = nn.LSTM(freqs, freqs, num_layers=2, batch_first=True, dropout=self.config.dropout, bidirectional=True)
-        self.lstm_proj = nn.Conv1d(freqs * 2, freqs, kernel_size=5, stride=1, padding=2)
+        self.recurrent = nn.LSTM(freqs, freqs, num_layers=2, batch_first=True, dropout=self.config.dropout, bidirectional=True)
+        # self.recurrent = nn.GRU(freqs, freqs, num_layers=2, batch_first=True, dropout=self.config.dropout, bidirectional=True)
+        self.recurrent_proj = nn.Conv1d(freqs * 2, freqs, kernel_size=5, stride=1, padding=2)
 
     def forward(self, x):
 
@@ -50,11 +51,11 @@ class Decoder(nn.Module):
         x_up1_f = self.f_upsample_conv_1(x_up2)
         x_up1 = self.t_upsample_conv_1(x_up1_f)
 
-        # Apply LSTM
+        # Apply recurrent layer
         y = self.norm(x_up1)
-        y, _ = self.lstm(y.permute(0, 2, 1))
+        y, _ = self.recurrent(y.permute(0, 2, 1))
         y = y.permute(0, 2, 1)
-        y = self.lstm_proj(y)
+        y = self.recurrent_proj(y)
 
         return y
 

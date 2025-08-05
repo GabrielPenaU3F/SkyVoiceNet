@@ -31,7 +31,6 @@ class PreprocessConfig(Config):
         self.max_resample_factor = 1.1
         self.save = False
         self.filename = 'nus_processed.h5'
-        self.normalize = True
         self.padding = 'zero'
 
 
@@ -85,7 +84,7 @@ class AudioPlayerConfig(Config):
     def __init__(self):
         self.device = 'cuda'
         self.mode = 'play'
-        self.method = 'hifi-gan'
+        self.method = 'griffin-lim'
         self.sr = 16000
         self.gan_sr = 22050
         self.n_fft = 1024

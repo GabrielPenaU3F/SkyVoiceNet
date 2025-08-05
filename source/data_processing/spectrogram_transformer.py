@@ -12,11 +12,6 @@ class SpectrogramTransformer:
         spectrogram_db = librosa.amplitude_to_db(abs(spectrogram))
         return spectrogram_db
 
-    def stretch_spectrogram(self, spectrogram, target_length):
-        scale_factor = target_length / spectrogram.shape[1]
-        stretched_spectrogram = zoom(spectrogram, (1, scale_factor), order=1)
-        return stretched_spectrogram
-
     def zeropad_time(self, spectrogram, target_length, padding='zero'):
         _, t = spectrogram.shape
         pad_t = target_length - t

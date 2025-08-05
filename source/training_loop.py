@@ -5,13 +5,15 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
+from source.network.min_max_wrapper import MinMaxWrapper
+
 
 def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, device='cuda'):
 
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
     optimizer = optim.RAdam(model.parameters(), lr=learning_rate, betas=(0.9, 0.9), eps=1e-9)
 
-    model.to(device)
+    wrapped_model = MinMaxWrapper(model).to(device)
     training_loss = []
 
     for epoch in range(num_epochs):
@@ -24,14 +26,15 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
 
             speech_spec = speech_spec.to(device)
             melody_contour = melody_contour.to(device)
-            target = melody_spec.to(device)
+            target_spec = melody_spec.to(device)
+
             optimizer.zero_grad()
 
             # Forward pass
-            predicted_spec = model(speech_spec, melody_contour)
+            predicted_spec_norm, target_norm = wrapped_model(speech_spec, melody_contour, target_spec)
 
             # Backprop
-            loss = loss_fn(predicted_spec, target)
+            loss = loss_fn(predicted_spec_norm, target_norm)
             loss.backward()
 
             for name, param in model.named_parameters():
@@ -44,7 +47,7 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
             epoch_loss += loss.item()
 
             # For memory usage optimization
-            del loss, predicted_spec, target # Delete tensors
+            del loss, predicted_spec_norm, target_norm # Delete tensors
             torch.cuda.empty_cache() # Clear memory
             torch.cuda.synchronize()
 

@@ -118,15 +118,6 @@ class ProcessingPipeline:
             melody_spectrogram = self.spectrogram_transformer.obtain_log_spectrogram(
                 song, self.config.n_fft, self.config.hop_length, self.config.win_length)
 
-            # Time stretch speech
-            # speech_spectrogram = self.spectrogram_transformer.stretch_spectrogram(
-            #     speech_spectrogram, contour.shape[1])
-
-            # Normalize
-            if self.config.normalize:
-                speech_spectrogram = self.normalizer.spectrogram_min_max_normalize(speech_spectrogram)
-                melody_spectrogram = self.normalizer.spectrogram_min_max_normalize(melody_spectrogram)
-
             # Add
             postprocessed_row = pd.DataFrame(
                 {'contour': [contour],

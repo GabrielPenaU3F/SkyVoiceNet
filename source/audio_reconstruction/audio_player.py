@@ -41,7 +41,7 @@ class AudioPlayer:
 
             audio = self.griffin_lim(log_spectrogram)
             if self.config.mode == 'play':
-                sd.play(audio, self.config.gan_sr)
+                sd.play(audio, self.config.sr)
                 sd.wait()
             elif self.config.mode == 'return':
                 return audio, self.config.sr

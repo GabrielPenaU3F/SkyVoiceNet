@@ -10,19 +10,18 @@ from scipy.io import wavfile
 from source.audio_reconstruction.audio_player import AudioPlayer
 from source.data_management.data_loader import DataLoader
 from source.data_management.path_repo import PathRepo
+from source.network.min_max_wrapper import MinMaxWrapper
 
 from source.network.sky_voice_net import SkyVoiceNet
 from source.utilities import draw_spectrograms, draw_single_spectrogram, compute_spectrogram_energy
 
-net = SkyVoiceNet()
-
 path_dir = PathRepo().get_output_path()
-output_file = os.path.join(path_dir, 'sky_voice_net_3_full_cat_30_batch4.pt')
+model_file = os.path.join(path_dir, 'sky_voice_net_4_full_cat_60_batch4.pt')
 
-trained_model = torch.load(output_file)
+trained_model = torch.load(model_file)
 
 # Load test data
-dataset = DataLoader.load_processed_data('reduced_dataset_3.h5', dataset=None)
+dataset = DataLoader.load_processed_data('reduced_dataset_4.h5', dataset=None)
 sample = dataset.sample(n=1)
 speech_spectrogram = sample.iloc[0]['speech']
 melody_spectrogram = sample.iloc[0]['song']
@@ -33,8 +32,10 @@ speech_spectrogram_tensor = torch.tensor(speech_spectrogram).unsqueeze(0).unsque
 melody_contour_tensor = torch.tensor(melody_contour).unsqueeze(0).unsqueeze(0).to('cuda').float()
 
 # Predict
+net = MinMaxWrapper(trained_model)
+net.eval()
 with torch.no_grad():
-    predicted_spectrogram = trained_model(speech_spectrogram_tensor, melody_contour_tensor).squeeze()
+    predicted_spectrogram = net(speech_spectrogram_tensor, melody_contour_tensor).squeeze()
 
 # Draw
 predicted_spectrogram = predicted_spectrogram.cpu().numpy()
@@ -69,5 +70,5 @@ predicted_audio, _ = player.play_audio_from_spectrogram(predicted_spectrogram, s
 path = PathRepo().get_test_wads_path()
 original_audio = (original_audio * 32767).astype(np.int16)
 predicted_audio = (predicted_audio * 32767).astype(np.int16)
-wavfile.write(os.path.join(path, 'ex4_original_full_30_batch4.wav'), new_sr, original_audio)
-wavfile.write(os.path.join(path, 'ex4_predicted_full_30_batch4.wav'), new_sr, predicted_audio)
+wavfile.write(os.path.join(path, 'ex4_original_full_60_batch4.wav'), new_sr, original_audio)
+wavfile.write(os.path.join(path, 'ex4_predicted_full_60_batch4.wav'), new_sr, predicted_audio)
