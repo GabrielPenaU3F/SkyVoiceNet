@@ -60,6 +60,7 @@ class NetworkConfig(Config):
         self.embed_dim = 64
         self.attn_heads = 4
         self.dropout = 0
+        self.recurrent_dropout = 0.3
 
     def validate_mode(self, mode):
         if mode not in self.modes:

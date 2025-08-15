@@ -12,13 +12,14 @@ class AudioPlayer:
 
     def __init__(self):
         self.config = AudioPlayerConfig()
-        vocoder, _, denoiser = torch.hub.load('NVIDIA/DeepLearningExamples:torchhub',
-                                                                'nvidia_hifigan')
         self.transformer = SpectrogramTransformer()
-        self.vocoder = vocoder
-        self.vocoder.eval()
-        self.vocoder = self.vocoder.to(self.config.device)
-        self.denoiser = denoiser.to(self.config.device)
+        if self.config.method == 'hifi-gan':
+            vocoder, _, denoiser = torch.hub.load('NVIDIA/DeepLearningExamples:torchhub',
+                                                                    'nvidia_hifigan')
+            self.vocoder = vocoder
+            self.vocoder.eval()
+            self.vocoder = self.vocoder.to(self.config.device)
+            self.denoiser = denoiser.to(self.config.device)
 
     def play_audio_from_spectrogram(self, log_spectrogram, **kwargs):
         self.config.update(**kwargs)

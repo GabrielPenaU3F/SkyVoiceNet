@@ -112,6 +112,8 @@ class ProcessingPipeline:
             song = row['song']
             contour = row['contour']
 
+            speech = self.match_melody_length(speech, song)
+
             # Obtain spectrograms
             speech_spectrogram = self.spectrogram_transformer.obtain_log_spectrogram(
                 speech, self.config.n_fft, self.config.hop_length, self.config.win_length)
@@ -128,3 +130,12 @@ class ProcessingPipeline:
             postprocessed_data = pd.concat([postprocessed_data, postprocessed_row], ignore_index=True)
 
         return postprocessed_data
+
+    def match_melody_length(self, speech, song):
+        n = len(speech)
+        m = len(song)
+        if n < m:
+            rate = n/m
+            speech = librosa.effects.time_stretch(speech, rate=rate)
+            return speech
+        else: return speech

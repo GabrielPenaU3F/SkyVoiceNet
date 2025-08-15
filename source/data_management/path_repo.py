@@ -7,11 +7,14 @@ class PathRepo(metaclass=Singleton):
 
     def __init__(self):
         base_path = self.build_base_path()
+        self.base_path = base_path
         self.wavs_path = os.path.join(base_path, 'resources', 'NUS-48E', 'nus-smc-corpus_48')
         self.hdf5_path = os.path.join(base_path, 'resources', 'data')
         self.output_path = os.path.join(base_path, 'outputs')
         self.contour_path = os.path.join(base_path, 'resources', 'data', 'melody_contour')
         self.test_wavs_path = os.path.join(base_path, 'outputs', 'test_wavs')
+        self.reduced_test_wavs_path = os.path.join(base_path, 'outputs', 'reduced', 'reduced_wavs')
+        self.full_test_wavs_path = os.path.join(base_path, 'outputs', 'full', 'full_wavs')
 
     def get_wavs_path(self):
         return self.wavs_path
@@ -32,3 +35,13 @@ class PathRepo(metaclass=Singleton):
 
     def get_test_wads_path(self):
         return self.test_wavs_path
+
+    def get_reduced_test_wads_path(self):
+        return self.reduced_test_wavs_path
+
+    def get_full_test_wavs_path(self):
+        return self.full_test_wavs_path
+
+    def get_base_path(self):
+        if self.base_path is not None:
+            return self.base_path

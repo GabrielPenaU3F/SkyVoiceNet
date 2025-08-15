@@ -3,6 +3,7 @@ import numpy as np
 import torch
 import sounddevice as sd
 from matplotlib import pyplot as plt
+from pesq import pesq
 
 def convert_to_midi_note(freq_tensor):
     midi_number = 69 + 12 * torch.log2(freq_tensor / 440)
@@ -85,3 +86,18 @@ def compute_spectrogram_energy(log_spectrogram):
     energy_per_frame = np.sum(spectrogram**2, axis=0)
 
     return total_energy, energy_per_frame
+
+def psnr(spectrogram_ref, spectrogram_test):
+    """
+    Calcula el PSNR (en dB) entre dos espectrogramas.
+    """
+    mse = np.mean((spectrogram_ref - spectrogram_test) ** 2)
+    if mse == 0:
+        return 0
+    max_val = np.max(spectrogram_ref)
+    return 20 * np.log10(max_val / np.sqrt(mse))
+
+def audio_pesq(audio_ref, audio_test, sr):
+    audio_ref = np.ascontiguousarray(audio_ref, dtype=np.float32)
+    audio_test = np.ascontiguousarray(audio_test, dtype=np.float32)
+    return pesq(sr, audio_ref, audio_test, 'wb')  # 'wb' = wideband

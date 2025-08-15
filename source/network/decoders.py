@@ -5,6 +5,7 @@ from torch.nn import functional as F
 from source.config import NetworkConfig
 from source.network.attention_blocks import SelfAttentionBlock, CrossAttentionBlock, DoubleAttentionBlock
 from source.network.convolutional_blocks import ConvTranspose1DBlock
+from source.network.residual_blocks import ResidualBlock
 from source.network.residual_buffer import ResidualBuffer
 
 class Decoder(nn.Module):
@@ -29,33 +30,52 @@ class Decoder(nn.Module):
 
         # Recurrent layer
         self.norm = nn.InstanceNorm1d(freqs)
-        self.recurrent = nn.LSTM(freqs, freqs, num_layers=2, batch_first=True, dropout=self.config.dropout, bidirectional=True)
-        # self.recurrent = nn.GRU(freqs, freqs, num_layers=2, batch_first=True, dropout=self.config.dropout, bidirectional=True)
-        self.recurrent_proj = nn.Conv1d(freqs * 2, freqs, kernel_size=5, stride=1, padding=2)
+        # self.recurrent = nn.LSTM(freqs, freqs, num_layers=2, batch_first=True, dropout=self.config.dropout, bidirectional=True)
+        # self.recurrent = nn.GRU(freqs, freqs, num_layers=1, batch_first=True, dropout=self.config.dropout, bidirectional=False)
+        self.recurrent = nn.LSTM(freqs, freqs, num_layers=1, batch_first=True, dropout=self.config.dropout, bidirectional=False)
+        # self.recurrent_proj = nn.Linear(freqs * 2, freqs)
+
+        # Residual blocks
+        self.residual_block_3 = ResidualBlock(hidden_2)
+        self.residual_block_2 = ResidualBlock(hidden_1)
+        self.residual_block_1 = ResidualBlock(freqs)
 
     def forward(self, x):
 
-        # # Upsampling with skip connections
+        # # Upsampling with residual connections
 
         # Upsampling 1
         x_up4_f = self.f_upsample_conv_3(x)
         x_up4 = self.t_upsample_conv_3(x_up4_f)
 
+        # Residual block 3
+        res_3 = self.residual_buffer.retrieve_buffer_conv_2_output()
+        res3_out = self.residual_block_3(res_3)
+        x_up4 = self.apply_skip_connection(x_up4, res3_out)
+
         # Upsampling 2
-        x_up4 = self.apply_skip_connection(x_up4, self.residual_buffer.retrieve_buffer_conv_2_output())
         x_up2_f = self.f_upsample_conv_2(x_up4)
         x_up2 = self.t_upsample_conv_2(x_up2_f)
 
+        # Residual block 2
+        res_2 = self.residual_buffer.retrieve_buffer_conv_1_output()
+        res2_out = self.residual_block_2(res_2)
+        x_up2 = self.apply_skip_connection(x_up2, res2_out)
+
         # Upsampling 3
-        x_up2 = self.apply_skip_connection(x_up2, self.residual_buffer.retrieve_buffer_conv_1_output())
         x_up1_f = self.f_upsample_conv_1(x_up2)
         x_up1 = self.t_upsample_conv_1(x_up1_f)
+
+        # Residual block 1
+        res_1 = self.residual_buffer.retrieve_input()
+        res1_out = self.residual_block_1(res_1)
+        x_up1 = self.apply_skip_connection(x_up1, res1_out)
 
         # Apply recurrent layer
         y = self.norm(x_up1)
         y, _ = self.recurrent(y.permute(0, 2, 1))
+        # y = self.recurrent_proj(y)
         y = y.permute(0, 2, 1)
-        y = self.recurrent_proj(y)
 
         return y
 
@@ -114,16 +134,16 @@ class LargeDecoder(Decoder):
             self.melody_pre_attention = SelfAttentionBlock(embed_dim=self.config.embed_dim)
             self.post_attention = SelfAttentionBlock(embed_dim=2*self.config.embed_dim)
 
-    def forward(self, speech_embedding, melody_embedding):
+    def forward(self, speech_embedding, contour):
 
         # Optional pre-attention
         if self.config.mode == 'cat_pre_post_attn':
             speech_embedding = self.speech_pre_attention(speech_embedding)
-            melody_embedding = self.melody_pre_attention(melody_embedding)
+            contour = self.melody_pre_attention(contour)
 
         # Concatenation
         speech_embedding = self.apply_skip_connection(speech_embedding, self.residual_buffer.retrieve_buffer_conv_3_output())
-        x = torch.cat((speech_embedding, melody_embedding), dim=1)
+        x = torch.cat((speech_embedding, contour), dim=1)
 
         # Optional single self-attention
         if self.config.mode == 'cat_attn':

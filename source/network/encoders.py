@@ -30,14 +30,16 @@ class Encoder(nn.Module):
 
         # Recurrent layer
         self.norm = nn.InstanceNorm1d(hidden_2)
-        self.recurrent = nn.LSTM(hidden_2, hidden_2, num_layers=2, batch_first=True, dropout=self.config.dropout, bidirectional=True)
-        # self.recurrent = nn.GRU(hidden_2, hidden_2, num_layers=2, batch_first=True, dropout=self.config.dropout, bidirectional=True)
-        self.recurrent_proj = nn.Conv1d(hidden_2 * 2, hidden_2, kernel_size=5, stride=1, padding=2)
+        # self.recurrent = nn.LSTM(hidden_2, hidden_2, num_layers=2, batch_first=True, dropout=self.config.dropout, bidirectional=True)
+        # self.recurrent = nn.GRU(hidden_2, hidden_2, num_layers=1, batch_first=True, dropout=self.config.recurrent_dropout, bidirectional=False)
+        self.recurrent = nn.LSTM(hidden_2, hidden_2, num_layers=1, batch_first=True, dropout=self.config.recurrent_dropout, bidirectional=False)
+        # self.recurrent_proj = nn.Linear(hidden_2 * 2, hidden_2)
 
 
     def forward(self, x):
 
         x = x.squeeze(1)
+        self.residual_buffer.buffer_input(x)
 
         # Downsample up to a dimension of 128
 
@@ -54,8 +56,8 @@ class Encoder(nn.Module):
         # Apply recurrent layer when the embedding dimension is 128
         x_down4 = self.norm(x_down4)
         x_down4, _ = self.recurrent(x_down4.permute(0, 2, 1))
+        # x_down4 = self.recurrent_proj(x_down4)
         x_down4 = x_down4.permute(0, 2, 1)
-        x_down4 = self.recurrent_proj(x_down4)
 
         # Downsampling 3
         x_down8_t = self.t_downsample_conv_3(x_down4)
