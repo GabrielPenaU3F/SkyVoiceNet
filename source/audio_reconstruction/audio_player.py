@@ -67,4 +67,5 @@ class AudioPlayer:
     def griffin_lim(self, log_spectrogram):
         log_spectrogram = np.pad(log_spectrogram, ((0, 1), (0, 0)), mode='constant') # Pad the frequency we removed
         magnitude_spectrogram = self.transformer.obtain_magnitude_spectrogram(log_spectrogram)
+        magnitude_spectrogram = np.power(magnitude_spectrogram, 1.2)
         return librosa.griffinlim(magnitude_spectrogram, n_iter=32, hop_length=256, win_length=1024, window='hann')

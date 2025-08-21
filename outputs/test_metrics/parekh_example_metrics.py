@@ -8,11 +8,11 @@ from source.utilities import psnr, audio_pesq
 
 current = PathRepo().get_base_path()
 base_path = os.path.split(current)[0]
-path = os.path.join(base_path, 'resources', 'parekh')
+path = os.path.join(base_path, 'outputs', 'parekh')
 
 melody_file = os.path.join(path, 'true_singing_0.wav')
 parekh_predicted_file = os.path.join(path, 'predicted_singing_0.wav')
-my_predicted_file = os.path.join(path, 'predicted_test7.wav')
+my_predicted_file = os.path.join(path, 'predicted_test8.wav')
 reference_melody, _ = librosa.load(melody_file, sr=16000)
 parekh_predicted, _ = librosa.load(parekh_predicted_file, sr=16000)
 my_predicted, _ = librosa.load(my_predicted_file, sr=16000)

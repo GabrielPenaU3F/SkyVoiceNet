@@ -116,9 +116,9 @@ class ProcessingPipeline:
 
             # Obtain spectrograms
             speech_spectrogram = self.spectrogram_transformer.obtain_log_spectrogram(
-                speech, self.config.n_fft, self.config.hop_length, self.config.win_length)
+                speech, self.config.n_fft, self.config.hop_length, self.config.win_length, self.config.keep_last_freq)
             melody_spectrogram = self.spectrogram_transformer.obtain_log_spectrogram(
-                song, self.config.n_fft, self.config.hop_length, self.config.win_length)
+                song, self.config.n_fft, self.config.hop_length, self.config.win_length, self.config.keep_last_freq)
 
             # Add
             postprocessed_row = pd.DataFrame(

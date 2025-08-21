@@ -6,6 +6,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from source.network.min_max_wrapper import MinMaxWrapper
+from source.network.sky_voice_net import SkyVoiceNet
 
 
 def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, device='cuda'):
@@ -13,7 +14,8 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
     optimizer = optim.RAdam(model.parameters(), lr=learning_rate, betas=(0.9, 0.9), eps=1e-9)
 
-    wrapped_model = MinMaxWrapper(model).to(device)
+    model = MinMaxWrapper(model).to(device) # Needed for network 4
+    # model = SkyVoiceNet().to(device)
     training_loss = []
 
     for epoch in range(num_epochs):
@@ -30,11 +32,14 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
 
             optimizer.zero_grad()
 
-            # Forward pass
-            predicted_spec_norm, target_norm = wrapped_model(speech_spec, melody_contour, target_spec)
+            # Forward pass (for wrapped model)
+            predicted_spec, target_spec = model(speech_spec, melody_contour, target_spec)
+
+            # Forward pass (for unwrapped model
+            # predicted_spec = model(speech_spec, melody_contour)
 
             # Backprop
-            loss = loss_fn(predicted_spec_norm, target_norm)
+            loss = loss_fn(predicted_spec, target_spec)
             loss.backward()
 
             for name, param in model.named_parameters():
@@ -47,7 +52,7 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
             epoch_loss += loss.item()
 
             # For memory usage optimization
-            del loss, predicted_spec_norm, target_norm # Delete tensors
+            del loss, predicted_spec, target_spec # Delete tensors
             torch.cuda.empty_cache() # Clear memory
             torch.cuda.synchronize()
 

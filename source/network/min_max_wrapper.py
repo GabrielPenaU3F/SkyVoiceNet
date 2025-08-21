@@ -30,4 +30,5 @@ class MinMaxWrapper(nn.Module):
             speech_mins = speech_spec.amin(dim=(1, 2), keepdim=True)
             speech_maxs = speech_spec.amax(dim=(1, 2), keepdim=True)
             output = Normalizer.minmax_denormalize(output_norm, speech_mins, speech_maxs)
-            return output
+            # return output
+            return output_norm

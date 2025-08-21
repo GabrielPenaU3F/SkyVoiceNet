@@ -28,12 +28,15 @@ class Decoder(nn.Module):
         self.t_upsample_conv_2 = ConvTranspose1DBlock(hidden_1, hidden_1, kernel_size=3, stride=2, padding=1, output_padding=1)
         self.t_upsample_conv_1 = ConvTranspose1DBlock(freqs, freqs, kernel_size=3, stride=2, padding=1, output_padding=1)
 
+
         # Recurrent layer
         self.norm = nn.InstanceNorm1d(freqs)
         # self.recurrent = nn.LSTM(freqs, freqs, num_layers=2, batch_first=True, dropout=self.config.dropout, bidirectional=True)
         # self.recurrent = nn.GRU(freqs, freqs, num_layers=1, batch_first=True, dropout=self.config.dropout, bidirectional=False)
         self.recurrent = nn.LSTM(freqs, freqs, num_layers=1, batch_first=True, dropout=self.config.dropout, bidirectional=False)
         # self.recurrent_proj = nn.Linear(freqs * 2, freqs)
+
+        # self.final_conv = ConvTranspose1DBlock(freqs, freqs + 1, 5, padding=2) # Needed if output must have 513 freqs
 
         # Residual blocks
         self.residual_block_3 = ResidualBlock(hidden_2)
@@ -76,6 +79,8 @@ class Decoder(nn.Module):
         y, _ = self.recurrent(y.permute(0, 2, 1))
         # y = self.recurrent_proj(y)
         y = y.permute(0, 2, 1)
+
+        # y = self.final_conv(y)
 
         return y
 

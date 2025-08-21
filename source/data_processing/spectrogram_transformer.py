@@ -6,11 +6,13 @@ from scipy.ndimage import zoom
 
 class SpectrogramTransformer:
 
-    def obtain_log_spectrogram(self, audio, n_fft, hop_length, win_length):
+    def obtain_log_spectrogram(self, audio, n_fft, hop_length, win_length, keep_last_freq=False):
         spectrogram = librosa.stft(audio, n_fft=n_fft, hop_length=hop_length, win_length=win_length)
-        spectrogram = np.delete(spectrogram, -1, axis=0) # Delete highest frequency so we have just 512
-        spectrogram_db = librosa.amplitude_to_db(abs(spectrogram))
-        return spectrogram_db
+        if not keep_last_freq:
+            spectrogram = np.delete(spectrogram, -1, axis=0) # Delete highest frequency so we have just 512
+        magnitude_spectrogram = abs(spectrogram)
+        log_spectrogram = np.log(1 + magnitude_spectrogram)
+        return log_spectrogram
 
     def zeropad_time(self, spectrogram, target_length, padding='zero'):
         _, t = spectrogram.shape
@@ -26,7 +28,10 @@ class SpectrogramTransformer:
         return spectrogram
 
     def obtain_magnitude_spectrogram(self, log_spectrogram):
-        return librosa.db_to_amplitude(log_spectrogram)
+        # return librosa.db_to_amplitude(log_spectrogram)
+        magnitude_spectrogram = np.exp(log_spectrogram) - 1
+        magnitude_spectrogram = np.clip(magnitude_spectrogram, 0, None)
+        return magnitude_spectrogram
 
     def convert_to_mel(self, y, sr, n_fft, n_mels):
         magnitude_spectrogram = np.exp(y) - 1

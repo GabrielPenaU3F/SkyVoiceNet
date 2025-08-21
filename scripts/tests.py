@@ -16,12 +16,12 @@ from source.network.sky_voice_net import SkyVoiceNet
 from source.utilities import draw_spectrograms, draw_single_spectrogram, compute_spectrogram_energy
 
 path_dir = PathRepo().get_output_path()
-model_file = os.path.join(path_dir, 'full', 'sky_voice_net_4_reduced_batch4_test_7.pt')
+model_file = os.path.join(path_dir, 'reduced', 'sky_voice_net_5_reduced_batch4_test_9.pt')
 
 trained_model = torch.load(model_file)
 
 # Load test data
-dataset = DataLoader.load_processed_data('reduced_dataset_5.h5', dataset=None)
+dataset = DataLoader.load_processed_data('reduced_dataset_7.h5', dataset=None)
 sample = dataset.sample(n=1, random_state=42)
 speech_spectrogram = sample.iloc[0]['speech']
 melody_spectrogram = sample.iloc[0]['song']
@@ -67,8 +67,9 @@ original_audio, new_sr = player.play_audio_from_spectrogram(melody_spectrogram, 
                                                      compression_factor=3, denoising_strength=0.2, mode='return')
 predicted_audio, _ = player.play_audio_from_spectrogram(predicted_spectrogram, sr=16000, method='griffin-lim',
                                                      compression_factor=3, denoising_strength=0.2, mode='return')
-path = PathRepo().get_full_test_wavs_path()
+# path = PathRepo().get_full_test_wavs_path()
+path = PathRepo().get_reduced_test_wads_path()
 original_audio = (original_audio * 32767).astype(np.int16)
 predicted_audio = (predicted_audio * 32767).astype(np.int16)
-# wavfile.write(os.path.join(path, 'ex_original_test_baseline.wav'), new_sr, original_audio)
-wavfile.write(os.path.join(path, 'ex_predicted_test_7.wav'), new_sr, predicted_audio)
+wavfile.write(os.path.join(path, 'ex_original_test_8.wav'), new_sr, original_audio)
+wavfile.write(os.path.join(path, 'ex_predicted_test_8.wav'), new_sr, predicted_audio)

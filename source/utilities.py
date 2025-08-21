@@ -101,3 +101,17 @@ def audio_pesq(audio_ref, audio_test, sr):
     audio_ref = np.ascontiguousarray(audio_ref, dtype=np.float32)
     audio_test = np.ascontiguousarray(audio_test, dtype=np.float32)
     return pesq(sr, audio_ref, audio_test, 'wb')  # 'wb' = wideband
+
+def amplify_audio(audio):
+    peak = np.max(np.abs(audio))
+    target_peak = 10 ** (-1 / 20)  # -1 dBFS ≈ 0.89125
+
+    if peak > 0:
+        gain = target_peak / peak
+        y_norm = audio * gain
+    else:
+        y_norm = audio.copy()
+
+    # Por seguridad, recortar por cualquier redondeo numérico:
+    y_norm = np.clip(y_norm, -1.0, 1.0)
+    return y_norm

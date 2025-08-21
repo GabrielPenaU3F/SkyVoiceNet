@@ -24,8 +24,8 @@ class SkyVoiceNet(nn.Module):
         contour_embedding = self.encoder_contour(contour)
 
         y_pred = self.decoder(speech_embedding, contour_embedding)
-
-        y_pred = self.final_activation(y_pred.unsqueeze(1))
+        y_pred = y_pred.unsqueeze(1)
+        y_pred = self.final_activation(y_pred)
         return y_pred
 
     def select_decoder(self, freqs):

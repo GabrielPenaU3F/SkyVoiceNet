@@ -23,6 +23,7 @@ class PreprocessConfig(Config):
         self.n_fft = 1024
         self.hop_length = 256
         self.win_length = 1024
+        self.keep_last_freq = False
         self.crepe_fmin = 50
         self.crepe_fmax = 1500
         self.crepe_batch_size = 2048

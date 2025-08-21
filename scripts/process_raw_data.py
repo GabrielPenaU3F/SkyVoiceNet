@@ -11,4 +11,4 @@ proc = ProcessingPipeline()
 # processed_data = proc.process(raw_data, mode='pre', save=True, filename='nus_preprocessed_3.h5')
 
 raw_data = DataLoader.load_preprocessed_data('nus_preprocessed_3.h5')
-processed_data = proc.process(raw_data, mode='post', save=True, filename='nus_processed_5.h5')
+processed_data = proc.process(raw_data, mode='post', save=True, filename='nus_processed_7.h5', keep_last_freq=False)
