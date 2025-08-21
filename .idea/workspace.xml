@@ -4,25 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="15936c0f-728c-4ae7-8ae2-14f990ceb9fa" name="Changes" comment="Safety commit">
-      <change afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/add_empty_bin_to_contour.py" afterDir="false" />
+    <list default="true" id="15936c0f-728c-4ae7-8ae2-14f990ceb9fa" name="Changes" comment="Move">
+      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/outputs/test_metrics/parekh_example_metrics.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/outputs/test_metrics/parekh_example_metrics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/parekh_test_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/parekh_test_processing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/process_raw_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/process_raw_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/reduce_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/reduce_dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/training_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/scripts/training_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/audio_reconstruction/audio_player.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/audio_reconstruction/audio_player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/processing_pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/processing_pipeline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/spectrogram_transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/data_processing/spectrogram_transformer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/network/decoders.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/network/decoders.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/network/encoders.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/network/encoders.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/network/min_max_wrapper.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/network/min_max_wrapper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/network/sky_voice_net.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/network/sky_voice_net.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/training_loop.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/training_loop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/source/utilities.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,11 +113,11 @@
       <recent name="D:\Universidad\FIUBA\Redes Neuronales\Trabajo Final\SkyVoiceNet\outputs" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Universidad\FIUBA\Redes Neuronales\Trabajo Final\SkyVoiceNet\scripts" />
       <recent name="D:\Universidad\FIUBA\Redes Neuronales\Trabajo Final\SkyVoiceNet\outputs\full\full_wavs" />
       <recent name="D:\Universidad\FIUBA\Redes Neuronales\Trabajo Final\SkyVoiceNet\outputs\full" />
       <recent name="D:\Universidad\FIUBA\Redes Neuronales\Trabajo Final\SkyVoiceNet\outputs\reduced" />
       <recent name="D:\Universidad\FIUBA\Redes Neuronales\Trabajo Final\SkyVoiceNet\outputs" />
-      <recent name="D:\Universidad\FIUBA\Redes Neuronales\Trabajo Final\SkyVoiceNet\outputs\concatenation_pre_post_attention" />
     </key>
   </component>
   <component name="RunManager" selected="Python.parekh_example_metrics">
@@ -151,7 +135,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Redes Neuronales/Trabajo Final/SkyVoiceNet/outputs/test_metrics/parekh_example_metrics.py" />
+      <option name="SCRIPT_NAME" value="D:\Universidad\FIUBA\Redes Neuronales\Trabajo Final\SkyVoiceNet\scripts\parekh_example_metrics.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -365,6 +349,8 @@
       <workItem from="1754707952766" duration="6347000" />
       <workItem from="1755150280154" duration="2299000" />
       <workItem from="1755280863983" duration="25144000" />
+      <workItem from="1755752449045" duration="197000" />
+      <workItem from="1755752780357" duration="91000" />
     </task>
     <task id="LOCAL-00001" summary="Basic data IO and preprocessing working">
       <option name="closed" value="true" />
@@ -606,7 +592,39 @@
       <option name="project" value="LOCAL" />
       <updated>1755284392846</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Really good version - everything working properly">
+      <option name="closed" value="true" />
+      <created>1755752477398</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1755752477398</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Adding example audios">
+      <option name="closed" value="true" />
+      <created>1755752603805</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1755752603805</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Adding example audios">
+      <option name="closed" value="true" />
+      <created>1755752616502</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1755752616502</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Move">
+      <option name="closed" value="true" />
+      <created>1755752628963</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1755752628963</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -627,9 +645,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Big refactor" />
-    <MESSAGE value="Fixed the processing pipeline; a padding was added to match spectrogram dimensions throughout the dataset.&#10;&#10;Also began the construction of the network" />
-    <MESSAGE value="A custom SkyDataset implemented to handle conversion of data to tensors" />
     <MESSAGE value="Refactored the dataset and implemented the network architecture up to the attention layer" />
     <MESSAGE value="Some comments were added" />
     <MESSAGE value="Completed a first implementation. Normalizing was added to the processing pipeline" />
@@ -652,7 +667,10 @@
     <MESSAGE value="Huge improvements." />
     <MESSAGE value="Commit a functional version of the network" />
     <MESSAGE value="Safety commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Safety commit" />
+    <MESSAGE value="Really good version - everything working properly" />
+    <MESSAGE value="Adding example audios" />
+    <MESSAGE value="Move" />
+    <option name="LAST_COMMIT_MESSAGE" value="Move" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
