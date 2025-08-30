@@ -53,43 +53,13 @@ class CrepeConfig(Config):
 
 class NetworkConfig(Config):
 
-    modes = {'cat', 'cat_attn', 'cross_attn', 'double_attn', 'cat_pre_post_attn'}
-
     def __init__(self):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        self.mode = 'cat'
-        self.embed_dim = 64
-        self.attn_heads = 4
         self.dropout = 0
-        self.recurrent_dropout = 0.3
-
-    def validate_mode(self, mode):
-        if mode not in self.modes:
-            raise ValueError(f'Invalid mode: {mode}')
-
-        return True
-
-    def update(self, **kwargs):
-        if 'mode' in kwargs.keys():
-            self.validate_mode(kwargs['mode'])
-        super().update(**kwargs)
-
-
-class PositionalEncodingConfig(Config):
-
-    def __init__(self):
-        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
-
 
 class AudioPlayerConfig(Config):
 
     def __init__(self):
         self.device = 'cuda'
         self.mode = 'play'
-        self.method = 'griffin-lim'
         self.sr = 16000
-        self.gan_sr = 22050
-        self.n_fft = 1024
-        self.n_mels = 80
-        self.compression_factor = 1
-        self.denoising_strength = 0.005

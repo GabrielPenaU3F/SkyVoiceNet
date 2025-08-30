@@ -19,7 +19,6 @@ class Encoder(nn.Module):
         # Each convolutional channel represents a frequency bin
 
         # Stride 1 ensures keeping temporal dimension constant
-        # self.f_initial_conv = Conv1DBlock(freqs + 1, freqs, kernel_size=3, stride=1, padding=1) # Needed if input has 513 freqs
         self.f_downsample_conv_1 = Conv1DBlock(freqs, hidden_1, kernel_size=5, stride=1, padding=2)
         self.f_downsample_conv_2 = Conv1DBlock(hidden_1, hidden_2, kernel_size=5, stride=1, padding=2)
         self.f_downsample_conv_3 = Conv1DBlock(hidden_2, hidden_dim, kernel_size=5, stride=1, padding=2)
@@ -31,16 +30,12 @@ class Encoder(nn.Module):
 
         # Recurrent layer
         self.norm = nn.InstanceNorm1d(hidden_2)
-        # self.recurrent = nn.LSTM(hidden_2, hidden_2, num_layers=2, batch_first=True, dropout=self.config.dropout, bidirectional=True)
-        # self.recurrent = nn.GRU(hidden_2, hidden_2, num_layers=1, batch_first=True, dropout=self.config.recurrent_dropout, bidirectional=False)
-        self.recurrent = nn.LSTM(hidden_2, hidden_2, num_layers=1, batch_first=True, dropout=self.config.recurrent_dropout, bidirectional=False)
-        # self.recurrent_proj = nn.Linear(hidden_2 * 2, hidden_2)
+        self.recurrent = nn.LSTM(hidden_2, hidden_2, num_layers=1, batch_first=True, bidirectional=False)
 
 
     def forward(self, x):
 
         x = x.squeeze(1)
-        # x = self.f_initial_conv(x)
         self.residual_buffer.buffer_input(x)
 
         # Downsample up to a dimension of 128
@@ -58,13 +53,11 @@ class Encoder(nn.Module):
         # Apply recurrent layer when the embedding dimension is 128
         x_down4 = self.norm(x_down4)
         x_down4, _ = self.recurrent(x_down4.permute(0, 2, 1))
-        # x_down4 = self.recurrent_proj(x_down4)
         x_down4 = x_down4.permute(0, 2, 1)
 
         # Downsampling 3
         x_down8_t = self.t_downsample_conv_3(x_down4)
         x_down8 = self.f_downsample_conv_3(x_down8_t)
-        self.residual_buffer.buffer_conv_3_output(x_down8)
 
         encoding = x_down8
-        return encoding
+        return 2 * encoding # Reinforcement helps here

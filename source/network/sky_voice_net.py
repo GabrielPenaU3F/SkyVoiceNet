@@ -1,7 +1,8 @@
 from torch import nn
 
 from source.config import NetworkConfig
-from source.network.decoders import ShortDecoder, LargeDecoder
+from source.data_processing.normalizer import Normalizer
+from source.network.decoders import Decoder
 from source.network.encoders import Encoder
 
 
@@ -14,10 +15,13 @@ class SkyVoiceNet(nn.Module):
 
         self.encoder_speech = Encoder(freqs)
         self.encoder_contour = Encoder(freqs)
-        self.decoder = self.select_decoder(freqs)
+        self.decoder = Decoder(freqs)
         self.final_activation = nn.ReLU()
 
     def forward(self, speech, contour):
+
+        # Apply min-max normalization
+        speech = Normalizer.minmax_normalize_batch(speech)
 
         # Speech and contour are encoded
         speech_embedding = self.encoder_speech(speech)
@@ -27,14 +31,3 @@ class SkyVoiceNet(nn.Module):
         y_pred = y_pred.unsqueeze(1)
         y_pred = self.final_activation(y_pred)
         return y_pred
-
-    def select_decoder(self, freqs):
-
-        # Decoder with 128-embeddings
-        if self.config.mode in {'cat', 'cat_attn', 'cat_pre_post_attn'}:
-            return LargeDecoder(freqs)
-
-        # Decoder with 64-embeddings
-        elif self.config.mode in {'cross_attn', 'double_attn'}:
-            return ShortDecoder(freqs)
-

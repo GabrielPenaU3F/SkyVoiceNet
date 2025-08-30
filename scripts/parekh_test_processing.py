@@ -9,11 +9,10 @@ from source.audio_reconstruction.audio_player import AudioPlayer
 from source.data_management.path_repo import PathRepo
 from source.data_processing.contour_extractor import ContourExtractor
 from source.data_processing.spectrogram_transformer import SpectrogramTransformer
-from source.network.min_max_wrapper import MinMaxWrapper
 from source.utilities import draw_spectrograms, draw_single_spectrogram, amplify_audio
 
 base_path = PathRepo().get_base_path()
-path = os.path.join(base_path, 'outputs', 'parekh')
+path = os.path.join(base_path, 'test_audios')
 
 speech_file = os.path.join(path, 'stretched_speech_0.wav')
 melody_file = os.path.join(path, 'true_singing_0.wav')
@@ -22,7 +21,6 @@ melody, _ = librosa.load(melody_file, sr=16000)
 
 speech_spectrogram = SpectrogramTransformer().obtain_log_spectrogram(
     speech, 1024, 256, 1024, keep_last_freq=False)
-
 contour = ContourExtractor().extract_contour(melody, sr=16000)
 
 draw_spectrograms(speech_spectrogram, contour, 'Speech spectrogram', 'Contour')
@@ -32,12 +30,11 @@ melody_contour_tensor = torch.tensor(contour).unsqueeze(0).unsqueeze(0).to('cuda
 
 # Network
 
-model_file = os.path.join(base_path, 'outputs', 'full', 'sky_voice_net_5_full_batch4_test_9.pt')
+model_file = os.path.join(base_path, 'outputs', 'full', 'sky_voice_net_final_reinforce_no_dropout.pt')
 trained_model = torch.load(model_file)
-net = MinMaxWrapper(trained_model)
-net.eval()
+trained_model.eval()
 with torch.no_grad():
-    predicted_spectrogram = net(speech_spectrogram_tensor, melody_contour_tensor).squeeze()
+    predicted_spectrogram = trained_model(speech_spectrogram_tensor, melody_contour_tensor).squeeze()
 
 predicted_spectrogram = predicted_spectrogram.cpu().numpy()
 draw_single_spectrogram(predicted_spectrogram, 'Predicted')
@@ -46,7 +43,7 @@ draw_single_spectrogram(predicted_spectrogram, 'Predicted')
 
 player = AudioPlayer()
 predicted_audio, _ = player.play_audio_from_spectrogram(predicted_spectrogram,
-                                                        sr=16000, method='griffin-lim', mode='return')
+                                                        sr=16000, mode='return')
 predicted_audio = amplify_audio(predicted_audio)
 predicted_audio = (predicted_audio * 32767).astype(np.int16)
-wavfile.write(os.path.join(path, 'predicted_test8.wav'), 16000, predicted_audio)
+wavfile.write(os.path.join(path, 'final_tests', 'predicted_6.wav'), 16000, predicted_audio)

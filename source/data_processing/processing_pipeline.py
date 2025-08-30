@@ -1,14 +1,11 @@
 import librosa
 import numpy as np
 import pandas as pd
-import sounddevice as sd
-from matplotlib import pyplot as plt
 
 from source.config import PreprocessConfig
 from source.data_management.data_writer import DataWriter
 from source.data_processing.contour_extractor import ContourExtractor
 from source.data_processing.normalizer import Normalizer
-from source.data_processing.resampler import Resampler
 from source.data_processing.spectrogram_transformer import SpectrogramTransformer
 from source.data_processing.word_processor import WordProcessor
 
@@ -17,7 +14,6 @@ class ProcessingPipeline:
 
     def __init__(self):
         self.config = PreprocessConfig() # This one is a singleton
-        self.resampler = Resampler(self.config.original_sr)
         self.normalizer = Normalizer()
         self.spectrogram_transformer = SpectrogramTransformer()
         self.contour_extractor = ContourExtractor()
@@ -68,24 +64,14 @@ class ProcessingPipeline:
             sing_audio_segments = WordProcessor.generate_combinations(sing_audio_words_per_phrase)
             read_audio_segments = WordProcessor.generate_combinations(speech_audio_words_per_phrase)
 
-            # for idx, audio_segment in enumerate(read_audio_segments):
-            #
-            #     if(len(audio_segment) == 5):
-            #         audio = np.concatenate(audio_segment)
-            #         fft = np.abs(np.fft.fft(audio))[:int(len(audio) / 2)]
-            #         f_axis = np.linspace(0, 22050, len(fft), endpoint=False)
-            #
-            #         plt.plot(f_axis, fft)
-            #         plt.show()
-            #         sd.play(audio, 44100)
-            #         sd.wait()
-
             # Resample, extract contour and add
             for idx, (sing_audio, read_audio) in enumerate(zip(sing_audio_segments, read_audio_segments)):
                 sing_audio = np.concatenate(sing_audio)
                 read_audio = np.concatenate(read_audio)
-                resampled_song = self.resampler.resample(sing_audio, self.config.resample_sr)
-                resampled_speech = self.resampler.resample(read_audio, self.config.resample_sr)
+                resampled_song = librosa.resample(sing_audio,
+                                                  orig_sr=self.config.original_sr, target_sr=self.config.resample_sr)
+                resampled_speech = librosa.resample(read_audio,
+                                                  orig_sr=self.config.original_sr, target_sr=self.config.resample_sr)
                 melody_contour = self.contour_extractor.extract_contour(resampled_song, sr=self.config.resample_sr)
 
                 preprocessed_row = pd.DataFrame(
@@ -95,11 +81,6 @@ class ProcessingPipeline:
                      }
                 )
                 preprocessed_data = pd.concat([preprocessed_data, preprocessed_row], ignore_index=True)
-
-            # Resample randomly
-            # randomly_resampled_speech, speech_sr = self.resampler.resample_randomly(silenceless_speech,
-            #                                                                         self.config.min_resample_factor,
-            #                                                                         self.config.max_resample_factor)
 
         return preprocessed_data
 

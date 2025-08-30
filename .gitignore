@@ -3,5 +3,6 @@ idea/
 .venv/
 resources/
 outputs/
+__pycache__/
 *.xml
 *.txt

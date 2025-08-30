@@ -5,8 +5,8 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from source.network.min_max_wrapper import MinMaxWrapper
-from source.network.sky_voice_net import SkyVoiceNet
+from source.data_processing.normalizer import Normalizer
+# from source.network.sky_voice_net import SkyVoiceNet
 
 
 def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, device='cuda'):
@@ -14,8 +14,7 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
     optimizer = optim.RAdam(model.parameters(), lr=learning_rate, betas=(0.9, 0.9), eps=1e-9)
 
-    model = MinMaxWrapper(model).to(device) # Needed for network 4
-    # model = SkyVoiceNet().to(device)
+    model = model.to(device)
     training_loss = []
 
     for epoch in range(num_epochs):
@@ -30,13 +29,13 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
             melody_contour = melody_contour.to(device)
             target_spec = melody_spec.to(device)
 
+            # Normalize target
+            target_spec = Normalizer.minmax_normalize_batch(target_spec)
+
             optimizer.zero_grad()
 
-            # Forward pass (for wrapped model)
-            predicted_spec, target_spec = model(speech_spec, melody_contour, target_spec)
-
-            # Forward pass (for unwrapped model
-            # predicted_spec = model(speech_spec, melody_contour)
+            # Forward pass
+            predicted_spec = model(speech_spec, melody_contour)
 
             # Backprop
             loss = loss_fn(predicted_spec, target_spec)
@@ -46,7 +45,7 @@ def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, 
                 if param.grad is not None:
                     print(f"{name} gradient norm: {param.grad.norm().item()}")
 
-            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)  # Gradient Clipping
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)  # Gradient clipping
             optimizer.step()
 
             epoch_loss += loss.item()
