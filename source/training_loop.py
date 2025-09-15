@@ -6,7 +6,6 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from source.data_processing.normalizer import Normalizer
-# from source.network.sky_voice_net import SkyVoiceNet
 
 
 def train_model(model, loss_fn, dataset, batch_size, num_epochs, learning_rate, device='cuda'):

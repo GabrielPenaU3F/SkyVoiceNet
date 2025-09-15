@@ -47,27 +47,30 @@ class Decoder(nn.Module):
         x_up4 = self.t_upsample_conv_3(x_up4_f)
 
         # Residual block 3
-        res_3 = self.residual_buffer.retrieve_buffer_conv_2_output()
-        res3_out = self.residual_block_3(res_3)
-        x_up4 = self.apply_skip_connection(x_up4, res3_out)
+        if self.config.residuals is not None:
+            res_3 = self.residual_buffer.retrieve_buffer_conv_2_output()
+            res3_out = self.residual_block_3(res_3)
+            x_up4 = self.apply_skip_connection(x_up4, res3_out)
 
         # Upsampling 2
         x_up2_f = self.f_upsample_conv_2(x_up4)
         x_up2 = self.t_upsample_conv_2(x_up2_f)
 
         # Residual block 2
-        res_2 = self.residual_buffer.retrieve_buffer_conv_1_output()
-        res2_out = self.residual_block_2(res_2)
-        x_up2 = self.apply_skip_connection(x_up2, res2_out)
+        if self.config.residuals is not None:
+            res_2 = self.residual_buffer.retrieve_buffer_conv_1_output()
+            res2_out = self.residual_block_2(res_2)
+            x_up2 = self.apply_skip_connection(x_up2, res2_out)
 
         # Upsampling 3
         x_up1_f = self.f_upsample_conv_1(x_up2)
         x_up1 = self.t_upsample_conv_1(x_up1_f)
 
         # Residual block 1
-        res_1 = self.residual_buffer.retrieve_input()
-        res1_out = self.residual_block_1(res_1)
-        x_up1 = self.apply_skip_connection(x_up1, res1_out)
+        if self.config.residuals is not None:
+            res_1 = self.residual_buffer.retrieve_input()
+            res1_out = self.residual_block_1(res_1)
+            x_up1 = self.apply_skip_connection(x_up1, res1_out)
 
         # Apply recurrent layer
         y = self.norm(x_up1)

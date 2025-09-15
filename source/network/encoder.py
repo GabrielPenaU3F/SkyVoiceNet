@@ -7,8 +7,9 @@ from source.network.residual_buffer import ResidualBuffer
 
 class Encoder(nn.Module):
 
-    def __init__(self, freqs=512, hidden_dim=64):
+    def __init__(self, encoder_type, freqs=512, hidden_dim=64):
         super(Encoder, self).__init__()
+        self.encoder_type = encoder_type
         self.config = NetworkConfig()
         self.residual_buffer = ResidualBuffer()
 
@@ -36,19 +37,22 @@ class Encoder(nn.Module):
     def forward(self, x):
 
         x = x.squeeze(1)
-        self.residual_buffer.buffer_input(x)
+        if self.encoder_type == self.config.residuals:
+            self.residual_buffer.buffer_input(x)
 
         # Downsample up to a dimension of 128
 
         # Downsampling 1
         x_down2_t = self.t_downsample_conv_1(x)
         x_down2 = self.f_downsample_conv_1(x_down2_t)
-        self.residual_buffer.buffer_conv_1_output(x_down2)
+        if self.encoder_type == self.config.residuals:
+            self.residual_buffer.buffer_conv_1_output(x_down2)
 
         # Downsampling 2
         x_down4_t = self.t_downsample_conv_2(x_down2)
         x_down4 = self.f_downsample_conv_2(x_down4_t)
-        self.residual_buffer.buffer_conv_2_output(x_down4)
+        if self.encoder_type == self.config.residuals:
+            self.residual_buffer.buffer_conv_2_output(x_down4)
 
         # Apply recurrent layer when the embedding dimension is 128
         x_down4 = self.norm(x_down4)
@@ -60,4 +64,4 @@ class Encoder(nn.Module):
         x_down8 = self.f_downsample_conv_3(x_down8_t)
 
         encoding = x_down8
-        return 2 * encoding # Reinforcement helps here
+        return self.config.reinforce_magnitude * encoding # Reinforcement helps here

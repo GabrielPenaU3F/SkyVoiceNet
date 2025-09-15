@@ -28,7 +28,6 @@ class SpectrogramTransformer:
         return spectrogram
 
     def obtain_magnitude_spectrogram(self, log_spectrogram):
-        # return librosa.db_to_amplitude(log_spectrogram)
         magnitude_spectrogram = np.exp(log_spectrogram) - 1
         magnitude_spectrogram = np.clip(magnitude_spectrogram, 0, None)
         return magnitude_spectrogram

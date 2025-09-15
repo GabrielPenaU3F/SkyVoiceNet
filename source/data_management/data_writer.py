@@ -42,3 +42,20 @@ class DataWriter:
                 group.create_dataset('speech', data=np.array(row['speech'], dtype=dtype))
 
         print('Data saved')
+
+    @staticmethod
+    def save_test_data(data, filename, dtype='float32'):
+        filepath = os.path.join(PathRepo().get_hdf5_path(), filename)
+        with h5py.File(filepath, 'w') as f:
+
+            for index, row in data.iterrows():
+                print(f'Saving input element Nº {index + 1}')
+                group_name = str(index)
+                if group_name in f:
+                    del f[group_name]
+                group = f.create_group(group_name)
+                group.create_dataset('original', data=np.array(row['original'], dtype=dtype))
+                group.create_dataset('pred_5', data=np.array(row['pred_5'], dtype=dtype))
+                group.create_dataset('pred_7', data=np.array(row['pred_7'], dtype=dtype))
+
+        print('Data saved')

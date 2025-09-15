@@ -2,7 +2,7 @@ import librosa
 import numpy as np
 import torch
 from matplotlib import pyplot as plt
-from pesq import pesq
+
 
 def series_to_tensor(series):
     return torch.tensor(np.stack(series)[:, None, :, :], dtype=torch.float32)
@@ -54,21 +54,9 @@ def compute_spectrogram_energy(log_spectrogram):
 
     return total_energy, energy_per_frame
 
-def psnr(spectrogram_ref, spectrogram_test):
-    mse = np.mean((spectrogram_ref - spectrogram_test) ** 2)
-    if mse == 0:
-        return 0
-    max_val = np.max(spectrogram_ref)
-    return 20 * np.log10(max_val / np.sqrt(mse))
-
-def audio_pesq(audio_ref, audio_test, sr):
-    audio_ref = np.ascontiguousarray(audio_ref, dtype=np.float32)
-    audio_test = np.ascontiguousarray(audio_test, dtype=np.float32)
-    return pesq(sr, audio_ref, audio_test, 'wb')  # 'wb' = wideband
-
-def amplify_audio(audio):
-    peak = np.max(np.abs(audio))
-    target_peak = 10 ** (-1 / 20)  # -1 dBFS ≈ 0.89125
-    gain = target_peak / peak
-    audio_amp = audio * gain
-    return audio_amp
+def match_spectrogram_dims(spec_1, spec_2, spec_3):
+    min_len = min(spec_1.shape[-1], spec_2.shape[-1], spec_3.shape[-1])
+    spec_1 = spec_1[..., :min_len]
+    spec_2 = spec_2[..., :min_len]
+    spec_3 = spec_3[..., :min_len]
+    return spec_1, spec_2, spec_3

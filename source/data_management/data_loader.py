@@ -51,6 +51,27 @@ class DataLoader:
         return data
 
     @staticmethod
+    def load_test_data(filename):
+        hdf5_dir = PathRepo().get_hdf5_path()
+        data = []
+        with h5py.File(os.path.join(hdf5_dir, filename), 'r') as f:
+            for index in f:
+                original = f[index]['original'][:]
+                pred_5 = f[index]['pred_5'][:]
+                pred_7 = f[index]['pred_7'][:]
+                data.append({'original': original, 'pred_5': pred_5, 'pred_7': pred_7})
+
+        data = pd.DataFrame(data)
+        data_list = data.apply(lambda row: {
+            'original': row['original'],
+            'pred_5': row['pred_5'],
+            'pred_7': row['pred_7']
+        }, axis=1).tolist()
+        data = VariableLengthDataset(data_list)
+
+        return data
+
+    @staticmethod
     def load_wavs():
 
         wav_dir = PathRepo().get_wavs_path()

@@ -2,8 +2,8 @@ from torch import nn
 
 from source.config import NetworkConfig
 from source.data_processing.normalizer import Normalizer
-from source.network.decoders import Decoder
-from source.network.encoders import Encoder
+from source.network.decoder import Decoder
+from source.network.encoder import Encoder
 
 
 class SkyVoiceNet(nn.Module):
@@ -13,8 +13,8 @@ class SkyVoiceNet(nn.Module):
         self.config = NetworkConfig()
         self.config.update(**kwargs)
 
-        self.encoder_speech = Encoder(freqs)
-        self.encoder_contour = Encoder(freqs)
+        self.encoder_speech = Encoder('speech', freqs=freqs)
+        self.encoder_contour = Encoder('contour', freqs=freqs)
         self.decoder = Decoder(freqs)
         self.final_activation = nn.ReLU()
 

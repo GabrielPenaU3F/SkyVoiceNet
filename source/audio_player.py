@@ -14,7 +14,7 @@ class AudioPlayer:
         self.config = AudioPlayerConfig()
         self.transformer = SpectrogramTransformer()
 
-    def play_audio_from_spectrogram(self, log_spectrogram, **kwargs):
+    def regenerate_audio(self, log_spectrogram, **kwargs):
         self.config.update(**kwargs)
 
         if isinstance(log_spectrogram, pd.Series):
@@ -23,6 +23,9 @@ class AudioPlayer:
             log_spectrogram = log_spectrogram.cpu().detach().numpy()
 
         audio = self.griffin_lim(log_spectrogram)
+        if self.config.amplify is True:
+            audio = self.amplify_audio(audio)
+
         if self.config.mode == 'play':
             sd.play(audio, self.config.sr)
             sd.wait()
@@ -34,3 +37,10 @@ class AudioPlayer:
         magnitude_spectrogram = self.transformer.obtain_magnitude_spectrogram(log_spectrogram)
         magnitude_spectrogram = np.power(magnitude_spectrogram, 1.2)
         return librosa.griffinlim(magnitude_spectrogram, n_iter=32, hop_length=256, win_length=1024, window='hann')
+
+    def amplify_audio(self, audio):
+        peak = np.max(np.abs(audio))
+        target_peak = 10 ** (-1 / 20)  # -1 dBFS ≈ 0.89125
+        gain = target_peak / peak
+        audio_amp = audio * gain
+        return audio_amp

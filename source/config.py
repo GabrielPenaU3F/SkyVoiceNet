@@ -56,10 +56,13 @@ class NetworkConfig(Config):
     def __init__(self):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.dropout = 0
+        self.residuals = None
+        self.reinforce_magnitude = 1
 
 class AudioPlayerConfig(Config):
 
     def __init__(self):
         self.device = 'cuda'
         self.mode = 'play'
+        self.amplify = False
         self.sr = 16000

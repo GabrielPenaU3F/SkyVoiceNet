@@ -5,10 +5,11 @@ import numpy as np
 import torch
 from scipy.io import wavfile
 
-from source.audio_reconstruction.audio_player import AudioPlayer
+from source.audio_player import AudioPlayer
 from source.data_management.path_repo import PathRepo
 from source.data_processing.contour_extractor import ContourExtractor
 from source.data_processing.spectrogram_transformer import SpectrogramTransformer
+from source.network.sky_voice_net import SkyVoiceNet
 from source.utilities import draw_spectrograms, draw_single_spectrogram, amplify_audio
 
 base_path = PathRepo().get_base_path()
@@ -30,11 +31,18 @@ melody_contour_tensor = torch.tensor(contour).unsqueeze(0).unsqueeze(0).to('cuda
 
 # Network
 
-model_file = os.path.join(base_path, 'outputs', 'full', 'sky_voice_net_final_reinforce_no_dropout.pt')
-trained_model = torch.load(model_file)
-trained_model.eval()
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+model_file = os.path.join(base_path, 'outputs', 'full', 'model_8_weights.pt')
+model = SkyVoiceNet(dropout=0,
+                    reinforce_magnitude=4,
+                    residuals=None
+                    )
+trained_state_dict = torch.load(model_file, map_location=device)
+model.load_state_dict(trained_state_dict)
+model.to(device)
+model.eval()
 with torch.no_grad():
-    predicted_spectrogram = trained_model(speech_spectrogram_tensor, melody_contour_tensor).squeeze()
+    predicted_spectrogram = model(speech_spectrogram_tensor, melody_contour_tensor).squeeze()
 
 predicted_spectrogram = predicted_spectrogram.cpu().numpy()
 draw_single_spectrogram(predicted_spectrogram, 'Predicted')
@@ -42,8 +50,6 @@ draw_single_spectrogram(predicted_spectrogram, 'Predicted')
 # Audio
 
 player = AudioPlayer()
-predicted_audio, _ = player.play_audio_from_spectrogram(predicted_spectrogram,
-                                                        sr=16000, mode='return')
-predicted_audio = amplify_audio(predicted_audio)
+predicted_audio, _ = player.regenerate_audio(predicted_spectrogram, sr=16000, mode='return', amplify=True)
 predicted_audio = (predicted_audio * 32767).astype(np.int16)
-wavfile.write(os.path.join(path, 'final_tests', 'predicted_6.wav'), 16000, predicted_audio)
+wavfile.write(os.path.join(path, 'final_tests', 'predicted_model_8.wav'), 16000, predicted_audio)
